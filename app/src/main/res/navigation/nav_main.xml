@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.lumi.surfeducationproject.SplashFragment"
+        android:name="com.lumi.surfeducationproject.ui.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/authFragment"
-        android:name="com.lumi.surfeducationproject.AuthFragment"
+        android:name="com.lumi.surfeducationproject.ui.AuthFragment"
         android:label="fragment_auth"
         tools:layout="@layout/fragment_auth" />
 </navigation>

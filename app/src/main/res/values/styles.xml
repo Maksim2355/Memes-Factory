@@ -4,8 +4,12 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
+
+    <style name="CustomAuthBtn" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/colorAccent</item>
+    </style>
+
 
 </resources>

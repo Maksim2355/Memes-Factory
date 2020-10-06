@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.lumi.surfeducationproject.navigation.StartAppNav
 
-class MainActivity : AppCompatActivity(), StartAppNav {
+class MainActivity : AppCompatActivity(),
+    StartAppNav {
 
+    //TODO Прокидывать NavController через внедрение зависимостей
     private lateinit var mNavController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
