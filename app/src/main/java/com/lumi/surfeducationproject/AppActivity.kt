@@ -5,11 +5,11 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.lumi.surfeducationproject.navigation.StartAppNav
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(),
-    StartAppNav {
+class AppActivity : AppCompatActivity(), StartAppNav {
 
-    //TODO Прокидывать NavController через внедрение зависимостей
+    @Inject
     private lateinit var mNavController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -5,4 +5,5 @@
     <string name="login_hint_authFragment">Логин</string>
     <string name="password_hint_authFragment">Пароль</string>
     <string name="loginIn_button_authFragment">Войти</string>
+    <string name="error_fieldsIsEmpty_authFragment">Поля не могут быть пустыми</string>
 </resources>
