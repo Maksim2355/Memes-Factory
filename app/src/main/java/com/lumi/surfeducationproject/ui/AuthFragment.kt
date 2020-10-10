@@ -96,8 +96,8 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
         passwordEditText.transformationMethod = PasswordTransformationMethod.getInstance();
     }
 
-    override fun showErrorSnackbar() {
-        val snackbar = Snackbar.make(root_layout, "Вы ввели неверные данные.\nПопробуйте еще раз",
+    override fun showErrorSnackbar(messageError: String) {
+        val snackbar = Snackbar.make(root_layout, messageError,
             Snackbar.LENGTH_LONG)
         val snackbarView = snackbar.view
         snackbarView.setBackgroundColor(Color.parseColor("#FF575D"))

@@ -18,7 +18,7 @@ interface AuthView: MvpView {
 
     fun hidePassword()
 
-    fun showErrorSnackbar()
+    fun showErrorSnackbar(messageError: String)
 
     fun hidePasswordHelper()
 
