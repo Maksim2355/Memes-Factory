@@ -62,7 +62,15 @@ dependencies {
     implementation "com.github.moxy-community:moxy-ktx:$moxyVersion"
     kapt "com.github.moxy-community:moxy-compiler:$moxyVersion"
 
+    //Retrofit and okHttp
+    implementation 'com.squareup.retrofit2:retrofit:2.7.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation("com.squareup.okhttp3:okhttp:4.1.0")
 
+    // RxJava3 Dependencies
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
+    implementation "com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0"
 
 
 
