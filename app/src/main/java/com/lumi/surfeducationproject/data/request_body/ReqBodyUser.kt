@@ -1,7 +1,7 @@
-package com.lumi.surfeducationproject.model
+package com.lumi.surfeducationproject.data.request_body
 
 import com.google.gson.annotations.SerializedName
 
-data class UserAuth(
+data class ReqBodyUser(
     val login: String,
     val password: String)

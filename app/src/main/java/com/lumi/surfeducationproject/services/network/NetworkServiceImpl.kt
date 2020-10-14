@@ -1,12 +1,11 @@
-package com.lumi.surfeducationproject.services
+package com.lumi.surfeducationproject.services.network
 
-import com.google.gson.Gson
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-object NetworkService {
+object NetworkServiceImpl: NetworkService {
 
     private const val BASE_URL = "https://virtserver.swaggerhub.com/AndroidSchool/SurfAndroidSchool/1.0.0/"
 
@@ -24,7 +23,7 @@ object NetworkService {
         return retrofit!!
     }
 
-    fun getApiService(): MemesApi {
+    override fun getApi(): MemesApi {
         if (api == null) {
             api = getRetrofit().create(MemesApi::class.java)
         }

@@ -1,4 +1,4 @@
-package com.lumi.surfeducationproject.model
+package com.lumi.surfeducationproject.data.model
 
 
 data class User(

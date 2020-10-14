@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/memes_feed_nav_mi"
+        android:icon="@drawable/ic_nav_feed_meme"
+        android:title="todo"
+        />
+    <item
+        android:id="memes_add_nav_mi"
+        android:icon="@drawable/ic_nav_add_meme"
+        android:title="todo"
+        />
+    <item
+        android:id="@+id/profile_nav_mi"
+        android:icon="@drawable/ic_nav_profile"
+        android:title="todo" />
+</menu>

@@ -1,6 +1,6 @@
 package com.lumi.surfeducationproject.di.modules
 
-import com.lumi.surfeducationproject.services.NetworkService
+import com.lumi.surfeducationproject.services.network.NetworkServiceImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -11,8 +11,8 @@ class NetworkingModule {
 
     @Provides
     @Singleton
-    fun provideApi(): NetworkService {
-        return NetworkService
+    fun provideApi(): NetworkServiceImpl {
+        return NetworkServiceImpl
     }
 
 }

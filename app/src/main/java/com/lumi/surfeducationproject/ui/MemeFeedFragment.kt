@@ -1,27 +1,26 @@
-package com.lumi.surfeducationproject
+package com.lumi.surfeducationproject.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import moxy.MvpAppCompatFragment
+import com.lumi.surfeducationproject.R
 
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class MemeFeedFragment : Fragment() {
 
-class TabFragment : MvpAppCompatFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_tab, container, false)
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_meme_feed, container, false)
     }
-
 }

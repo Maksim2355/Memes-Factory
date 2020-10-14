@@ -1,9 +1,10 @@
 package com.lumi.surfeducationproject.views
 
-import com.lumi.surfeducationproject.enums.EmptyFields
+import com.lumi.surfeducationproject.common.EmptyFields
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
+import moxy.viewstate.strategy.alias.Skip
 
 @StateStrategyType(value = AddToEndSingleStrategy::class)
 interface AuthView: MvpView {
@@ -27,6 +28,9 @@ interface AuthView: MvpView {
     fun enableIconEye()
 
     fun disableIconEye()
+
+    @Skip
+    fun openContentFragment()
 
 
 }

@@ -1,9 +1,8 @@
 package com.lumi.surfeducationproject.ui
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.text.InputType
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
@@ -13,7 +12,8 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.enums.EmptyFields
+import com.lumi.surfeducationproject.common.EmptyFields
+import com.lumi.surfeducationproject.navigation.StartContentScreenNav
 import com.lumi.surfeducationproject.presenters.AuthPresenter
 import com.lumi.surfeducationproject.views.AuthView
 import kotlinx.android.synthetic.main.fragment_auth.*
@@ -25,7 +25,10 @@ import studio.carbonylgroup.textfieldboxes.TextFieldBoxes
 
 class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListener {
 
-    private val presenter by moxyPresenter { AuthPresenter() }
+
+    private val presenter by moxyPresenter {
+        AuthPresenter()
+    }
 
     private lateinit var loginInputField: TextFieldBoxes
     private lateinit var loginEditText: ExtendedEditText
@@ -38,6 +41,13 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
 
     private var isPasswordVisible: Boolean = false
     private var isEnablePasswordBtnVisible: Boolean = false
+
+    private lateinit var startScreen: StartContentScreenNav
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        startScreen = context as StartContentScreenNav
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,6 +96,10 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
     override fun disableIconEye() {
         isEnablePasswordBtnVisible = false
         passwordInputField.removeEndIcon()
+    }
+
+    override fun openContentFragment() {
+        startScreen.startContentScreen();
     }
 
     override fun showPassword() {
