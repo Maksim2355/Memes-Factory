@@ -29,5 +29,12 @@
         <item name="itemIconTint">@color/selector_bottom_nav_btn</item>
     </style>
 
+    <style name="FavoriteCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/selector_checkbox_favorite</item>
+    </style>
+
+    <style name="ShareCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/ic_share</item>
+    </style>
 
 </resources>
