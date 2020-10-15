@@ -6,6 +6,8 @@ interface SharedPrefService {
 
     fun saveUser(user: User)
 
-    fun readUser(): User
+    fun readUser(): User?
+
+    fun deleteUser()
 
 }

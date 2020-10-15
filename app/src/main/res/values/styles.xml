@@ -7,27 +7,27 @@
         <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
 
-    <style name="AppThemeContent" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/ColorPrimaryContent</item>
-        <item name="android:windowBackground">@color/colorPrimary</item>
-    </style>
-
     <style name="CustomAuthBtn" parent="Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/colorAccent</item>
+    </style>
+
+    <style name="CustomBtn" parent="TextAppearance.AppCompat.Widget.Button">
+        <item name="android:background">@drawable/ripple</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">17sp</item>
     </style>
 
     <style name="Toolbar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
-        <!-- <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item> -->
-        <item name="android:background">@color/ColorPrimaryContent</item>
+        <item name="android:background">@color/colorPrimaryContent</item>
     </style>
 
-    <style name="BottomNavBar" parent="Widget.Design.BottomNavigationView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">?attr/bottomNavigationStyle</item>
+    <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="itemHorizontalTranslationEnabled">false</item>
+        <item name="itemIconTint">@color/selector_bottom_nav_btn</item>
     </style>
+
 
 </resources>

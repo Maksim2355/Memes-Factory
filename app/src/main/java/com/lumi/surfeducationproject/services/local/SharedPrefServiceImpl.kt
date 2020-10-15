@@ -24,15 +24,21 @@ object SharedPrefServiceImpl : SharedPrefService {
         }.apply()
     }
 
-    override fun readUser(): User {
-        with(sharedPref){
-            val id = getInt(ID, 0)
-            val username = getString(USERNAME, "")
-            val firstName = getString(FIRST_NAME, "")
-            val lastName = getString(LAST_NAME, "")
-            val userDescription = getString(USER_DESCRIPTION, "")
+    override fun readUser(): User? {
+        if (sharedPref.contains(ID)){
+            val id = sharedPref.getInt(ID, 0)
+            val username = sharedPref.getString(USERNAME, "")
+            val firstName = sharedPref.getString(FIRST_NAME, "")
+            val lastName = sharedPref.getString(LAST_NAME, "")
+            val userDescription = sharedPref.getString(USER_DESCRIPTION, "")
             return User(id, username!!, firstName!!, lastName!!, userDescription!!)
-        }
+        }else return null
 
+
+
+    }
+
+    override fun deleteUser() {
+        sharedPref.edit().clear().apply()
     }
 }

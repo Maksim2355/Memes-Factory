@@ -52,7 +52,9 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? { return inflater.inflate(R.layout.fragment_auth, container, false) }
+    ): View? {
+        return inflater.inflate(R.layout.fragment_auth, container, false)
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,17 +78,17 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
 
     override fun enableIconEye() {
         isEnablePasswordBtnVisible = true
-        if (isPasswordVisible){
+        if (isPasswordVisible) {
             passwordInputField.setEndIcon(R.drawable.ic_eye_on)
-        }else {
+        } else {
             passwordInputField.setEndIcon(R.drawable.ic_eye_off)
         }
         passwordInputField.endIconImageButton.setOnClickListener {
             isPasswordVisible = !isPasswordVisible
-            if (isPasswordVisible){
+            if (isPasswordVisible) {
                 passwordInputField.setEndIcon(R.drawable.ic_eye_on)
                 showPassword()
-            }else{
+            } else {
                 passwordInputField.setEndIcon(R.drawable.ic_eye_off)
                 hidePassword()
             }
@@ -111,8 +113,10 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
     }
 
     override fun showErrorSnackbar(messageError: String) {
-        val snackbar = Snackbar.make(root_layout, messageError,
-            Snackbar.LENGTH_LONG)
+        val snackbar = Snackbar.make(
+            root_layout, messageError,
+            Snackbar.LENGTH_LONG
+        )
         val snackbarView = snackbar.view
         snackbarView.setBackgroundColor(Color.parseColor("#FF575D"))
         val textView =
@@ -123,14 +127,14 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
     }
 
     override fun showMessageErrorInputField(emptyFields: EmptyFields, messageError: String) {
-        when(emptyFields){
+        when (emptyFields) {
             EmptyFields.LOGIN -> {
                 loginInputField.setError(messageError, false)
             }
-            EmptyFields.PASSWORD-> {
+            EmptyFields.PASSWORD -> {
                 passwordInputField.setError(messageError, false)
             }
-            EmptyFields.ALL-> {
+            EmptyFields.ALL -> {
                 loginInputField.setError(messageError, false)
                 passwordInputField.setError(messageError, false)
             }
@@ -157,11 +161,11 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
 
     override fun onFocusChange(v: View?, hasFocus: Boolean) {
         v?.let {
-            when(v.id){
+            when (v.id) {
                 R.id.password_edit_text -> {
-                    if (hasFocus){
+                    if (hasFocus) {
                         presenter.enableCheckPasswordField()
-                    }else{
+                    } else {
                         presenter.disableCheckPasswordField(getInputPassword())
                     }
                 }

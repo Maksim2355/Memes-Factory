@@ -1,35 +1,44 @@
 package com.lumi.surfeducationproject
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.lumi.surfeducationproject.common.StyleManager
 import com.lumi.surfeducationproject.navigation.StartAppNav
 import com.lumi.surfeducationproject.navigation.StartContentScreenNav
-import javax.inject.Inject
+import com.lumi.surfeducationproject.services.local.SharedPrefServiceImpl
+
 
 class AppActivity : AppCompatActivity(), StartAppNav, StartContentScreenNav, StyleManager {
 
-    private lateinit var mNavController: NavController
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        mNavController = Navigation.findNavController(this, R.id.nav_host_fragment_container)
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_container)
     }
 
     override fun startApp() {
-        //TODO() Добавить логику перехода к нужному фрагменту в случае, если пользователь авторизированн
-        mNavController.navigate(R.id.action_splashFragment_to_authFragment)
+        if (SharedPrefServiceImpl.readUser() != null){
+            navController.navigate(R.id.action_splashFragment_to_tabFragment)
+        }else{
+            navController.navigate(R.id.action_splashFragment_to_authFragment)
+        }
     }
 
     override fun startContentScreen() {
-        mNavController.navigate(R.id.action_authFragment_to_tabFragment)
+        navController.navigate(R.id.action_authFragment_to_tabFragment)
     }
 
-    override fun setStyleTheme(themeId: Int) {
-        setTheme(themeId)
+    override fun setColorStatusBar(color: Int) {
+        val window: Window = window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.setStatusBarColor(resources.getColor(R.color.colorPrimaryContent))
+        window.setNavigationBarColor(Color.BLUE)
     }
-
 }

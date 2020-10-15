@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/root_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
@@ -13,14 +12,13 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:orientation="vertical"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="60dp"
         android:layout_marginRight="16dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
 
         <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
             android:id="@+id/login_field_boxes"
@@ -48,46 +46,42 @@
                 android:id="@+id/password_edit_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                />
+                android:inputType="textPassword" />
 
         </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
     </LinearLayout>
 
     <com.google.android.material.card.MaterialCardView
+        style="@style/CustomAuthBtn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginBottom="24dp"
-        style="@style/CustomAuthBtn"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-            <Button
-                android:id="@+id/auth_user_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingTop="14dp"
-                android:background="@drawable/ripple"
-                android:paddingBottom="18dp"
-                android:text="@string/loginIn_button_authFragment"
-                android:textColor="@color/colorPrimary"
-                android:textSize="17sp"
-                android:visibility="visible"/>
+        <Button
+            android:id="@+id/auth_user_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            style="@style/CustomBtn"
+            android:paddingTop="14dp"
+            android:paddingBottom="18dp"
+            android:text="@string/loginIn_button_authFragment"
+            android:visibility="visible" />
 
-            <ProgressBar
-                android:id="@+id/progress_auth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:indeterminateDrawable="@drawable/progress_bar"
-                android:visibility="gone"
-                />
+        <ProgressBar
+            android:id="@+id/progress_auth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminateDrawable="@drawable/progress_bar"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:visibility="gone" />
 
     </com.google.android.material.card.MaterialCardView>
 

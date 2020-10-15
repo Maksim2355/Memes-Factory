@@ -2,6 +2,6 @@ package com.lumi.surfeducationproject.common
 
 interface StyleManager {
 
-    fun setStyleTheme(themeId: Int)
+    fun setColorStatusBar(color: Int)
 
 }
