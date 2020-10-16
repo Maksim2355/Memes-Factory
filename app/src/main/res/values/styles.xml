@@ -11,6 +11,7 @@
         <item name="cardBackgroundColor">@color/colorAccent</item>
     </style>
 
+
     <style name="CustomBtn" parent="TextAppearance.AppCompat.Widget.Button">
         <item name="android:background">@drawable/ripple</item>
         <item name="android:textColor">@color/colorPrimary</item>

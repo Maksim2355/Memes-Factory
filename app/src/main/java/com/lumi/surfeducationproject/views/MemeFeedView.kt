@@ -1,10 +1,14 @@
 package com.lumi.surfeducationproject.views
 
+import com.lumi.surfeducationproject.data.model.Meme
 import moxy.MvpView
+import moxy.viewstate.strategy.AddToEndSingleStrategy
+import moxy.viewstate.strategy.StateStrategyType
 
+@StateStrategyType(value = AddToEndSingleStrategy::class)
 interface MemeFeedView: MvpView {
 
-    fun showMemes()
+    fun showMemes(memesList: List<Meme>)
 
     fun showErrorState()
 
@@ -16,7 +20,7 @@ interface MemeFeedView: MvpView {
 
     fun hideLoadState()
 
-    fun showErrorSnackbar()
+    fun showErrorSnackbar(message: String)
 
 
 }

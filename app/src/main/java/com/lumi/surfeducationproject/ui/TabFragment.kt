@@ -37,7 +37,7 @@ class TabFragment : MvpAppCompatFragment(), BottomNavigationView.OnNavigationIte
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bottomNavView = view.findViewById(R.id.bottomNavigationView)
-        navControllerTab = view.findNavController()
+        navControllerTab = findNavController()
 
         bottomNavView.setOnNavigationItemSelectedListener(this)
     }
@@ -59,7 +59,7 @@ class TabFragment : MvpAppCompatFragment(), BottomNavigationView.OnNavigationIte
     }
 
     private fun navigateAddMeme() {
-        TODO("Not yet implemented")
+
     }
 
     private fun navigateMemesFeed() {

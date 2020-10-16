@@ -1,19 +1,35 @@
 package com.lumi.surfeducationproject.ui
 
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.snackbar.Snackbar
 import com.lumi.surfeducationproject.R
+import com.lumi.surfeducationproject.common.RefresherOwner
+import com.lumi.surfeducationproject.data.model.Meme
+import com.lumi.surfeducationproject.presenters.MemesFeedPresenter
 import com.lumi.surfeducationproject.views.MemeFeedView
+import kotlinx.android.synthetic.main.fragment_meme_feed.*
 import moxy.MvpAppCompatFragment
+import moxy.ktx.moxyPresenter
 
 
-class MemeFeedFragment : MvpAppCompatFragment(), MemeFeedView {
+class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshListener, MemeFeedView,
+    RefresherOwner {
 
-    private lateinit var memesRv: RecyclerView
+    private val presenter by moxyPresenter { MemesFeedPresenter() }
+
+    private lateinit var refresh: SwipeRefreshLayout
+
+    private lateinit var memesView: RecyclerView
+    private lateinit var errorView: TextView
+    private lateinit var loadView: FrameLayout
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,34 +40,75 @@ class MemeFeedFragment : MvpAppCompatFragment(), MemeFeedView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        refresh = view.findViewById(R.id.refresh_srl)
+        refresh.setOnRefreshListener(this)
+
+        memesView = view.findViewById(R.id.state_meme_list_rv)
+        initRecyclerView(view)
+
+        errorView = view.findViewById(R.id.state_error_tv)
+        loadView = view.findViewById(R.id.state_progress_pb)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.loadMemes()
+    }
+
+    private fun initRecyclerView(v: View) {
 
     }
 
-    override fun showMemes() {
-        TODO("Not yet implemented")
+    override fun showMemes(memesList: List<Meme>) {
+        //TODO Подготовка адаптера и показ recyclerView
+        memesView.visibility = View.VISIBLE
+        errorView.visibility = View.GONE
     }
 
     override fun showErrorState() {
-        TODO("Not yet implemented")
-    }
-
-    override fun showRefresh() {
-        TODO("Not yet implemented")
-    }
-
-    override fun hideRefresh() {
-        TODO("Not yet implemented")
+        memesView.visibility = View.GONE
+        errorView.visibility = View.VISIBLE
     }
 
     override fun showLoadState() {
-        TODO("Not yet implemented")
+        loadView.visibility = View.VISIBLE
     }
 
     override fun hideLoadState() {
-        TODO("Not yet implemented")
+        loadView.visibility = View.GONE
     }
 
-    override fun showErrorSnackbar() {
-        TODO("Not yet implemented")
+    override fun showRefresh() {
+        refresh.isRefreshing = true
+        setRefresherState(true)
     }
+
+    override fun hideRefresh() {
+        refresh.isRefreshing = false
+        setRefresherState(false)
+    }
+
+    override fun showErrorSnackbar(message: String) {
+        val snackbar = Snackbar.make(
+            root_layout_tab, message,
+            Snackbar.LENGTH_LONG
+        )
+        val snackbarView = snackbar.view
+        snackbarView.setBackgroundColor(Color.parseColor("#FF575D"))
+        val textView =
+            snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+        textView.setTextColor(Color.WHITE)
+        textView.textSize = 16f
+        snackbar.show()
+
+    }
+
+    override fun onRefresh() {
+        presenter.updateMemes()
+    }
+
+    override fun setRefresherState(refresherState: Boolean) {
+        refresh.post { refresh.isRefreshing = refresherState}
+    }
+
 }
