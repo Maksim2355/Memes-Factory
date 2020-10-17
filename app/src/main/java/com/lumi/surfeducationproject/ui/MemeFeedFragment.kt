@@ -7,16 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.RefresherOwner
 import com.lumi.surfeducationproject.data.model.Meme
+import com.lumi.surfeducationproject.list_controllers.MemeController
 import com.lumi.surfeducationproject.presenters.MemesFeedPresenter
 import com.lumi.surfeducationproject.views.MemeFeedView
 import kotlinx.android.synthetic.main.fragment_meme_feed.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import ru.surfstudio.android.easyadapter.EasyAdapter
+import ru.surfstudio.android.easyadapter.ItemList
 
 
 class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshListener, MemeFeedView,
@@ -26,7 +30,9 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
 
     private lateinit var refresh: SwipeRefreshLayout
 
-    private lateinit var memesView: RecyclerView
+    private lateinit var memesRecyclerView: RecyclerView
+    private val easyAdapter = EasyAdapter()
+
     private lateinit var errorView: TextView
     private lateinit var loadView: FrameLayout
 
@@ -41,10 +47,12 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         refresh = view.findViewById(R.id.refresh_srl)
+        refresh.setColorSchemeColors(Color.BLACK)
+        refresh.setProgressBackgroundColorSchemeColor(resources.getColor(R.color.colorAccent))
         refresh.setOnRefreshListener(this)
 
-        memesView = view.findViewById(R.id.state_meme_list_rv)
-        initRecyclerView(view)
+        memesRecyclerView = view.findViewById(R.id.state_meme_list_rv)
+        initRecyclerView()
 
         errorView = view.findViewById(R.id.state_error_tv)
         loadView = view.findViewById(R.id.state_progress_pb)
@@ -55,18 +63,25 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
         presenter.loadMemes()
     }
 
-    private fun initRecyclerView(v: View) {
-
+    private fun initRecyclerView() {
+        with(memesRecyclerView){
+            adapter = easyAdapter
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        }
     }
 
     override fun showMemes(memesList: List<Meme>) {
-        //TODO Подготовка адаптера и показ recyclerView
-        memesView.visibility = View.VISIBLE
+        val meme = memesList + memesList + memesList
+        val itemList = ItemList.create().apply {
+            addAll(meme, MemeController())
+        }
+        easyAdapter.setItems(itemList)
+        memesRecyclerView.visibility = View.VISIBLE
         errorView.visibility = View.GONE
     }
 
     override fun showErrorState() {
-        memesView.visibility = View.GONE
+        memesRecyclerView.visibility = View.GONE
         errorView.visibility = View.VISIBLE
     }
 

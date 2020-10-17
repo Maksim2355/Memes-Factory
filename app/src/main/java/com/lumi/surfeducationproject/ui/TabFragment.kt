@@ -2,12 +2,10 @@ package com.lumi.surfeducationproject.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -20,6 +18,8 @@ class TabFragment : MvpAppCompatFragment(), BottomNavigationView.OnNavigationIte
     private lateinit var styleManager: StyleManager
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var navControllerTab: NavController
+
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -37,7 +37,7 @@ class TabFragment : MvpAppCompatFragment(), BottomNavigationView.OnNavigationIte
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bottomNavView = view.findViewById(R.id.bottomNavigationView)
-        navControllerTab = findNavController()
+        navControllerTab = Navigation.findNavController(view.findViewById(R.id.nav_host_fragment_content))
 
         bottomNavView.setOnNavigationItemSelectedListener(this)
     }

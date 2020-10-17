@@ -1,5 +1,6 @@
 package com.lumi.surfeducationproject.services.network
 
+import com.lumi.surfeducationproject.data.model.Meme
 import com.lumi.surfeducationproject.data.request_body.ReqBodyUser
 import com.lumi.surfeducationproject.data.response.MemesResponse
 import com.lumi.surfeducationproject.data.response.UserResponse
@@ -14,7 +15,7 @@ interface MemesApi {
     fun authorizationUser(@Body userAuth: ReqBodyUser): Single<UserResponse>
 
     @GET("memes")
-    fun getMemes(): Single<MemesResponse>
+    fun getMemes(): Single<List<Meme>>
 
 
 }

@@ -6,7 +6,7 @@ import java.net.UnknownHostException
 import java.util.*
 
 object Exceptions {
-    val NETWORK_EXCEPTIONS: List<Class<*>> = Arrays.asList(
+    val NETWORK_EXCEPTIONS: List<Class<*>> = listOf(
         UnknownHostException::class.java,
         SocketTimeoutException::class.java,
         ConnectException::class.java

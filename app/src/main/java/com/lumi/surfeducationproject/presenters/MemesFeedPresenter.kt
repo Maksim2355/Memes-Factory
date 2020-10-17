@@ -17,7 +17,7 @@ class MemesFeedPresenter: MvpPresenter<MemeFeedView>() {
             .doOnSubscribe { viewState.showLoadState() }
             .doFinally { viewState.hideLoadState() }
             .subscribe({
-                showMemes(it.memes)
+                showMemes(it)
             }, {
                 errorProcessing(it)
             })
@@ -30,7 +30,7 @@ class MemesFeedPresenter: MvpPresenter<MemeFeedView>() {
             .doOnSubscribe { viewState.showRefresh() }
             .doFinally { viewState.hideRefresh() }
             .subscribe({
-                showMemes(it.memes)
+                showMemes(it)
             }, {
                 errorProcessing(it)
             })

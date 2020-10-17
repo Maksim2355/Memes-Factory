@@ -7,4 +7,5 @@
     <string name="loginIn_button_authFragment">Войти</string>
     <string name="error_fieldsIsEmpty_authFragment">Поля не могут быть пустыми</string>
     <string name="message_error_state">Не удалось загрузить ленту \nОбновите экран или попробуйте позже</string>
+    <string name="hint_searchView_memeFeedFr">Поиск</string>
 </resources>
