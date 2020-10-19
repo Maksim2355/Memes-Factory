@@ -8,12 +8,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.lumi.surfeducationproject.common.StyleManager
-import com.lumi.surfeducationproject.navigation.StartAppNav
-import com.lumi.surfeducationproject.navigation.StartContentScreenNav
+import com.lumi.surfeducationproject.data.model.Meme
+import com.lumi.surfeducationproject.navigation.NavigationAddMeme
+import com.lumi.surfeducationproject.navigation.NavigationStartApp
+import com.lumi.surfeducationproject.navigation.NavigationContent
+import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
 import com.lumi.surfeducationproject.services.local.SharedPrefServiceImpl
 
 
-class AppActivity : AppCompatActivity(), StartAppNav, StartContentScreenNav, StyleManager {
+class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent,
+                    NavigationAddMeme, NavigationMemeDetails , StyleManager {
 
     private lateinit var navController: NavController
 
@@ -40,5 +44,13 @@ class AppActivity : AppCompatActivity(), StartAppNav, StartContentScreenNav, Sty
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.setStatusBarColor(resources.getColor(R.color.colorPrimaryContent))
         window.setNavigationBarColor(Color.BLUE)
+    }
+
+    override fun startMemeDetailsScreen(meme: Meme) {
+
+    }
+
+    override fun startAddMemeScreen() {
+        navController.navigate(R.id.action_tabFragment_to_addMemeFragment)
     }
 }

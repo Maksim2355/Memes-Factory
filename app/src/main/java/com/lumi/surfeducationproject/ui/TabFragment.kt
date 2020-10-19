@@ -3,14 +3,12 @@ package com.lumi.surfeducationproject.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.StyleManager
+import com.lumi.surfeducationproject.navigation.NavigationAddMeme
 import moxy.MvpAppCompatFragment
 
 class TabFragment : MvpAppCompatFragment(), BottomNavigationView.OnNavigationItemSelectedListener {
@@ -19,12 +17,14 @@ class TabFragment : MvpAppCompatFragment(), BottomNavigationView.OnNavigationIte
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var navControllerTab: NavController
 
+    private lateinit var navAddMeme: NavigationAddMeme
 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         styleManager = context as StyleManager
         styleManager.setColorStatusBar(R.color.colorPrimaryContent)
+        navAddMeme = context as NavigationAddMeme
     }
 
     override fun onCreateView(
@@ -59,7 +59,7 @@ class TabFragment : MvpAppCompatFragment(), BottomNavigationView.OnNavigationIte
     }
 
     private fun navigateAddMeme() {
-
+        navAddMeme.startAddMemeScreen()
     }
 
     private fun navigateMemesFeed() {
@@ -68,6 +68,11 @@ class TabFragment : MvpAppCompatFragment(), BottomNavigationView.OnNavigationIte
 
     private fun navigateProfile() {
         navControllerTab.navigate(R.id.profileFragment)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_toolbar_feed, menu)
     }
 
 

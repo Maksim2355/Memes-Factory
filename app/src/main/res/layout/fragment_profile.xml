@@ -6,11 +6,44 @@
     android:orientation="vertical"
     tools:context=".ui.ProfileFragment">
 
-
-    <TextView
+    <Toolbar
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="profile"
-        android:gravity="center"/>
+        android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="18dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ProfileName"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="16dp"
+            android:text="Имя его"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:text="A pessimist is a man who thinks everybody is as nasty as himself, and hates them for it."/>
+    
+    <view
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#312F51"
+        android:layout_marginBottom="24dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 
 </LinearLayout>

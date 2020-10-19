@@ -45,13 +45,13 @@
         android:label="fragment_tab"
         tools:layout="@layout/fragment_tab" >
         <action
-            android:id="@+id/action_tabFragment_to_addMemeFragment2"
+            android:id="@+id/action_tabFragment_to_addMemeFragment"
             app:destination="@id/addMemeFragment" />
         <action
             android:id="@+id/action_tabFragment_to_memeDetailsFragment"
             app:destination="@id/memeDetailsFragment" />
         <action
-            android:id="@+id/action_tabFragment_to_authFragment4"
+            android:id="@+id/action_tabFragment_to_authFragment"
             app:destination="@id/authFragment" />
     </fragment>
 </navigation>

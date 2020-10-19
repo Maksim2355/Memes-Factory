@@ -1,5 +1,5 @@
 package com.lumi.surfeducationproject.navigation
 
-interface StartAppNav {
+interface NavigationStartApp {
     fun startApp()
 }

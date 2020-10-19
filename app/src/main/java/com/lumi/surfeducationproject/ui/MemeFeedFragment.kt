@@ -1,11 +1,11 @@
 package com.lumi.surfeducationproject.ui
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -36,6 +36,7 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
     private lateinit var errorView: TextView
     private lateinit var loadView: FrameLayout
 
+    
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -125,5 +126,6 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
     override fun setRefresherState(refresherState: Boolean) {
         refresh.post { refresh.isRefreshing = refresherState}
     }
+
 
 }

@@ -10,17 +10,15 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.navigation.StartAppNav
+import com.lumi.surfeducationproject.navigation.NavigationStartApp
 import com.lumi.surfeducationproject.presenters.SplashPresenter
 import com.lumi.surfeducationproject.views.SplashView
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
-import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
 
 class SplashFragment : MvpAppCompatFragment(), SplashView {
 
-    private lateinit var startApp: StartAppNav
+    private lateinit var navigationStartApp: NavigationStartApp
     private lateinit var logoImgView: ImageView
 
     private val presenter by moxyPresenter { SplashPresenter() }
@@ -29,7 +27,7 @@ class SplashFragment : MvpAppCompatFragment(), SplashView {
     @SuppressLint("ResourceType")
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        startApp = context as StartAppNav
+        navigationStartApp = context as NavigationStartApp
     }
 
     override fun onCreateView(
@@ -57,7 +55,7 @@ class SplashFragment : MvpAppCompatFragment(), SplashView {
 
     override fun startApp() {
         Handler().postDelayed({
-            startApp.startApp()
+            navigationStartApp.startApp()
         }, 700)
     }
 }

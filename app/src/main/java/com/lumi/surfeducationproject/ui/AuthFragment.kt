@@ -13,7 +13,7 @@ import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.EmptyFields
-import com.lumi.surfeducationproject.navigation.StartContentScreenNav
+import com.lumi.surfeducationproject.navigation.NavigationContent
 import com.lumi.surfeducationproject.presenters.AuthPresenter
 import com.lumi.surfeducationproject.views.AuthView
 import kotlinx.android.synthetic.main.fragment_auth.*
@@ -42,11 +42,11 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
     private var isPasswordVisible: Boolean = false
     private var isEnablePasswordBtnVisible: Boolean = false
 
-    private lateinit var startScreen: StartContentScreenNav
+    private lateinit var navigation: NavigationContent
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        startScreen = context as StartContentScreenNav
+        navigation = context as NavigationContent
     }
 
     override fun onCreateView(
@@ -101,7 +101,7 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
     }
 
     override fun openContentFragment() {
-        startScreen.startContentScreen();
+        navigation.startContentScreen();
     }
 
     override fun showPassword() {

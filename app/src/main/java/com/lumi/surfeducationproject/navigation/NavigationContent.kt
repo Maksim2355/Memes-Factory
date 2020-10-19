@@ -1,6 +1,6 @@
 package com.lumi.surfeducationproject.navigation
 
-interface StartContentScreenNav {
+interface NavigationContent {
 
     fun startContentScreen()
 
