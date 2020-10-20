@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_clear"
-        android:icon="@drawable/ic_clear"
-        android:title=""
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_back"
-        android:icon="@drawable/ic_back"
-        android:title=""
-        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_search"
+        android:title="@string/hint_searchView_memeFeedFr"
         android:icon="@drawable/ic_search"
-        android:title="@android:string/search_go"
-        app:showAsAction="ifRoom"
-        />
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="always" />
 
 </menu>

@@ -1,4 +1,4 @@
-package com.lumi.surfeducationproject.list_controllers
+package com.lumi.surfeducationproject.controllers
 
 import android.view.ViewGroup
 import android.widget.CheckBox
@@ -11,7 +11,9 @@ import ru.surfstudio.android.easyadapter.controller.BindableItemController
 import ru.surfstudio.android.easyadapter.holder.BindableViewHolder
 
 class MemeController: BindableItemController<Meme, MemeController.Holder>() {
-    
+
+    var memeDetailsClickListener: ((Meme) -> Unit) = {}
+    var shareClickListener: ((Meme) -> Unit) = {}
 
     override fun createViewHolder(parent: ViewGroup?) = Holder(parent)
 
@@ -21,18 +23,20 @@ class MemeController: BindableItemController<Meme, MemeController.Holder>() {
         parent,
         R.layout.item_mem
     ) {
-        val photoMeme: ImageView = itemView.findViewById(R.id.photoMeme_iv)
-        val descriptionMeme: TextView = itemView.findViewById(R.id.descriptionMeme_tv)
-        val favoriteBtn: CheckBox = itemView.findViewById(R.id.favorite_btn)
-        val shareBtn: CheckBox = itemView.findViewById(R.id.share_btn)
 
+        private val photoMeme: ImageView = itemView.findViewById(R.id.photoMeme_iv)
+        private val nameMeme: TextView = itemView.findViewById(R.id.memeName_tv)
+        private val favoriteBtn: CheckBox = itemView.findViewById(R.id.favorite_btn)
+        private val shareBtn: CheckBox = itemView.findViewById(R.id.share_btn)
 
         override fun bind(data: Meme) {
             Glide.with(itemView).load(data.photoUrl).into(photoMeme)
-            descriptionMeme.text = data.description
+            nameMeme.text = data.description
             if (data.isFavorite){
                 favoriteBtn.isChecked = true
             }
+            shareBtn.setOnClickListener { shareClickListener(data) }
+            itemView.setOnClickListener { memeDetailsClickListener(data) }
         }
     }
 }

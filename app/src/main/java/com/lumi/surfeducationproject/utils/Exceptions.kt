@@ -1,9 +1,8 @@
-package com.lumi.surfeducationproject.Utils
+package com.lumi.surfeducationproject.utils
 
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
-import java.util.*
 
 object Exceptions {
     val NETWORK_EXCEPTIONS: List<Class<*>> = listOf(

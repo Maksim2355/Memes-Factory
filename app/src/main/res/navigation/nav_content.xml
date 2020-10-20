@@ -15,4 +15,9 @@
         android:name="com.lumi.surfeducationproject.ui.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/addMemeFragment"
+        android:name="com.lumi.surfeducationproject.ui.AddMemeFragment"
+        android:label="fragment_add_meme"
+        tools:layout="@layout/fragment_add_meme" />
 </navigation>

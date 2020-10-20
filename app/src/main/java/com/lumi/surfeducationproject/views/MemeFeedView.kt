@@ -4,6 +4,7 @@ import com.lumi.surfeducationproject.data.model.Meme
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
+import moxy.viewstate.strategy.alias.Skip
 
 @StateStrategyType(value = AddToEndSingleStrategy::class)
 interface MemeFeedView: MvpView {
@@ -22,5 +23,7 @@ interface MemeFeedView: MvpView {
 
     fun showErrorSnackbar(message: String)
 
+    @Skip
+    fun openMemeDetails(data: Meme)
 
 }

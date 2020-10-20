@@ -1,23 +1,21 @@
 package com.lumi.surfeducationproject
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.lumi.surfeducationproject.common.Key_Details_Meme
 import com.lumi.surfeducationproject.common.StyleManager
 import com.lumi.surfeducationproject.data.model.Meme
-import com.lumi.surfeducationproject.navigation.NavigationAddMeme
 import com.lumi.surfeducationproject.navigation.NavigationStartApp
 import com.lumi.surfeducationproject.navigation.NavigationContent
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
 import com.lumi.surfeducationproject.services.local.SharedPrefServiceImpl
 
 
-class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent,
-                    NavigationAddMeme, NavigationMemeDetails , StyleManager {
+class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, NavigationMemeDetails , StyleManager {
 
     private lateinit var navController: NavController
 
@@ -42,15 +40,13 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent,
     override fun setColorStatusBar(color: Int) {
         val window: Window = window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.setStatusBarColor(resources.getColor(R.color.colorPrimaryContent))
-        window.setNavigationBarColor(Color.BLUE)
+        window.statusBarColor = resources.getColor(color)
     }
 
     override fun startMemeDetailsScreen(meme: Meme) {
-
+        val bundle = Bundle()
+        bundle.putSerializable(Key_Details_Meme, meme)
+        navController.navigate(R.id.action_tabFragment_to_memeDetailsFragment, bundle)
     }
 
-    override fun startAddMemeScreen() {
-        navController.navigate(R.id.action_tabFragment_to_addMemeFragment)
-    }
 }

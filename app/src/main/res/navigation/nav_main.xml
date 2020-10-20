@@ -30,11 +30,6 @@
             app:destination="@id/tabFragment" />
     </fragment>
     <fragment
-        android:id="@+id/addMemeFragment"
-        android:name="com.lumi.surfeducationproject.ui.AddMemeFragment"
-        android:label="fragment_add_meme"
-        tools:layout="@layout/fragment_add_meme" />
-    <fragment
         android:id="@+id/memeDetailsFragment"
         android:name="com.lumi.surfeducationproject.ui.MemeDetailsFragment"
         android:label="fragment_meme_details"
@@ -44,9 +39,6 @@
         android:name="com.lumi.surfeducationproject.ui.TabFragment"
         android:label="fragment_tab"
         tools:layout="@layout/fragment_tab" >
-        <action
-            android:id="@+id/action_tabFragment_to_addMemeFragment"
-            app:destination="@id/addMemeFragment" />
         <action
             android:id="@+id/action_tabFragment_to_memeDetailsFragment"
             app:destination="@id/memeDetailsFragment" />

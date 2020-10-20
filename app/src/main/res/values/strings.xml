@@ -9,4 +9,6 @@
     <string name="message_error_state">Не удалось загрузить ленту \nОбновите экран или попробуйте позже</string>
     <string name="hint_searchView_memeFeedFr">Поиск</string>
     <string name="create_mem_title">Создать</string>
+    <string name="logout">Выйти</string>
+    <string name="about_app">О приложении</string>
 </resources>

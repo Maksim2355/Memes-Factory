@@ -1,6 +1,6 @@
 package com.lumi.surfeducationproject.presenters
 
-import com.lumi.surfeducationproject.Utils.Exceptions
+import com.lumi.surfeducationproject.utils.Exceptions
 import com.lumi.surfeducationproject.data.model.Meme
 import com.lumi.surfeducationproject.services.network.NetworkServiceImpl
 import com.lumi.surfeducationproject.views.MemeFeedView
@@ -46,6 +46,18 @@ class MemesFeedPresenter: MvpPresenter<MemeFeedView>() {
         }else {
             viewState.showErrorState()
         }
+    }
+
+    fun shareMeme(it: Meme) {
+
+    }
+
+    fun openDetails(it: Meme) {
+        viewState.openMemeDetails(it)
+    }
+
+    fun filterMemeList(searchText: String) {
+        viewState.showErrorSnackbar(searchText)
     }
 
 

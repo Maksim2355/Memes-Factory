@@ -1,9 +1,7 @@
 package com.lumi.surfeducationproject.presenters
 
-import android.content.SharedPreferences
-import com.lumi.surfeducationproject.Utils.Exceptions
+import com.lumi.surfeducationproject.utils.Exceptions
 import com.lumi.surfeducationproject.common.EmptyFields
-import com.lumi.surfeducationproject.data.model.User
 import com.lumi.surfeducationproject.data.request_body.ReqBodyUser
 import com.lumi.surfeducationproject.services.local.SharedPrefServiceImpl
 import com.lumi.surfeducationproject.services.network.NetworkServiceImpl

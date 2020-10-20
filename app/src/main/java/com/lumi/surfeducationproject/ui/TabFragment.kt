@@ -8,7 +8,6 @@ import androidx.navigation.Navigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.StyleManager
-import com.lumi.surfeducationproject.navigation.NavigationAddMeme
 import moxy.MvpAppCompatFragment
 
 class TabFragment : MvpAppCompatFragment(), BottomNavigationView.OnNavigationItemSelectedListener {
@@ -17,14 +16,11 @@ class TabFragment : MvpAppCompatFragment(), BottomNavigationView.OnNavigationIte
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var navControllerTab: NavController
 
-    private lateinit var navAddMeme: NavigationAddMeme
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         styleManager = context as StyleManager
         styleManager.setColorStatusBar(R.color.colorPrimaryContent)
-        navAddMeme = context as NavigationAddMeme
     }
 
     override fun onCreateView(
@@ -44,13 +40,17 @@ class TabFragment : MvpAppCompatFragment(), BottomNavigationView.OnNavigationIte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
-            R.id.memes_add_nav_mi -> {
-                navigateAddMeme()
-                true
-            }R.id.memes_feed_nav_mi -> {
+            R.id.memes_feed_nav_mi -> {
+                styleManager.setColorStatusBar(R.color.colorPrimaryContent)
                 navigateMemesFeed()
                 true
+
+            }R.id.memes_add_nav_mi -> {
+                styleManager.setColorStatusBar(R.color.colorPrimaryContent)
+                navigateAddMeme()
+                true
             }R.id.profile_nav_mi -> {
+                styleManager.setColorStatusBar(R.color.colorPrimary)
                 navigateProfile()
                 true
             }
@@ -59,7 +59,7 @@ class TabFragment : MvpAppCompatFragment(), BottomNavigationView.OnNavigationIte
     }
 
     private fun navigateAddMeme() {
-        navAddMeme.startAddMemeScreen()
+        navControllerTab.navigate(R.id.addMemeFragment)
     }
 
     private fun navigateMemesFeed() {

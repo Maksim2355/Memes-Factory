@@ -30,10 +30,10 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/descriptionMeme_tv"
+                android:id="@+id/memeName_tv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Name memes" />
+                android:layout_height="match_parent"
+                tools:text="Названия мема" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,13 +44,15 @@
                     android:id="@+id/favorite_btn"
                     style="@style/FavoriteCheckBox"
                     android:layout_width="24dp"
-                    android:layout_height="24dp" />
+                    android:layout_height="24dp"
+                    />
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/share_btn"
                     style="@style/ShareCheckBox"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp" />
 
             </LinearLayout>
         </LinearLayout>

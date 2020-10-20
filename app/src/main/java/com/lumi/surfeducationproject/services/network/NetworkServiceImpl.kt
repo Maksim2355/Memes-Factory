@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object NetworkServiceImpl: NetworkService {
 
-    private const val BASE_URL = "https://virtserver.swaggerhub.com/AndroidSchool/SurfAndroidSchool/1.0.0/"
+    private const val BASE_URL = "https://r2.mocker.surfstudio.ru/android_vsu/"
 
     private var client: OkHttpClient? = null
     private var retrofit: Retrofit? = null

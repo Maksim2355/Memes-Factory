@@ -7,7 +7,7 @@
     tools:context=".ui.MemeDetailsFragment">
 
     <include
-        android:id="@+id/include"
+        android:id="@+id/toolbar_meme_details"
         layout="@layout/toolbar" />
 
     <ScrollView
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_meme_details">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 style="@style/MemeNameTv"
-                android:text="Работай дизайнер! Солнце еще высоко..." />
+                tools:text="Работай дизайнер! Солнце еще высоко..." />
 
             <ImageView
                 android:id="@+id/img_meme_iv"
@@ -48,11 +48,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     style="@style/MemeDateCreatedTv"
-                    android:text="29.06.2020" />
+                    tools:text="29.06.2020" />
 
 
                 <androidx.appcompat.widget.AppCompatCheckBox
-                    android:id="@+id/favorite_detatils_btn"
+                    android:id="@+id/favorite_detatils_checkBox"
                     style="@style/FavoriteCheckBox"
                     android:layout_width="24dp"
                     android:layout_height="24dp" />
@@ -67,7 +67,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_weight="1"
                 style="@style/MemeDateDescriptionTv"
-                android:text="Описание тестового мема и прочее"/>
+                tools:text="Описание тестового мема и прочее"/>
 
 
         </LinearLayout>

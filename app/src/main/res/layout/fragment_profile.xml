@@ -6,44 +6,56 @@
     android:orientation="vertical"
     tools:context=".ui.ProfileFragment">
 
-    <Toolbar
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/example"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="18dp"
-            tools:srcCompat="@tools:sample/avatars" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_profile"
+            style="@style/ToolbarDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/ProfileName"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="16dp"
-            android:text="Имя его"/>
+    <ImageView
+        android:id="@+id/avatars_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="18dp"
+        tools:srcCompat="@tools:sample/avatars" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp"
-            android:text="A pessimist is a man who thinks everybody is as nasty as himself, and hates them for it."/>
-    
-    <view
+    <TextView
+        android:id="@+id/nickname_tv"
+        style="@style/ProfileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp"
+        tools:text="Никнейм" />
+
+    <TextView
+        android:id="@+id/descriptionProfile_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        tools:text="A pessimist is a man who thinks everybody is as nasty as himself, and hates them for it." />
+
+    <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#312F51"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="24dp"
+        android:background="#312F51" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/memeList_profile_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

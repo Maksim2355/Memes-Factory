@@ -54,6 +54,7 @@
                     android:text="@string/message_error_state"
                     android:visibility="gone" />
             </LinearLayout>
+
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </FrameLayout>
