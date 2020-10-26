@@ -72,14 +72,17 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
         getActionBar()?.title = TITLE_ACTION_BAR
 
         refresh = view.findViewById(R.id.refresh_srl)
-        refresh.setColorSchemeColors(Color.BLACK)
-        refresh.setProgressBackgroundColorSchemeColor(resources.getColor(R.color.colorAccent))
+        with(refresh) {
+            setColorSchemeColors(Color.BLACK)
+            setProgressBackgroundColorSchemeColor(resources.getColor(R.color.colorAccent))
+        }
         refresh.setOnRefreshListener(this)
+
 
         memeController.memeDetailsClickListener = {
             presenter.openDetails(it)
         }
-        memeController.shareClickListener = {presenter.shareMeme(it)}
+        memeController.shareClickListener = { presenter.shareMeme(it) }
 
         memesRecyclerView = view.findViewById(R.id.state_meme_list_rv)
         initRecyclerView()
@@ -94,7 +97,7 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
     }
 
     private fun initRecyclerView() {
-        with(memesRecyclerView){
+        with(memesRecyclerView) {
             adapter = easyAdapter
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
@@ -156,7 +159,7 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
     }
 
     override fun setRefresherState(refresherState: Boolean) {
-        refresh.post { refresh.isRefreshing = refresherState}
+        refresh.post { refresh.isRefreshing = refresherState }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -164,25 +167,32 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
         super.onCreateOptionsMenu(menu, inflater)
 
         val searchView: SearchView = menu.findItem(R.id.action_search).actionView as SearchView
-//        searchView.setOnQueryTextFocusChangeListener { view: View, b: Boolean -> getActionBar()?.title = ""  }
-
-        Observable.create(ObservableOnSubscribe<String> {subscriber ->
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    subscriber.onNext(query!!)
-                    return false
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    subscriber.onNext(newText!!)
-                    return false
-                }
-
-            })
-        }).subscribe {
-            presenter.filterMemeList(it)
+        searchView.setOnQueryTextFocusChangeListener { view: View, b: Boolean ->
+            getActionBar()?.title = ""
+            toolbar.setNavigationIcon(R.drawable.ic_back)
+        }
+        searchView.setOnCloseListener {
+            getActionBar()?.title = TITLE_ACTION_BAR
+            toolbar.navigationIcon = null
+            false
         }
 
+//        Observable.create(ObservableOnSubscribe<String> { subscriber ->
+//            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//                override fun onQueryTextSubmit(query: String?): Boolean {
+//                    subscriber.onNext(query!!)
+//                    return false
+//                }
+//
+//                override fun onQueryTextChange(newText: String?): Boolean {
+//                    subscriber.onNext(newText!!)
+//                    return false
+//                }
+//
+//            })
+//        }).subscribe {
+//            presenter.filterMemeList(it)
+//        }
 
     }
 

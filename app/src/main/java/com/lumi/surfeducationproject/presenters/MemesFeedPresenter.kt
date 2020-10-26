@@ -1,6 +1,6 @@
 package com.lumi.surfeducationproject.presenters
 
-import com.lumi.surfeducationproject.utils.Exceptions
+import com.lumi.surfeducationproject.exceptions.NetworkExceptions
 import com.lumi.surfeducationproject.data.model.Meme
 import com.lumi.surfeducationproject.services.network.NetworkServiceImpl
 import com.lumi.surfeducationproject.views.MemeFeedView
@@ -41,7 +41,7 @@ class MemesFeedPresenter: MvpPresenter<MemeFeedView>() {
     }
 
     private fun errorProcessing(throwable: Throwable){
-        if (Exceptions.NETWORK_EXCEPTIONS.contains(throwable.javaClass)) {
+        if (NetworkExceptions.NETWORK_EXCEPTIONS.contains(throwable.javaClass)) {
             viewState.showErrorSnackbar("Отсутствует подключение к интернету \nПодключитесь к сети и попробуйте снова")
         }else {
             viewState.showErrorState()

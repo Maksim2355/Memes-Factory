@@ -7,8 +7,9 @@ import io.reactivex.rxjava3.core.Single
 
 interface UserRepository {
 
-    fun getUser(): Single<User?>
 
+
+    fun getUser(): Single<User?>
 
     fun addUser(user: User): Completable
 

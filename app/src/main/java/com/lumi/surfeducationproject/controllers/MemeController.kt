@@ -31,7 +31,7 @@ class MemeController: BindableItemController<Meme, MemeController.Holder>() {
 
         override fun bind(data: Meme) {
             Glide.with(itemView).load(data.photoUrl).into(photoMeme)
-            nameMeme.text = data.description
+            nameMeme.text = data.title
             if (data.isFavorite){
                 favoriteBtn.isChecked = true
             }

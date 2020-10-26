@@ -1,6 +1,6 @@
 package com.lumi.surfeducationproject.presenters
 
-import com.lumi.surfeducationproject.utils.Exceptions
+import com.lumi.surfeducationproject.exceptions.NetworkExceptions
 import com.lumi.surfeducationproject.common.EmptyFields
 import com.lumi.surfeducationproject.data.request_body.ReqBodyUser
 import com.lumi.surfeducationproject.services.local.SharedPrefServiceImpl
@@ -36,7 +36,7 @@ class AuthPresenter(): MvpPresenter<AuthView>() {
                     viewState.openContentFragment()
                     SharedPrefServiceImpl.saveUser(it.userInfo)
                 },{
-                    if (Exceptions.NETWORK_EXCEPTIONS.contains(it.javaClass)) {
+                    if (NetworkExceptions.NETWORK_EXCEPTIONS.contains(it.javaClass)) {
                         viewState.showErrorSnackbar("Отсутствует подключение к интернету \nПодключитесь к сети и попробуйте снова")
                     }else {
                         viewState.showErrorSnackbar("Вы ввели неверные данные.\nПопробуйте еще раз")

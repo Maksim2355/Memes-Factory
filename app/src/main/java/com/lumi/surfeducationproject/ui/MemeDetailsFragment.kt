@@ -1,5 +1,6 @@
 package com.lumi.surfeducationproject.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -12,10 +13,13 @@ import com.bumptech.glide.Glide
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.Key_Details_Meme
 import com.lumi.surfeducationproject.data.model.Meme
+import com.lumi.surfeducationproject.navigation.NavigationBackPressed
+import com.lumi.surfeducationproject.utils.getPostCreateDate
 import kotlinx.android.synthetic.main.fragment_meme_details.view.*
+import moxy.MvpAppCompatFragment
 
 
-class MemeDetailsFragment : Fragment() {
+class MemeDetailsFragment : MvpAppCompatFragment() {
 
     private lateinit var toolbar: Toolbar
 
@@ -24,7 +28,12 @@ class MemeDetailsFragment : Fragment() {
     private lateinit var dateCreateTv: TextView
     private lateinit var favoriteCheckBox: CheckBox
     private lateinit var descriptionTv: TextView
+    private lateinit var navBack: NavigationBackPressed
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        navBack = context as NavigationBackPressed
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +46,8 @@ class MemeDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         toolbar = view.findViewById(R.id.toolbar_meme_details)
+        toolbar.setNavigationIcon(R.drawable.ic_close)
+        toolbar.setNavigationOnClickListener { navBack.back() }
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
 
@@ -45,17 +56,18 @@ class MemeDetailsFragment : Fragment() {
         dateCreateTv = view.findViewById(R.id.created_date_tv)
         favoriteCheckBox = view.findViewById(R.id.favorite_detatils_checkBox)
         descriptionTv = view.findViewById(R.id.text_meme_tv)
+
         val meme = arguments?.getSerializable(Key_Details_Meme) as Meme
         meme.let {
             getActionBar()?.title = meme.title
             memeTitleTv.text = meme.title
             Glide.with(this).load(meme.photoUrl).into(memeImgIv)
             //Todo сделать преобразования даты
-            dateCreateTv.text = meme.createdDate.toString()
+            dateCreateTv.text = getPostCreateDate(meme.createdDate)
             if (meme.isFavorite){
                 favoriteCheckBox.isChecked = true
             }
-            descriptionTv.text =meme.description
+            descriptionTv.text = meme.description
         }
 
     }
