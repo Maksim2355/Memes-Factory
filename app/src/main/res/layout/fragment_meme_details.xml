@@ -6,9 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".ui.MemeDetailsFragment">
 
-    <include
+
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_meme_details"
-        layout="@layout/toolbar" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/avatars_mini_iv"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/nickname_mini_tv"
+                style="@style/ProfileName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                tools:text="nickanmeDebila" />
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+
 
     <ScrollView
         android:layout_width="0dp"
@@ -39,7 +70,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="12dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -63,8 +96,7 @@
                 android:id="@+id/text_meme_tv"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_margin="16dp"
                 android:layout_weight="1"
                 style="@style/MemeDateDescriptionTv"
                 tools:text="Описание тестового мема и прочее"/>

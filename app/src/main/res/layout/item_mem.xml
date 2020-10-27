@@ -43,16 +43,16 @@
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/favorite_btn"
                     style="@style/FavoriteCheckBox"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    />
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp" />
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/share_btn"
                     style="@style/ShareCheckBox"
+                    android:src="@drawable/ic_share"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp" />
+                    android:layout_height="24dp" />
 
             </LinearLayout>
         </LinearLayout>

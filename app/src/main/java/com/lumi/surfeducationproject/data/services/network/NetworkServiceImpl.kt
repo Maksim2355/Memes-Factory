@@ -1,5 +1,7 @@
-package com.lumi.surfeducationproject.services.network
+package com.lumi.surfeducationproject.data.services.network
 
+import com.lumi.surfeducationproject.data.api.MemesApi
+import com.lumi.surfeducationproject.domain.services.NetworkService
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

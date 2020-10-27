@@ -1,8 +1,8 @@
 package com.lumi.surfeducationproject.presenters
 
 import com.lumi.surfeducationproject.exceptions.NetworkExceptions
-import com.lumi.surfeducationproject.data.model.Meme
-import com.lumi.surfeducationproject.services.network.NetworkServiceImpl
+import com.lumi.surfeducationproject.data.dto.MemDto
+import com.lumi.surfeducationproject.data.services.network.NetworkServiceImpl
 import com.lumi.surfeducationproject.views.MemeFeedView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -36,8 +36,8 @@ class MemesFeedPresenter: MvpPresenter<MemeFeedView>() {
             })
     }
 
-    private fun showMemes(memes: List<Meme>){
-        viewState.showMemes(memes)
+    private fun showMemes(memDtos: List<MemDto>){
+        viewState.showMemes(memDtos)
     }
 
     private fun errorProcessing(throwable: Throwable){
@@ -48,11 +48,11 @@ class MemesFeedPresenter: MvpPresenter<MemeFeedView>() {
         }
     }
 
-    fun shareMeme(it: Meme) {
+    fun shareMeme(it: MemDto) {
 
     }
 
-    fun openDetails(it: Meme) {
+    fun openDetails(it: MemDto) {
         viewState.openMemeDetails(it)
     }
 

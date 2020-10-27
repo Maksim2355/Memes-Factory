@@ -1,10 +1,11 @@
-package com.lumi.surfeducationproject.services.local
+package com.lumi.surfeducationproject.data.services.local
 
 import android.content.SharedPreferences
 import com.lumi.surfeducationproject.App
-import com.lumi.surfeducationproject.data.model.User
+import com.lumi.surfeducationproject.data.dto.UserInfo
+import com.lumi.surfeducationproject.domain.services.SharedPreferenceService
 
-object SharedPrefServiceImpl : SharedPrefService {
+class SharedPreferenceServiceImpl : SharedPreferenceService {
 
     private val ID = "ID"
     private val USERNAME = "USERNAME"
@@ -14,24 +15,24 @@ object SharedPrefServiceImpl : SharedPrefService {
 
     private val sharedPref: SharedPreferences = App.instance.sharedPref
 
-    override fun saveUser(user: User) {
+    override fun saveUser(authInfoDto: UserInfo) {
         sharedPref.edit().apply() {
-            this.putInt(ID, user.id)
-            this.putString(USERNAME, user.username)
-            this.putString(FIRST_NAME, user.firstName)
-            this.putString(LAST_NAME, user.lastName)
-            this.putString(USER_DESCRIPTION, user.userDescription)
+            this.putInt(ID, authInfoDto.id)
+            this.putString(USERNAME, authInfoDto.username)
+            this.putString(FIRST_NAME, authInfoDto.firstName)
+            this.putString(LAST_NAME, authInfoDto.lastName)
+            this.putString(USER_DESCRIPTION, authInfoDto.description)
         }.apply()
     }
 
-    override fun readUser(): User? {
+    override fun readUser(): UserInfo? {
         if (sharedPref.contains(ID)){
             val id = sharedPref.getInt(ID, 0)
             val username = sharedPref.getString(USERNAME, "")
             val firstName = sharedPref.getString(FIRST_NAME, "")
             val lastName = sharedPref.getString(LAST_NAME, "")
             val userDescription = sharedPref.getString(USER_DESCRIPTION, "")
-            return User(id, username!!, firstName!!, lastName!!, userDescription!!)
+            return UserInfo(id, username!!, firstName!!, lastName!!, userDescription!!)
         }else return null
 
 

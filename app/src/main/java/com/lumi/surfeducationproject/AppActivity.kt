@@ -8,16 +8,13 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.lumi.surfeducationproject.common.Key_Details_Meme
 import com.lumi.surfeducationproject.common.StyleManager
-import com.lumi.surfeducationproject.data.model.Meme
-import com.lumi.surfeducationproject.navigation.NavigationBackPressed
-import com.lumi.surfeducationproject.navigation.NavigationStartApp
-import com.lumi.surfeducationproject.navigation.NavigationContent
-import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
-import com.lumi.surfeducationproject.services.local.SharedPrefServiceImpl
+import com.lumi.surfeducationproject.data.dto.MemDto
+import com.lumi.surfeducationproject.navigation.*
+import com.lumi.surfeducationproject.data.services.local.SharedPreferenceServiceImpl
 
 
 class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, NavigationMemeDetails , StyleManager,
-    NavigationBackPressed {
+    NavigationBackPressed, NavigationAuth {
 
     private lateinit var navController: NavController
 
@@ -28,7 +25,7 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
     }
 
     override fun startApp() {
-        if (SharedPrefServiceImpl.readUser() != null){
+        if (SharedPreferenceServiceImpl.readUser() != null){
             navController.navigate(R.id.action_splashFragment_to_tabFragment)
         }else{
             navController.navigate(R.id.action_splashFragment_to_authFragment)
@@ -45,14 +42,18 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
         window.statusBarColor = resources.getColor(color)
     }
 
-    override fun startMemeDetailsScreen(meme: Meme) {
+    override fun startMemeDetailsScreen(memDto: MemDto) {
         val bundle = Bundle()
-        bundle.putSerializable(Key_Details_Meme, meme)
+        bundle.putSerializable(Key_Details_Meme, memDto)
         navController.navigate(R.id.action_tabFragment_to_memeDetailsFragment, bundle)
     }
 
     override fun back() {
         navController.popBackStack()
+    }
+
+    override fun startAuthScreen() {
+        navController.navigate(R.id.action_tabFragment_to_authFragment)
     }
 
 }

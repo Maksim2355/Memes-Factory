@@ -8,20 +8,36 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.lumi.surfeducationproject.R
+import com.lumi.surfeducationproject.data.dto.MemDto
+import com.lumi.surfeducationproject.data.dto.AuthInfoDto
+import com.lumi.surfeducationproject.navigation.NavigationAuth
+import com.lumi.surfeducationproject.presenters.ProfilePresenter
+import com.lumi.surfeducationproject.views.ProfileView
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import moxy.MvpAppCompatFragment
+import moxy.ktx.moxyPresenter
 
 
-class ProfileFragment : MvpAppCompatFragment() {
+class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
     private lateinit var toolbar: Toolbar
+
+    private val presenter by moxyPresenter { ProfilePresenter() }
 
     private lateinit var avatarIv: ImageView
     private lateinit var nicknameTv: TextView
     private lateinit var descriptionTv: TextView
 
     private lateinit var recycler: RecyclerView
+
+    private lateinit var navLogout: NavigationAuth
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        navLogout = context as NavigationAuth
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,12 +58,46 @@ class ProfileFragment : MvpAppCompatFragment() {
         descriptionTv = view.descriptionProfile_tv
 
         recycler = view.memeList_profile_rv
+
+        presenter.initProfile()
     }
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_toolbar_profile, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        presenter.loadMemes()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_logout -> {
+                presenter.logout()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun showMemes(memDtos: List<MemDto>) {
+        //Todo Создается при создании БД
+    }
+
+    override fun exitAccount() {
+        navLogout.startAuthScreen()
+    }
+
+    override fun showProfile(authInfoDto: AuthInfoDto) {
+        Glide.with(this)
+            .load("https://img.pngio.com/avatar-1-length-of-human-face-hd-png-download-6648260-free-human-face-png-840_640.png")
+            .circleCrop()
+            .into(avatarIv)
+        nicknameTv.text = authInfoDto.firstName
+        descriptionTv.text = authInfoDto.userDescription
     }
 
 }

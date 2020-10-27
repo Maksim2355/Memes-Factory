@@ -48,7 +48,3 @@ fun getPostCreateDate(differenceDateMs: Int): String {
         }
     }
 }
-
-fun main(){
-    println(getPostCreateDate(1566038241))
-}

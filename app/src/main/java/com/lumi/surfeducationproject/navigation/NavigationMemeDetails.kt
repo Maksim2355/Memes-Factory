@@ -1,9 +1,9 @@
 package com.lumi.surfeducationproject.navigation
 
-import com.lumi.surfeducationproject.data.model.Meme
+import com.lumi.surfeducationproject.data.dto.MemDto
 
 interface NavigationMemeDetails {
 
-    fun startMemeDetailsScreen(meme: Meme)
+    fun startMemeDetailsScreen(memDto: MemDto)
 
 }

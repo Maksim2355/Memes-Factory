@@ -5,12 +5,14 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:itemBackground">@color/colorPrimaryContent</item>
+        <item name="android:actionMenuTextColor">@color/colorAccent</item>
     </style>
+
 
     <style name="CustomAuthBtn" parent="Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/colorAccent</item>
     </style>
-
 
     <style name="CustomBtn" parent="TextAppearance.AppCompat.Widget.Button">
         <item name="android:background">@drawable/ripple</item>
@@ -50,7 +52,7 @@
     
     <style name="MemeNameTv" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">26sp</item>
     </style>
 
     <style name="MemeDateCreatedTv" parent="Widget.AppCompat.TextView">
@@ -60,7 +62,7 @@
 
     <style name="MemeDateDescriptionTv" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="ProfileName" parent="Widget.AppCompat.TextView">

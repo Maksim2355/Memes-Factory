@@ -2,9 +2,9 @@ package com.lumi.surfeducationproject.presenters
 
 import com.lumi.surfeducationproject.exceptions.NetworkExceptions
 import com.lumi.surfeducationproject.common.EmptyFields
-import com.lumi.surfeducationproject.data.request_body.ReqBodyUser
-import com.lumi.surfeducationproject.services.local.SharedPrefServiceImpl
-import com.lumi.surfeducationproject.services.network.NetworkServiceImpl
+import com.lumi.surfeducationproject.data.dto.LoginUserRequestDto
+import com.lumi.surfeducationproject.data.services.local.SharedPreferenceServiceImpl
+import com.lumi.surfeducationproject.data.services.network.NetworkServiceImpl
 import com.lumi.surfeducationproject.views.AuthView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -26,7 +26,7 @@ class AuthPresenter(): MvpPresenter<AuthView>() {
 
     fun authUser(login: String, password: String) {
         if (checkFields(login, password)) {
-            val userAuth = ReqBodyUser(login, password)
+            val userAuth = LoginUserRequestDto(login, password)
             NetworkServiceImpl.getApi().authorizationUser(userAuth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -34,7 +34,7 @@ class AuthPresenter(): MvpPresenter<AuthView>() {
                 .doFinally { viewState.hideProgressBar() }
                 .subscribe({
                     viewState.openContentFragment()
-                    SharedPrefServiceImpl.saveUser(it.userInfo)
+                    SharedPreferenceServiceImpl.saveUser(it.authInfoInfoDto)
                 },{
                     if (NetworkExceptions.NETWORK_EXCEPTIONS.contains(it.javaClass)) {
                         viewState.showErrorSnackbar("Отсутствует подключение к интернету \nПодключитесь к сети и попробуйте снова")

@@ -42,8 +42,8 @@ class SplashFragment : MvpAppCompatFragment(), SplashView {
         logoImgView = view.findViewById(R.id.logo)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         presenter.startApp()
     }
 
@@ -56,6 +56,6 @@ class SplashFragment : MvpAppCompatFragment(), SplashView {
     override fun startApp() {
         Handler().postDelayed({
             navigationStartApp.startApp()
-        }, 700)
+        }, 500)
     }
 }

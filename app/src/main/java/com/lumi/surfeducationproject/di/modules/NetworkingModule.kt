@@ -1,6 +1,6 @@
 package com.lumi.surfeducationproject.di.modules
 
-import com.lumi.surfeducationproject.services.network.NetworkServiceImpl
+import com.lumi.surfeducationproject.data.services.network.NetworkServiceImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

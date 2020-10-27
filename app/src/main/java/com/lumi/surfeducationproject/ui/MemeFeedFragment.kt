@@ -1,6 +1,5 @@
 package com.lumi.surfeducationproject.ui
 
-import android.app.SearchManager
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -17,18 +16,15 @@ import com.google.android.material.snackbar.Snackbar
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.RefresherOwner
 import com.lumi.surfeducationproject.controllers.MemeController
-import com.lumi.surfeducationproject.data.model.Meme
+import com.lumi.surfeducationproject.data.dto.MemDto
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
 import com.lumi.surfeducationproject.presenters.MemesFeedPresenter
 import com.lumi.surfeducationproject.views.MemeFeedView
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import kotlinx.android.synthetic.main.fragment_meme_feed.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.surfstudio.android.easyadapter.EasyAdapter
 import ru.surfstudio.android.easyadapter.ItemList
-import java.util.*
 
 
 class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshListener, MemeFeedView,
@@ -103,7 +99,7 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
         }
     }
 
-    override fun showMemes(memesList: List<Meme>) {
+    override fun showMemes(memesList: List<MemDto>) {
         val itemList = ItemList.create().apply {
             addAll(memesList, memeController)
         }
@@ -150,7 +146,7 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
 
     }
 
-    override fun openMemeDetails(data: Meme) {
+    override fun openMemeDetails(data: MemDto) {
         navMemeDetailsFragment.startMemeDetailsScreen(data)
     }
 
@@ -167,15 +163,16 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
         super.onCreateOptionsMenu(menu, inflater)
 
         val searchView: SearchView = menu.findItem(R.id.action_search).actionView as SearchView
-        searchView.setOnQueryTextFocusChangeListener { view: View, b: Boolean ->
-            getActionBar()?.title = ""
-            toolbar.setNavigationIcon(R.drawable.ic_back)
-        }
-        searchView.setOnCloseListener {
-            getActionBar()?.title = TITLE_ACTION_BAR
-            toolbar.navigationIcon = null
-            false
-        }
+
+//        searchView.setOnQueryTextFocusChangeListener { view: View, b: Boolean ->
+//            getActionBar()?.title = ""
+//            toolbar.setNavigationIcon(R.drawable.ic_back)
+//        }
+//        searchView.setOnCloseListener {
+//            getActionBar()?.title = TITLE_ACTION_BAR
+//            toolbar.navigationIcon = null
+//            false
+//        }
 
 //        Observable.create(ObservableOnSubscribe<String> { subscriber ->
 //            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
