@@ -16,7 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.RefresherOwner
 import com.lumi.surfeducationproject.controllers.MemeController
-import com.lumi.surfeducationproject.data.dto.MemDto
+import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
 import com.lumi.surfeducationproject.presenters.MemesFeedPresenter
 import com.lumi.surfeducationproject.views.MemeFeedView
@@ -99,7 +99,7 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
         }
     }
 
-    override fun showMemes(memesList: List<MemDto>) {
+    override fun showMemes(memesList: List<NetworkMeme>) {
         val itemList = ItemList.create().apply {
             addAll(memesList, memeController)
         }
@@ -146,7 +146,7 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
 
     }
 
-    override fun openMemeDetails(data: MemDto) {
+    override fun openMemeDetails(data: NetworkMeme) {
         navMemeDetailsFragment.startMemeDetailsScreen(data)
     }
 

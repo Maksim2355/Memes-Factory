@@ -10,8 +10,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.data.dto.MemDto
-import com.lumi.surfeducationproject.data.dto.AuthInfoDto
+import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
+import com.lumi.surfeducationproject.data.dto.network.NetworkUserResponse
 import com.lumi.surfeducationproject.navigation.NavigationAuth
 import com.lumi.surfeducationproject.presenters.ProfilePresenter
 import com.lumi.surfeducationproject.views.ProfileView
@@ -83,7 +83,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         }
     }
 
-    override fun showMemes(memDtos: List<MemDto>) {
+    override fun showMemes(networkMemes: List<NetworkMeme>) {
         //Todo Создается при создании БД
     }
 
@@ -91,13 +91,13 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         navLogout.startAuthScreen()
     }
 
-    override fun showProfile(authInfoDto: AuthInfoDto) {
+    override fun showProfile(networkUserResponse: NetworkUserResponse) {
         Glide.with(this)
             .load("https://img.pngio.com/avatar-1-length-of-human-face-hd-png-download-6648260-free-human-face-png-840_640.png")
             .circleCrop()
             .into(avatarIv)
-        nicknameTv.text = authInfoDto.firstName
-        descriptionTv.text = authInfoDto.userDescription
+        nicknameTv.text = networkUserResponse.firstName
+        descriptionTv.text = networkUserResponse.userDescription
     }
 
 }

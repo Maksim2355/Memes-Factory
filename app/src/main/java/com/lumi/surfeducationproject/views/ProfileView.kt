@@ -1,15 +1,15 @@
 package com.lumi.surfeducationproject.views
 
-import com.lumi.surfeducationproject.data.dto.MemDto
-import com.lumi.surfeducationproject.data.dto.AuthInfoDto
+import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
+import com.lumi.surfeducationproject.data.dto.network.NetworkUserResponse
 import moxy.MvpView
 
 interface ProfileView: MvpView {
 
-    fun showMemes(memDtos: List<MemDto>)
+    fun showMemes(networkMemes: List<NetworkMeme>)
 
     fun exitAccount()
 
-    fun showProfile(authInfoDto: AuthInfoDto)
+    fun showProfile(networkUserResponse: NetworkUserResponse)
 
 }

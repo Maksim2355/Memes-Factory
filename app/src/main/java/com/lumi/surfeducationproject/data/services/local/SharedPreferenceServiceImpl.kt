@@ -2,8 +2,8 @@ package com.lumi.surfeducationproject.data.services.local
 
 import android.content.SharedPreferences
 import com.lumi.surfeducationproject.App
-import com.lumi.surfeducationproject.data.dto.UserInfo
-import com.lumi.surfeducationproject.domain.services.SharedPreferenceService
+import com.lumi.surfeducationproject.data.dto.network.NetworkUser
+import com.lumi.surfeducationproject.domain.model.User
 
 class SharedPreferenceServiceImpl : SharedPreferenceService {
 
@@ -15,27 +15,25 @@ class SharedPreferenceServiceImpl : SharedPreferenceService {
 
     private val sharedPref: SharedPreferences = App.instance.sharedPref
 
-    override fun saveUser(authInfoDto: UserInfo) {
+    override fun saveUser(user: User) {
         sharedPref.edit().apply() {
-            this.putInt(ID, authInfoDto.id)
-            this.putString(USERNAME, authInfoDto.username)
-            this.putString(FIRST_NAME, authInfoDto.firstName)
-            this.putString(LAST_NAME, authInfoDto.lastName)
-            this.putString(USER_DESCRIPTION, authInfoDto.description)
+            this.putInt(ID, user.id)
+            this.putString(USERNAME, user.username)
+            this.putString(FIRST_NAME, user.firstName)
+            this.putString(LAST_NAME, user.lastName)
+            this.putString(USER_DESCRIPTION, user.descriptionProfile)
         }.apply()
     }
 
-    override fun readUser(): UserInfo? {
-        if (sharedPref.contains(ID)){
+    override fun readUser(): User? {
+        return if (sharedPref.contains(ID)){
             val id = sharedPref.getInt(ID, 0)
             val username = sharedPref.getString(USERNAME, "")
             val firstName = sharedPref.getString(FIRST_NAME, "")
             val lastName = sharedPref.getString(LAST_NAME, "")
             val userDescription = sharedPref.getString(USER_DESCRIPTION, "")
-            return UserInfo(id, username!!, firstName!!, lastName!!, userDescription!!)
-        }else return null
-
-
+            User(id, username!!, firstName!!, lastName!!, userDescription!!)
+        } else null
 
     }
 

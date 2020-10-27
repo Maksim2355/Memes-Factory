@@ -1,10 +1,11 @@
-package com.lumi.surfeducationproject.data.dto
+package com.lumi.surfeducationproject.data.dto.network
 
 import com.google.gson.annotations.SerializedName
 
-data class ErrorResponseDto(
+data class NetworkErrorResponse(
     @SerializedName("code")
-    val codeError: String,
+    val code: String,
+
     @SerializedName("errorMessage")
     val errorMessage: String
 )

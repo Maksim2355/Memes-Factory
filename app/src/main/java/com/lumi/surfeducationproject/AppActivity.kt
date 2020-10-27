@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.lumi.surfeducationproject.common.Key_Details_Meme
 import com.lumi.surfeducationproject.common.StyleManager
-import com.lumi.surfeducationproject.data.dto.MemDto
+import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
 import com.lumi.surfeducationproject.navigation.*
 import com.lumi.surfeducationproject.data.services.local.SharedPreferenceServiceImpl
 
@@ -42,9 +42,9 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
         window.statusBarColor = resources.getColor(color)
     }
 
-    override fun startMemeDetailsScreen(memDto: MemDto) {
+    override fun startMemeDetailsScreen(networkMeme: NetworkMeme) {
         val bundle = Bundle()
-        bundle.putSerializable(Key_Details_Meme, memDto)
+        bundle.putSerializable(Key_Details_Meme, networkMeme)
         navController.navigate(R.id.action_tabFragment_to_memeDetailsFragment, bundle)
     }
 

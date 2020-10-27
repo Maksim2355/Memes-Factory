@@ -2,7 +2,7 @@ package com.lumi.surfeducationproject.presenters
 
 import com.lumi.surfeducationproject.exceptions.NetworkExceptions
 import com.lumi.surfeducationproject.common.EmptyFields
-import com.lumi.surfeducationproject.data.dto.LoginUserRequestDto
+import com.lumi.surfeducationproject.data.dto.network.NetworkLoginUserRequest
 import com.lumi.surfeducationproject.data.services.local.SharedPreferenceServiceImpl
 import com.lumi.surfeducationproject.data.services.network.NetworkServiceImpl
 import com.lumi.surfeducationproject.views.AuthView
@@ -26,7 +26,7 @@ class AuthPresenter(): MvpPresenter<AuthView>() {
 
     fun authUser(login: String, password: String) {
         if (checkFields(login, password)) {
-            val userAuth = LoginUserRequestDto(login, password)
+            val userAuth = NetworkLoginUserRequest(login, password)
             NetworkServiceImpl.getApi().authorizationUser(userAuth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

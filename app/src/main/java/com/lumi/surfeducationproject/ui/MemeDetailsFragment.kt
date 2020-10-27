@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.Key_Details_Meme
-import com.lumi.surfeducationproject.data.dto.MemDto
+import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 import com.lumi.surfeducationproject.data.services.local.SharedPreferenceServiceImpl
 import com.lumi.surfeducationproject.utils.getPostCreateDate
@@ -73,7 +73,7 @@ class MemeDetailsFragment : MvpAppCompatFragment() {
             nicknameMiniTv.text = user.firstName
         }
 
-        val meme = arguments?.getSerializable(Key_Details_Meme) as MemDto
+        val meme = arguments?.getSerializable(Key_Details_Meme) as NetworkMeme
         meme.let {
             memeTitleTv.text = meme.title
             Glide.with(this).load(meme.photoUrl).into(memeImgIv)

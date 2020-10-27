@@ -6,20 +6,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.data.dto.MemDto
+import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
 import ru.surfstudio.android.easyadapter.controller.BindableItemController
 import ru.surfstudio.android.easyadapter.holder.BindableViewHolder
 
-class MemeController: BindableItemController<MemDto, MemeController.Holder>() {
+class MemeController: BindableItemController<NetworkMeme, MemeController.Holder>() {
 
-    var memeDetailsClickListener: ((MemDto) -> Unit) = {}
-    var shareClickListener: ((MemDto) -> Unit) = {}
+    var memeDetailsClickListener: ((NetworkMeme) -> Unit) = {}
+    var shareClickListener: ((NetworkMeme) -> Unit) = {}
 
     override fun createViewHolder(parent: ViewGroup?) = Holder(parent)
 
-    override fun getItemId(data: MemDto) = data.id.hashCode().toString()
+    override fun getItemId(data: NetworkMeme) = data.id.hashCode().toString()
 
-    inner class Holder(parent: ViewGroup?): BindableViewHolder<MemDto>(
+    inner class Holder(parent: ViewGroup?): BindableViewHolder<NetworkMeme>(
         parent,
         R.layout.item_mem
     ) {
@@ -29,7 +29,7 @@ class MemeController: BindableItemController<MemDto, MemeController.Holder>() {
         private val favoriteBtn: CheckBox = itemView.findViewById(R.id.favorite_btn)
         private val shareBtn: CheckBox = itemView.findViewById(R.id.share_btn)
 
-        override fun bind(data: MemDto) {
+        override fun bind(data: NetworkMeme) {
             Glide.with(itemView).load(data.photoUrl).into(photoMeme)
             nameMeme.text = data.title
             if (data.isFavorite){

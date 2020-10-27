@@ -1,7 +1,7 @@
-package com.lumi.surfeducationproject.data.dto
+package com.lumi.surfeducationproject.data.dto.network
 
 import com.google.gson.annotations.SerializedName
 
-data class LoginUserRequestDto(
+data class NetworkLoginUserRequest(
     val login: String,
     val password: String)

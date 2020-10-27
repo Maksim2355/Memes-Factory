@@ -1,16 +1,20 @@
-package com.lumi.surfeducationproject.data.dto
+package com.lumi.surfeducationproject.data.dto.network
 
 import com.google.gson.annotations.SerializedName
 
-data class UserInfo(
+data class NetworkUser(
     @SerializedName("id")
     val id: Int,
+
     @SerializedName("username")
     val username: String,
+
     @SerializedName("firstName")
     val firstName: String,
+
     @SerializedName("lastName")
     val lastName: String,
+
     @SerializedName("userDescription")
-    val description: String
+    val userDescription: String
 )
