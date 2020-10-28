@@ -9,6 +9,6 @@ interface SplashView: MvpView {
     fun startAnimation()
 
     @Skip
-    fun startApp()
+    fun startApp(isAuthUser: Boolean)
 
 }

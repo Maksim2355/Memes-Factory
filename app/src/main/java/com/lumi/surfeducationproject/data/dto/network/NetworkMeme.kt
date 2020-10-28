@@ -10,15 +10,16 @@ data class NetworkMeme(
     @SerializedName("title")
     val title: String,
 
+    @SerializedName("createdDate")
+    val createdDate: Int,
+
     @SerializedName("description")
     val description: String,
 
     @SerializedName("isFavorite")
     val isFavorite: Boolean,
 
-    @SerializedName("createdDate")
-    val createdDate: Int,
-
     @SerializedName("photoUrl")
     val photoUrl: String
+
 ) : Serializable

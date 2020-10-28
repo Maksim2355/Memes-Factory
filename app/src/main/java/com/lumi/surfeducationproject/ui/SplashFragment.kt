@@ -19,10 +19,9 @@ import moxy.ktx.moxyPresenter
 class SplashFragment : MvpAppCompatFragment(), SplashView {
 
     private lateinit var navigationStartApp: NavigationStartApp
-    private lateinit var logoImgView: ImageView
+    private lateinit var icLogoIv: ImageView
 
     private val presenter by moxyPresenter { SplashPresenter() }
-
 
     @SuppressLint("ResourceType")
     override fun onAttach(context: Context) {
@@ -39,7 +38,7 @@ class SplashFragment : MvpAppCompatFragment(), SplashView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        logoImgView = view.findViewById(R.id.logo)
+        icLogoIv = view.findViewById(R.id.logo)
     }
 
     override fun onStart() {
@@ -50,12 +49,13 @@ class SplashFragment : MvpAppCompatFragment(), SplashView {
     @SuppressLint("ResourceType")
     override fun startAnimation() {
         val anim = AnimationUtils.loadAnimation(context, R.animator.pulse_logo_app)
-        logoImgView.startAnimation(anim)
+        icLogoIv.startAnimation(anim)
     }
 
-    override fun startApp() {
+    override fun startApp(isAuthUser: Boolean) {
         Handler().postDelayed({
-            navigationStartApp.startApp()
+            navigationStartApp.startApp(isAuthUser)
         }, 500)
     }
+
 }

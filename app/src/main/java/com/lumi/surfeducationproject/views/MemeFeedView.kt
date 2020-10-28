@@ -1,13 +1,16 @@
 package com.lumi.surfeducationproject.views
 
-import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
+import com.lumi.surfeducationproject.domain.model.Meme
 import moxy.MvpView
-import moxy.viewstate.strategy.alias.*
+import moxy.viewstate.strategy.alias.AddToEndSingle
+import moxy.viewstate.strategy.alias.OneExecution
+import moxy.viewstate.strategy.alias.SingleState
+import moxy.viewstate.strategy.alias.Skip
 
 interface MemeFeedView: MvpView {
 
     @SingleState
-    fun showMemes(memesList: List<NetworkMeme>)
+    fun showMemes(memesList: List<Meme>)
 
     @AddToEndSingle
     fun showErrorState()
@@ -28,6 +31,6 @@ interface MemeFeedView: MvpView {
     fun showErrorSnackbar(message: String)
 
     @OneExecution
-    fun openMemeDetails(data: NetworkMeme)
+    fun openMemeDetails(data: Meme)
 
 }

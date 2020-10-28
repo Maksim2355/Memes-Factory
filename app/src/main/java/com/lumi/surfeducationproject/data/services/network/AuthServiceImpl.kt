@@ -1,20 +1,21 @@
 package com.lumi.surfeducationproject.data.services.network
 
-import com.lumi.surfeducationproject.data.dto.network.NetworkUserResponse
 import com.lumi.surfeducationproject.data.dto.network.NetworkLoginUserRequest
-import io.reactivex.rxjava3.core.Maybe
+import com.lumi.surfeducationproject.data.dto.network.NetworkUserResponse
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class AuthServiceImpl: AuthService {
 
     private val api = NetworkServiceImpl.getAuthApi()
 
-    override fun loginIn(userRequestDataNetwork: NetworkLoginUserRequest): Single<NetworkUserResponse>? {
+    override fun loginIn(userRequestDataNetwork: NetworkLoginUserRequest?): Single<NetworkUserResponse> {
         return api.loginIn(userRequestDataNetwork)
     }
 
-    override fun logout(): Maybe<Throwable> {
-        return api.logout()
+    //TODO прийти к единому вызову Completable or Maybe<>
+    override fun logout(): Completable {
+        return api.logout().ignoreElement()
     }
 
 }

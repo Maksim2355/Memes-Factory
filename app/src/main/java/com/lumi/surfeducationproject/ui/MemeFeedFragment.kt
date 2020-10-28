@@ -17,6 +17,7 @@ import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.RefresherOwner
 import com.lumi.surfeducationproject.controllers.MemeController
 import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
+import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
 import com.lumi.surfeducationproject.presenters.MemesFeedPresenter
 import com.lumi.surfeducationproject.views.MemeFeedView
@@ -99,7 +100,8 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
         }
     }
 
-    override fun showMemes(memesList: List<NetworkMeme>) {
+
+    override fun showMemes(memesList: List<Meme>) {
         val itemList = ItemList.create().apply {
             addAll(memesList, memeController)
         }
@@ -146,7 +148,7 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
 
     }
 
-    override fun openMemeDetails(data: NetworkMeme) {
+    override fun openMemeDetails(data: Meme) {
         navMemeDetailsFragment.startMemeDetailsScreen(data)
     }
 

@@ -13,9 +13,13 @@ import com.bumptech.glide.Glide
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.Key_Details_Meme
 import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
+import com.lumi.surfeducationproject.data.repository.UserRepositoryImpl
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 import com.lumi.surfeducationproject.data.services.local.SharedPreferenceServiceImpl
+import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.utils.getPostCreateDate
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpAppCompatFragment
 
 
@@ -65,15 +69,22 @@ class MemeDetailsFragment : MvpAppCompatFragment() {
         avatarsMiniIv = view.findViewById(R.id.avatars_mini_iv)
         nicknameMiniTv = view.findViewById(R.id.nickname_mini_tv)
 
-        val user = SharedPreferenceServiceImpl.readUser()
-        user?.let {
-            Glide.with(this).load("https://img.pngio.com/avatar-1-length-of-human-face-hd-png-download-6648260-free-human-face-png-840_640.png")
-                .optionalCircleCrop()
-                .into(avatarsMiniIv)
-            nicknameMiniTv.text = user.firstName
-        }
+        UserRepositoryImpl().getUser().subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                it?.let {
+                    Glide.with(this).load("https://img.pngio.com/avatar-1-length-of-human-face-hd-png-download-6648260-free-human-face-png-840_640.png")
+                        .optionalCircleCrop()
+                        .into(avatarsMiniIv)
+                    nicknameMiniTv.text = it.firstName
+                }
+            },{
+                //Todo Понять, нужен ли реактивный подход в получении данных с репозитория
+                nicknameMiniTv.text = "Загадочная личность"
+            })
 
-        val meme = arguments?.getSerializable(Key_Details_Meme) as NetworkMeme
+
+        val meme = arguments?.getSerializable(Key_Details_Meme) as Meme
         meme.let {
             memeTitleTv.text = meme.title
             Glide.with(this).load(meme.photoUrl).into(memeImgIv)

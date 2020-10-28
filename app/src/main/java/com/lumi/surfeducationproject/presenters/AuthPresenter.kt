@@ -1,18 +1,40 @@
 package com.lumi.surfeducationproject.presenters
 
-import com.lumi.surfeducationproject.exceptions.NetworkExceptions
 import com.lumi.surfeducationproject.common.EmptyFields
 import com.lumi.surfeducationproject.data.dto.network.NetworkLoginUserRequest
+import com.lumi.surfeducationproject.data.repository.UserRepositoryImpl
 import com.lumi.surfeducationproject.data.services.local.SharedPreferenceServiceImpl
 import com.lumi.surfeducationproject.data.services.network.NetworkServiceImpl
+import com.lumi.surfeducationproject.domain.repository.UserRepository
+import com.lumi.surfeducationproject.exceptions.NETWORK_EXCEPTIONS
 import com.lumi.surfeducationproject.views.AuthView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 
-class AuthPresenter(): MvpPresenter<AuthView>() {
+class AuthPresenter: MvpPresenter<AuthView>() {
 
     private val LENGTH_PASSWORD = 6
+    private val userRepository: UserRepository = UserRepositoryImpl()
+
+    fun authUser(login: String, password: String) {
+        if (checkFields(login, password)) {
+            val userAuth = NetworkLoginUserRequest(login, password)
+            userRepository.getUser(userAuth)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { viewState.showProgressBar() }
+                .doFinally { viewState.hideProgressBar() }
+                .subscribe({
+                    viewState.openContentFragment()
+                },{
+                    if (NETWORK_EXCEPTIONS.contains(it.javaClass)) {
+                        viewState.showErrorSnackbar("Отсутствует подключение к интернету \nПодключитесь к сети и попробуйте снова")
+                    }else {
+                        viewState.showErrorSnackbar("Вы ввели неверные данные.\nПопробуйте еще раз")
+                    }
+                })
+        }
+    }
 
     fun enableCheckPasswordField() {
         viewState.showPasswordHelper(LENGTH_PASSWORD)
@@ -22,27 +44,6 @@ class AuthPresenter(): MvpPresenter<AuthView>() {
     fun disableCheckPasswordField(password: String) {
         if (password.isEmpty()) viewState.disableIconEye()
         if (password.length >= LENGTH_PASSWORD) viewState.hidePasswordHelper()
-    }
-
-    fun authUser(login: String, password: String) {
-        if (checkFields(login, password)) {
-            val userAuth = NetworkLoginUserRequest(login, password)
-            NetworkServiceImpl.getApi().authorizationUser(userAuth)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { viewState.showProgressBar() }
-                .doFinally { viewState.hideProgressBar() }
-                .subscribe({
-                    viewState.openContentFragment()
-                    SharedPreferenceServiceImpl.saveUser(it.authInfoInfoDto)
-                },{
-                    if (NetworkExceptions.NETWORK_EXCEPTIONS.contains(it.javaClass)) {
-                        viewState.showErrorSnackbar("Отсутствует подключение к интернету \nПодключитесь к сети и попробуйте снова")
-                    }else {
-                        viewState.showErrorSnackbar("Вы ввели неверные данные.\nПопробуйте еще раз")
-                    }
-                })
-        }
     }
 
 

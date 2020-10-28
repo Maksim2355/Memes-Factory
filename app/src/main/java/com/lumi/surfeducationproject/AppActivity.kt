@@ -9,8 +9,10 @@ import androidx.navigation.Navigation
 import com.lumi.surfeducationproject.common.Key_Details_Meme
 import com.lumi.surfeducationproject.common.StyleManager
 import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
+import com.lumi.surfeducationproject.data.repository.UserRepositoryImpl
 import com.lumi.surfeducationproject.navigation.*
 import com.lumi.surfeducationproject.data.services.local.SharedPreferenceServiceImpl
+import com.lumi.surfeducationproject.domain.model.Meme
 
 
 class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, NavigationMemeDetails , StyleManager,
@@ -24,8 +26,8 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_container)
     }
 
-    override fun startApp() {
-        if (SharedPreferenceServiceImpl.readUser() != null){
+    override fun startApp(isAuthUser: Boolean) {
+        if (isAuthUser){
             navController.navigate(R.id.action_splashFragment_to_tabFragment)
         }else{
             navController.navigate(R.id.action_splashFragment_to_authFragment)
@@ -42,9 +44,9 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
         window.statusBarColor = resources.getColor(color)
     }
 
-    override fun startMemeDetailsScreen(networkMeme: NetworkMeme) {
+    override fun startMemeDetailsScreen(meme: Meme) {
         val bundle = Bundle()
-        bundle.putSerializable(Key_Details_Meme, networkMeme)
+        bundle.putSerializable(Key_Details_Meme, meme)
         navController.navigate(R.id.action_tabFragment_to_memeDetailsFragment, bundle)
     }
 

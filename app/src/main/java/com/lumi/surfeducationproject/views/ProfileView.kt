@@ -1,15 +1,23 @@
 package com.lumi.surfeducationproject.views
 
-import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
-import com.lumi.surfeducationproject.data.dto.network.NetworkUserResponse
+import com.lumi.surfeducationproject.domain.model.Meme
+import com.lumi.surfeducationproject.domain.model.User
 import moxy.MvpView
+import moxy.viewstate.strategy.alias.AddToEndSingle
+import moxy.viewstate.strategy.alias.Skip
 
 interface ProfileView: MvpView {
 
-    fun showMemes(networkMemes: List<NetworkMeme>)
+    @AddToEndSingle
+    fun showMemes(memeList: List<Meme>)
 
+    @Skip
     fun exitAccount()
 
-    fun showProfile(networkUserResponse: NetworkUserResponse)
+    @AddToEndSingle
+    fun showProfile(user: User)
+
+    @AddToEndSingle
+    fun showErrorSnackBarDownloadProfile(message: String)
 
 }

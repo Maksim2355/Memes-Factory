@@ -1,6 +1,7 @@
 package com.lumi.surfeducationproject.ui
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
@@ -9,12 +10,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
 import com.lumi.surfeducationproject.data.dto.network.NetworkUserResponse
+import com.lumi.surfeducationproject.domain.model.Meme
+import com.lumi.surfeducationproject.domain.model.User
 import com.lumi.surfeducationproject.navigation.NavigationAuth
 import com.lumi.surfeducationproject.presenters.ProfilePresenter
 import com.lumi.surfeducationproject.views.ProfileView
+import kotlinx.android.synthetic.main.fragment_auth.*
+import kotlinx.android.synthetic.main.fragment_auth.root_layout
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -59,7 +66,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
         recycler = view.memeList_profile_rv
 
-        presenter.initProfile()
+        presenter.loadProfile()
     }
 
 
@@ -83,21 +90,35 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         }
     }
 
-    override fun showMemes(networkMemes: List<NetworkMeme>) {
-        //Todo Создается при создании БД
+    override fun showMemes(memeList: List<Meme>) {
+        TODO("Not yet implemented")
     }
 
     override fun exitAccount() {
         navLogout.startAuthScreen()
     }
 
-    override fun showProfile(networkUserResponse: NetworkUserResponse) {
+    override fun showProfile(user: User) {
         Glide.with(this)
             .load("https://img.pngio.com/avatar-1-length-of-human-face-hd-png-download-6648260-free-human-face-png-840_640.png")
             .circleCrop()
             .into(avatarIv)
-        nicknameTv.text = networkUserResponse.firstName
-        descriptionTv.text = networkUserResponse.userDescription
+        nicknameTv.text = user.firstName
+        descriptionTv.text = user.descriptionProfile
+    }
+
+    override fun showErrorSnackBarDownloadProfile(message: String) {
+        val snackbar = Snackbar.make(
+            root_profile_layout, message,
+            Snackbar.LENGTH_LONG
+        )
+        val snackbarView = snackbar.view
+        snackbarView.setBackgroundColor(Color.parseColor("#FF575D"))
+        val textView =
+            snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+        textView.setTextColor(Color.WHITE)
+        textView.textSize = 16f
+        snackbar.show()
     }
 
 }

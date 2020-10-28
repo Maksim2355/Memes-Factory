@@ -1,8 +1,9 @@
 package com.lumi.surfeducationproject.presenters
 
-import com.lumi.surfeducationproject.exceptions.NetworkExceptions
-import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
-import com.lumi.surfeducationproject.data.services.network.NetworkServiceImpl
+import com.lumi.surfeducationproject.data.repository.MemeRepositoryImpl
+import com.lumi.surfeducationproject.domain.model.Meme
+import com.lumi.surfeducationproject.domain.repository.MemeRepository
+import com.lumi.surfeducationproject.exceptions.NETWORK_EXCEPTIONS
 import com.lumi.surfeducationproject.views.MemeFeedView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -10,8 +11,10 @@ import moxy.MvpPresenter
 
 class MemesFeedPresenter: MvpPresenter<MemeFeedView>() {
 
+    private val memeRepository: MemeRepository = MemeRepositoryImpl()
+
     fun loadMemes(){
-        NetworkServiceImpl.getApi().getMemes()
+        memeRepository.getMemes()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { viewState.showLoadState() }
@@ -24,7 +27,7 @@ class MemesFeedPresenter: MvpPresenter<MemeFeedView>() {
     }
 
     fun updateMemes(){
-        NetworkServiceImpl.getApi().getMemes()
+        memeRepository.getMemes()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { viewState.showRefresh() }
@@ -36,23 +39,23 @@ class MemesFeedPresenter: MvpPresenter<MemeFeedView>() {
             })
     }
 
-    private fun showMemes(networkMemes: List<NetworkMeme>){
-        viewState.showMemes(networkMemes)
+    private fun showMemes(memeList: List<Meme>){
+        viewState.showMemes(memeList)
     }
 
     private fun errorProcessing(throwable: Throwable){
-        if (NetworkExceptions.NETWORK_EXCEPTIONS.contains(throwable.javaClass)) {
+        if (NETWORK_EXCEPTIONS.contains(throwable.javaClass)) {
             viewState.showErrorSnackbar("Отсутствует подключение к интернету \nПодключитесь к сети и попробуйте снова")
         }else {
             viewState.showErrorState()
         }
     }
 
-    fun shareMeme(it: NetworkMeme) {
+    fun shareMeme(it: Meme) {
 
     }
 
-    fun openDetails(it: NetworkMeme) {
+    fun openDetails(it: Meme) {
         viewState.openMemeDetails(it)
     }
 

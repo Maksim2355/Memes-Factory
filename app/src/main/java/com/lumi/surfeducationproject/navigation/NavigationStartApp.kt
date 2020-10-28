@@ -1,5 +1,5 @@
 package com.lumi.surfeducationproject.navigation
 
 interface NavigationStartApp {
-    fun startApp()
+    fun startApp(isAuthUser: Boolean)
 }
