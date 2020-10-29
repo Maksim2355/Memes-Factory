@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 
 @Module
-class NetworkModule {
+class NetworkModule() {
 
     private val BASE_URL = "https://r2.mocker.surfstudio.ru/android_vsu/"
 

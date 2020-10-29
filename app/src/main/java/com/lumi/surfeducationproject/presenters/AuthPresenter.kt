@@ -7,6 +7,7 @@ import com.lumi.surfeducationproject.domain.repository.UserRepository
 import com.lumi.surfeducationproject.exceptions.NETWORK_EXCEPTIONS
 import com.lumi.surfeducationproject.views.AuthView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 import javax.inject.Inject
 
@@ -19,6 +20,7 @@ class AuthPresenter @Inject constructor(
         if (checkFields(login, password)) {
             val userAuth = NetworkLoginUserRequest(login, password)
             userRepository.getUser(userAuth)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { viewState.showProgressBar() }
                 .doFinally { viewState.hideProgressBar() }

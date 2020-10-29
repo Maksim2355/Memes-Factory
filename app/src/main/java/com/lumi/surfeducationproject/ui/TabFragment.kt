@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -12,9 +13,7 @@ import javax.inject.Inject
 
 class TabFragment : Fragment(), BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private val navControllerTab: NavController by lazy {
-        findNavController()
-    }
+    private lateinit var navControllerTab: NavController
 
     private lateinit var bottomNavView: BottomNavigationView
 
@@ -29,6 +28,8 @@ class TabFragment : Fragment(), BottomNavigationView.OnNavigationItemSelectedLis
         super.onViewCreated(view, savedInstanceState)
         bottomNavView = view.findViewById(R.id.bottomNavigationView)
         bottomNavView.setOnNavigationItemSelectedListener(this)
+
+        navControllerTab = Navigation.findNavController(view.findViewById(R.id.nav_host_fragment_content))
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

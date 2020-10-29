@@ -48,7 +48,8 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
     private var isPasswordVisible: Boolean = false
     private var isEnablePasswordBtnVisible: Boolean = false
 
-    private lateinit var navigation: NavigationContent
+    @Inject
+    lateinit var navigation: NavigationContent
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
