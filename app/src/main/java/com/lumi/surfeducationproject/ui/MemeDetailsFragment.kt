@@ -10,17 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.Key_Details_Meme
-import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
-import com.lumi.surfeducationproject.data.repository.UserRepositoryImpl
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
-import com.lumi.surfeducationproject.data.services.local.SharedPreferenceServiceImpl
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.utils.getPostCreateDate
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpAppCompatFragment
+import javax.inject.Inject
 
 
 class MemeDetailsFragment : MvpAppCompatFragment() {
@@ -36,11 +33,12 @@ class MemeDetailsFragment : MvpAppCompatFragment() {
     private lateinit var avatarsMiniIv: ImageView
     private lateinit var nicknameMiniTv: TextView
 
-    private lateinit var navBack: NavigationBackPressed
+    @Inject
+    lateinit var navBack: NavigationBackPressed
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        navBack = context as NavigationBackPressed
+        App.instance.startFragmentComponent().inject(this)
     }
 
     override fun onCreateView(
@@ -106,4 +104,9 @@ class MemeDetailsFragment : MvpAppCompatFragment() {
 
     private fun getActionBar() = (activity as AppCompatActivity).supportActionBar
 
+
+    override fun onDetach() {
+        super.onDetach()
+        App.instance.clearFragmentComponent()
+    }
 }

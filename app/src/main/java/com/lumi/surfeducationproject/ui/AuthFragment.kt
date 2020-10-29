@@ -1,7 +1,6 @@
 package com.lumi.surfeducationproject.ui
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -10,13 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
-import com.google.android.material.snackbar.Snackbar
+import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.EmptyFields
+import com.lumi.surfeducationproject.common.SnackBarManager
 import com.lumi.surfeducationproject.navigation.NavigationContent
 import com.lumi.surfeducationproject.presenters.AuthPresenter
 import com.lumi.surfeducationproject.views.AuthView
-import kotlinx.android.synthetic.main.fragment_auth.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText
@@ -30,10 +29,12 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
 
     @Inject
     lateinit var presenterProvider: Provider<AuthPresenter>
-
     private val presenter by moxyPresenter {
         presenterProvider.get()
     }
+
+    @Inject
+    lateinit var snackBarManager: SnackBarManager
 
     private lateinit var loginInputField: TextFieldBoxes
     private lateinit var loginEditText: ExtendedEditText
@@ -51,7 +52,8 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        navigation = context as NavigationContent
+        App.instance.startFragmentComponent().inject(this)
+
     }
 
     override fun onCreateView(
@@ -118,17 +120,7 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
     }
 
     override fun showErrorSnackbar(messageError: String) {
-        val snackbar = Snackbar.make(
-            root_layout, messageError,
-            Snackbar.LENGTH_LONG
-        )
-        val snackbarView = snackbar.view
-        snackbarView.setBackgroundColor(Color.parseColor("#FF575D"))
-        val textView =
-            snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
-        textView.setTextColor(Color.WHITE)
-        textView.textSize = 16f
-        snackbar.show()
+        snackBarManager.showErrorMessage(messageError)
     }
 
     override fun showMessageErrorInputField(emptyFields: EmptyFields, messageError: String) {
@@ -180,5 +172,11 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
 
     private fun getInputPassword() = passwordEditText.text.toString()
     private fun getInputLogin() = loginEditText.text.toString()
+
+
+    override fun onDetach() {
+        super.onDetach()
+        App.instance.clearFragmentComponent()
+    }
 
 }

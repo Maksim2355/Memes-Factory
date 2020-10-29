@@ -1,26 +1,22 @@
 package com.lumi.surfeducationproject.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.common.StyleManager
-import moxy.MvpAppCompatFragment
 import javax.inject.Inject
 
-class TabFragment : MvpAppCompatFragment(), BottomNavigationView.OnNavigationItemSelectedListener {
+class TabFragment : Fragment(), BottomNavigationView.OnNavigationItemSelectedListener {
 
-    @Inject lateinit var styleManager: StyleManager
-    @Inject lateinit var bottomNavView: BottomNavigationView
-    @Inject lateinit var navControllerTab: NavController
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        styleManager.setColorStatusBar(R.color.colorPrimaryContent)
+    private val navControllerTab: NavController by lazy {
+        findNavController()
     }
+
+    private lateinit var bottomNavView: BottomNavigationView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,15 +34,12 @@ class TabFragment : MvpAppCompatFragment(), BottomNavigationView.OnNavigationIte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.memes_feed_nav_mi -> {
-                styleManager.setColorStatusBar(R.color.colorPrimaryContent)
                 navigateMemesFeed()
                 true
             }R.id.memes_add_nav_mi -> {
-                styleManager.setColorStatusBar(R.color.colorPrimaryContent)
                 navigateAddMeme()
                 true
             }R.id.profile_nav_mi -> {
-                styleManager.setColorStatusBar(R.color.colorPrimary)
                 navigateProfile()
                 true
             }

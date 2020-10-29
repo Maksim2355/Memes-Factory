@@ -13,8 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
+import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.common.RefresherOwner
+import com.lumi.surfeducationproject.common.*
 import com.lumi.surfeducationproject.controllers.MemeController
 import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
 import com.lumi.surfeducationproject.domain.model.Meme
@@ -34,9 +35,12 @@ import javax.inject.Provider
 class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshListener, MemeFeedView,
     RefresherOwner {
 
+
     @Inject
     lateinit var presenterProvider: Provider<MemesFeedPresenter>
-    private val presenter by moxyPresenter { presenterProvider.get() }
+    private val presenter by moxyPresenter {
+        presenterProvider.get()
+    }
 
     private lateinit var toolbar: Toolbar
     private lateinit var refresh: SwipeRefreshLayout
@@ -44,16 +48,31 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
     private lateinit var errorView: TextView
     private lateinit var loadView: FrameLayout
 
-    @Inject lateinit var easyAdapter: EasyAdapter
-    @Inject lateinit var memeController: MemeController
+    @Inject
+    lateinit var styleManager: StyleManager
 
-    @Inject lateinit var navMemeDetailsFragment: NavigationMemeDetails
+    @Inject
+    lateinit var snackBarManager: SnackBarManager
+
+    @Inject
+    lateinit var easyAdapter: EasyAdapter
+    @Inject
+    lateinit var memeController: MemeController
+
+    @Inject
+    lateinit var navMemeDetailsFragment: NavigationMemeDetails
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        App.instance.startFragmentComponent().inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
+        styleManager.setColorStatusBar(R.color.colorPrimaryContent)
         return inflater.inflate(R.layout.fragment_meme_feed, container, false)
     }
 
@@ -130,18 +149,7 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
     }
 
     override fun showErrorSnackbar(message: String) {
-        val snackbar = Snackbar.make(
-            root_layout_tab, message,
-            Snackbar.LENGTH_LONG
-        )
-        val snackbarView = snackbar.view
-        snackbarView.setBackgroundColor(Color.parseColor("#FF575D"))
-        val textView =
-            snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
-        textView.setTextColor(Color.WHITE)
-        textView.textSize = 16f
-        snackbar.show()
-
+        snackBarManager.showErrorMessage(message)
     }
 
     override fun openMemeDetails(data: Meme) {
@@ -193,4 +201,9 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
 
     private fun getActionBar() = (activity as AppCompatActivity).supportActionBar
 
+
+    override fun onDetach() {
+        super.onDetach()
+        App.instance.clearFragmentComponent()
+    }
 }

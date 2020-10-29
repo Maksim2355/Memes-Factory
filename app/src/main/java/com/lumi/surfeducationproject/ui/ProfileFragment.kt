@@ -1,7 +1,6 @@
 package com.lumi.surfeducationproject.ui
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
@@ -10,19 +9,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
+import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
-import com.lumi.surfeducationproject.data.dto.network.NetworkUserResponse
+import com.lumi.surfeducationproject.common.SnackBarManager
+import com.lumi.surfeducationproject.common.StyleManager
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.domain.model.User
 import com.lumi.surfeducationproject.navigation.NavigationAuth
-import com.lumi.surfeducationproject.presenters.MemesFeedPresenter
 import com.lumi.surfeducationproject.presenters.ProfilePresenter
 import com.lumi.surfeducationproject.views.ProfileView
-import kotlinx.android.synthetic.main.fragment_auth.*
-import kotlinx.android.synthetic.main.fragment_auth.root_layout
-import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -35,23 +30,37 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
     @Inject
     lateinit var presenterProvider: Provider<ProfilePresenter>
-    private val presenter by moxyPresenter { presenterProvider.get() }
+    private val presenter by moxyPresenter {
+        presenterProvider.get()
+    }
+
+    @Inject
+    lateinit var styleManager: StyleManager
+
+    @Inject
+    lateinit var snackBarManager: SnackBarManager
+
+    @Inject
+    lateinit var navLogout: NavigationAuth
 
     private lateinit var toolbar: Toolbar
-
     private lateinit var avatarIv: ImageView
     private lateinit var nicknameTv: TextView
     private lateinit var descriptionTv: TextView
     private lateinit var recycler: RecyclerView
 
-    @Inject
-    lateinit var navLogout: NavigationAuth
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        App.instance.startFragmentComponent().inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
+        styleManager.setColorStatusBar(R.color.colorPrimary)
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
@@ -109,17 +118,13 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
     }
 
     override fun showErrorSnackBarDownloadProfile(message: String) {
-        val snackbar = Snackbar.make(
-            root_profile_layout, message,
-            Snackbar.LENGTH_LONG
-        )
-        val snackbarView = snackbar.view
-        snackbarView.setBackgroundColor(Color.parseColor("#FF575D"))
-        val textView =
-            snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
-        textView.setTextColor(Color.WHITE)
-        textView.textSize = 16f
-        snackbar.show()
+        snackBarManager.showErrorMessage(message)
+    }
+
+
+    override fun onDetach() {
+        super.onDetach()
+        App.instance.clearFragmentComponent()
     }
 
 }

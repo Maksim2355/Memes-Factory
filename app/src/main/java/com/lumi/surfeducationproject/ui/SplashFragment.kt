@@ -9,9 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.navigation.NavigationStartApp
-import com.lumi.surfeducationproject.presenters.ProfilePresenter
 import com.lumi.surfeducationproject.presenters.SplashPresenter
 import com.lumi.surfeducationproject.views.SplashView
 import moxy.MvpAppCompatFragment
@@ -21,8 +21,10 @@ import javax.inject.Provider
 
 class SplashFragment : MvpAppCompatFragment(), SplashView {
 
+
     @Inject
     lateinit var presenterProvider: Provider<SplashPresenter>
+
     private val presenter by moxyPresenter { presenterProvider.get() }
 
     @Inject
@@ -33,7 +35,7 @@ class SplashFragment : MvpAppCompatFragment(), SplashView {
     @SuppressLint("ResourceType")
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        navigationStartApp = context as NavigationStartApp
+        App.instance.startFragmentComponent().inject(this)
     }
 
     override fun onCreateView(
@@ -63,6 +65,12 @@ class SplashFragment : MvpAppCompatFragment(), SplashView {
         Handler().postDelayed({
             navigationStartApp.startApp(isAuthUser)
         }, 500)
+    }
+
+
+    override fun onDetach() {
+        super.onDetach()
+        App.instance.clearFragmentComponent()
     }
 
 }

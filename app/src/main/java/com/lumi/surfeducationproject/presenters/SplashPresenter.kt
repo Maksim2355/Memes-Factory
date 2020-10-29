@@ -7,12 +7,12 @@ import javax.inject.Inject
 
 
 class SplashPresenter @Inject constructor(
-    private val authRepository: UserRepository
+    private val userRepository: UserRepository
 ) : MvpPresenter<SplashView>() {
 
     fun startApp() {
         viewState.startAnimation()
-        authRepository.getUser().subscribe({
+        userRepository.getUser().subscribe({
             if (it != null){
                 viewState.startApp(true)
             }else{
