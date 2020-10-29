@@ -69,19 +69,19 @@ class MemeDetailsFragment : MvpAppCompatFragment() {
         avatarsMiniIv = view.findViewById(R.id.avatars_mini_iv)
         nicknameMiniTv = view.findViewById(R.id.nickname_mini_tv)
 
-        UserRepositoryImpl().getUser().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                it?.let {
-                    Glide.with(this).load("https://img.pngio.com/avatar-1-length-of-human-face-hd-png-download-6648260-free-human-face-png-840_640.png")
-                        .optionalCircleCrop()
-                        .into(avatarsMiniIv)
-                    nicknameMiniTv.text = it.firstName
-                }
-            },{
-                //Todo Понять, нужен ли реактивный подход в получении данных с репозитория
-                nicknameMiniTv.text = "Загадочная личность"
-            })
+//        UserRepositoryImpl().getUser().subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe({
+//                it?.let {
+//                    Glide.with(this).load("https://img.pngio.com/avatar-1-length-of-human-face-hd-png-download-6648260-free-human-face-png-840_640.png")
+//                        .optionalCircleCrop()
+//                        .into(avatarsMiniIv)
+//                    nicknameMiniTv.text = it.firstName
+//                }
+//            },{
+//                //Todo Понять, нужен ли реактивный подход в получении данных с репозитория
+//                nicknameMiniTv.text = "Загадочная личность"
+//            })
 
 
         val meme = arguments?.getSerializable(Key_Details_Meme) as Meme

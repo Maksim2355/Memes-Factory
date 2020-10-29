@@ -13,12 +13,13 @@ import com.lumi.surfeducationproject.data.repository.UserRepositoryImpl
 import com.lumi.surfeducationproject.navigation.*
 import com.lumi.surfeducationproject.data.services.local.SharedPreferenceServiceImpl
 import com.lumi.surfeducationproject.domain.model.Meme
+import javax.inject.Inject
 
 
 class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, NavigationMemeDetails , StyleManager,
     NavigationBackPressed, NavigationAuth {
 
-    private lateinit var navController: NavController
+    @Inject lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

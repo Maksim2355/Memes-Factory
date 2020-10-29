@@ -3,19 +3,17 @@ package com.lumi.surfeducationproject.presenters
 import com.lumi.surfeducationproject.common.EmptyFields
 import com.lumi.surfeducationproject.data.dto.network.NetworkLoginUserRequest
 import com.lumi.surfeducationproject.data.repository.UserRepositoryImpl
-import com.lumi.surfeducationproject.data.services.local.SharedPreferenceServiceImpl
-import com.lumi.surfeducationproject.data.services.network.NetworkServiceImpl
 import com.lumi.surfeducationproject.domain.repository.UserRepository
 import com.lumi.surfeducationproject.exceptions.NETWORK_EXCEPTIONS
 import com.lumi.surfeducationproject.views.AuthView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
+import javax.inject.Inject
 
-class AuthPresenter: MvpPresenter<AuthView>() {
+class AuthPresenter @Inject constructor(
+    private val userRepository: UserRepository
+): MvpPresenter<AuthView>() {
 
-    private val LENGTH_PASSWORD = 6
-    private val userRepository: UserRepository = UserRepositoryImpl()
 
     fun authUser(login: String, password: String) {
         if (checkFields(login, password)) {
@@ -71,4 +69,9 @@ class AuthPresenter: MvpPresenter<AuthView>() {
 
         return true
     }
+
+    companion object{
+        private val LENGTH_PASSWORD = 6
+    }
+
 }

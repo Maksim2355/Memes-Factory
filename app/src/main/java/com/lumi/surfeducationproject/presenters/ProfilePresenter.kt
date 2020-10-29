@@ -1,15 +1,16 @@
 package com.lumi.surfeducationproject.presenters
 
-import com.lumi.surfeducationproject.data.repository.UserRepositoryImpl
 import com.lumi.surfeducationproject.domain.repository.UserRepository
 import com.lumi.surfeducationproject.views.ProfileView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
+import javax.inject.Inject
 
-class ProfilePresenter: MvpPresenter<ProfileView>() {
+class ProfilePresenter @Inject constructor(
+    private val userRepository: UserRepository
+): MvpPresenter<ProfileView>() {
 
-    private val userRepository: UserRepository = UserRepositoryImpl()
 
     fun loadProfile(){
         userRepository.getUser().subscribeOn(Schedulers.io())

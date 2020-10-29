@@ -10,12 +10,14 @@ import com.lumi.surfeducationproject.domain.model.User
 import com.lumi.surfeducationproject.domain.repository.UserRepository
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
 
-class UserRepositoryImpl : UserRepository {
+class UserRepositoryImpl @Inject constructor(
+    private val sharedPreferenceService: SharedPreferenceService,
+    private val authService: AuthService,
+    private val mapper: UserDtoDataMapper
+) : UserRepository {
 
-    private val sharedPreferenceService: SharedPreferenceService = SharedPreferenceServiceImpl()
-    private val authService: AuthService = AuthServiceImpl()
-    private val mapper: UserDtoDataMapper = UserDtoDataMapper()
 
     override fun getUser(userRequestRequestNetwork: NetworkLoginUserRequest?): Single<User> {
         return authService.loginIn(userRequestRequestNetwork)

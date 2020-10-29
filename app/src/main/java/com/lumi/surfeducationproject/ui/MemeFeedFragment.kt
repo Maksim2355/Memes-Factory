@@ -19,6 +19,7 @@ import com.lumi.surfeducationproject.controllers.MemeController
 import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
+import com.lumi.surfeducationproject.presenters.AuthPresenter
 import com.lumi.surfeducationproject.presenters.MemesFeedPresenter
 import com.lumi.surfeducationproject.views.MemeFeedView
 import kotlinx.android.synthetic.main.fragment_meme_feed.*
@@ -26,32 +27,27 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.surfstudio.android.easyadapter.EasyAdapter
 import ru.surfstudio.android.easyadapter.ItemList
+import javax.inject.Inject
+import javax.inject.Provider
 
 
 class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshListener, MemeFeedView,
     RefresherOwner {
 
-    private val presenter by moxyPresenter { MemesFeedPresenter() }
+    @Inject
+    lateinit var presenterProvider: Provider<MemesFeedPresenter>
+    private val presenter by moxyPresenter { presenterProvider.get() }
 
     private lateinit var toolbar: Toolbar
-
     private lateinit var refresh: SwipeRefreshLayout
-
     private lateinit var memesRecyclerView: RecyclerView
-    private val easyAdapter = EasyAdapter()
-    private val memeController = MemeController()
-
     private lateinit var errorView: TextView
     private lateinit var loadView: FrameLayout
 
-    private val TITLE_ACTION_BAR = "Популярные мемы"
+    @Inject lateinit var easyAdapter: EasyAdapter
+    @Inject lateinit var memeController: MemeController
 
-    private lateinit var navMemeDetailsFragment: NavigationMemeDetails
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        navMemeDetailsFragment = context as NavigationMemeDetails
-    }
+    @Inject lateinit var navMemeDetailsFragment: NavigationMemeDetails
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +62,7 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
 
         toolbar = view.findViewById(R.id.toolbar_meme_feed)
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        getActionBar()?.title = TITLE_ACTION_BAR
+        getActionBar()?.title = "Популярные мемы"
 
         refresh = view.findViewById(R.id.refresh_srl)
         with(refresh) {

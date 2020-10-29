@@ -4,16 +4,11 @@ import android.content.SharedPreferences
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.data.dto.network.NetworkUser
 import com.lumi.surfeducationproject.domain.model.User
+import javax.inject.Inject
 
-class SharedPreferenceServiceImpl : SharedPreferenceService {
-
-    private val ID = "ID"
-    private val USERNAME = "USERNAME"
-    private val FIRST_NAME = "FIRST_NAME"
-    private val LAST_NAME = "LAST_NAME"
-    private val USER_DESCRIPTION = "USER_DESCRIPTION"
-
-    private val sharedPref: SharedPreferences = App.instance.sharedPref
+class SharedPreferenceServiceImpl @Inject constructor(
+    private val sharedPref: SharedPreferences
+) : SharedPreferenceService {
 
     override fun saveUser(user: User) {
         sharedPref.edit().apply() {
@@ -39,5 +34,13 @@ class SharedPreferenceServiceImpl : SharedPreferenceService {
 
     override fun deleteUser() {
         sharedPref.edit().clear().apply()
+    }
+
+    companion object{
+        private val ID = "ID"
+        private val USERNAME = "USERNAME"
+        private val FIRST_NAME = "FIRST_NAME"
+        private val LAST_NAME = "LAST_NAME"
+        private val USER_DESCRIPTION = "USER_DESCRIPTION"
     }
 }

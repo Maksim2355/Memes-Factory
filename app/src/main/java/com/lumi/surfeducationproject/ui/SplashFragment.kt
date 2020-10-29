@@ -11,17 +11,24 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.navigation.NavigationStartApp
+import com.lumi.surfeducationproject.presenters.ProfilePresenter
 import com.lumi.surfeducationproject.presenters.SplashPresenter
 import com.lumi.surfeducationproject.views.SplashView
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import javax.inject.Inject
+import javax.inject.Provider
 
 class SplashFragment : MvpAppCompatFragment(), SplashView {
 
-    private lateinit var navigationStartApp: NavigationStartApp
-    private lateinit var icLogoIv: ImageView
+    @Inject
+    lateinit var presenterProvider: Provider<SplashPresenter>
+    private val presenter by moxyPresenter { presenterProvider.get() }
 
-    private val presenter by moxyPresenter { SplashPresenter() }
+    @Inject
+    lateinit var navigationStartApp: NavigationStartApp
+
+    private lateinit var icLogoIv: ImageView
 
     @SuppressLint("ResourceType")
     override fun onAttach(context: Context) {

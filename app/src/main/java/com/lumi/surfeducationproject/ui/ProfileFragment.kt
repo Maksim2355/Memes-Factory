@@ -17,6 +17,7 @@ import com.lumi.surfeducationproject.data.dto.network.NetworkUserResponse
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.domain.model.User
 import com.lumi.surfeducationproject.navigation.NavigationAuth
+import com.lumi.surfeducationproject.presenters.MemesFeedPresenter
 import com.lumi.surfeducationproject.presenters.ProfilePresenter
 import com.lumi.surfeducationproject.views.ProfileView
 import kotlinx.android.synthetic.main.fragment_auth.*
@@ -25,26 +26,26 @@ import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import javax.inject.Inject
+import javax.inject.Provider
 
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
-    private lateinit var toolbar: Toolbar
 
-    private val presenter by moxyPresenter { ProfilePresenter() }
+    @Inject
+    lateinit var presenterProvider: Provider<ProfilePresenter>
+    private val presenter by moxyPresenter { presenterProvider.get() }
+
+    private lateinit var toolbar: Toolbar
 
     private lateinit var avatarIv: ImageView
     private lateinit var nicknameTv: TextView
     private lateinit var descriptionTv: TextView
-
     private lateinit var recycler: RecyclerView
 
-    private lateinit var navLogout: NavigationAuth
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        navLogout = context as NavigationAuth
-    }
+    @Inject
+    lateinit var navLogout: NavigationAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

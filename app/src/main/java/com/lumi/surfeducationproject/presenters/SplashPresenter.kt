@@ -1,14 +1,14 @@
 package com.lumi.surfeducationproject.presenters
 
-import com.lumi.surfeducationproject.data.repository.UserRepositoryImpl
 import com.lumi.surfeducationproject.domain.repository.UserRepository
 import com.lumi.surfeducationproject.views.SplashView
 import moxy.MvpPresenter
+import javax.inject.Inject
 
 
-class SplashPresenter : MvpPresenter<SplashView>() {
-
-    private val authRepository: UserRepository = UserRepositoryImpl()
+class SplashPresenter @Inject constructor(
+    private val authRepository: UserRepository
+) : MvpPresenter<SplashView>() {
 
     fun startApp() {
         viewState.startAnimation()

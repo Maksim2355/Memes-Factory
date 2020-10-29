@@ -21,13 +21,18 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+import javax.inject.Inject
+import javax.inject.Provider
 
 
 class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListener {
 
 
+    @Inject
+    lateinit var presenterProvider: Provider<AuthPresenter>
+
     private val presenter by moxyPresenter {
-        AuthPresenter()
+        presenterProvider.get()
     }
 
     private lateinit var loginInputField: TextFieldBoxes

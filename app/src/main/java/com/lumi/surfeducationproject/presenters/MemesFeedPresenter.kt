@@ -8,10 +8,11 @@ import com.lumi.surfeducationproject.views.MemeFeedView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
+import javax.inject.Inject
 
-class MemesFeedPresenter: MvpPresenter<MemeFeedView>() {
-
-    private val memeRepository: MemeRepository = MemeRepositoryImpl()
+class MemesFeedPresenter @Inject constructor(
+    private val memeRepository: MemeRepository
+): MvpPresenter<MemeFeedView>() {
 
     fun loadMemes(){
         memeRepository.getMemes()
