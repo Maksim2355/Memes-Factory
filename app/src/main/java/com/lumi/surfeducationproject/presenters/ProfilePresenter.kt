@@ -33,7 +33,11 @@ class ProfilePresenter @Inject constructor(
             .deleteUser()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { viewState.exitAccount() }
+            .subscribe({
+                viewState.exitAccount()
+            }, {
+                viewState.showErrorSnackBarDownloadProfile("Ошибка выхода из аккаунта. Попробуйте еще раз")
+            })
     }
 
     fun loadMemes(){

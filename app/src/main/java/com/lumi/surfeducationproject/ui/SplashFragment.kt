@@ -62,9 +62,7 @@ class SplashFragment : MvpAppCompatFragment(), SplashView {
     }
 
     override fun startApp(isAuthUser: Boolean) {
-        Handler().postDelayed({
-            navigationStartApp.startApp(isAuthUser)
-        }, 500)
+        navigationStartApp.startApp(isAuthUser)
     }
 
 

@@ -101,12 +101,10 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
 
         errorView = view.findViewById(R.id.state_error_tv)
         loadView = view.findViewById(R.id.state_progress_pb)
-    }
 
-    override fun onResume() {
-        super.onResume()
         presenter.loadMemes()
     }
+
 
     private fun initRecyclerView() {
         with(memesRecyclerView) {

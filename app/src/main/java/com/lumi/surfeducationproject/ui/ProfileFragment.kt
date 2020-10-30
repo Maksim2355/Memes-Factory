@@ -1,10 +1,12 @@
 package com.lumi.surfeducationproject.ui
 
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
@@ -85,15 +87,11 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onStart() {
-        super.onStart()
-        presenter.loadMemes()
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_logout -> {
-                presenter.logout()
+                showDialog()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -115,6 +113,26 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
             .into(avatarIv)
         nicknameTv.text = user.firstName
         descriptionTv.text = user.descriptionProfile
+    }
+
+    override fun showDialog() {
+        //Todo сдаться и просто поставить восклицательные знаки
+        val contextForDialog = context
+        contextForDialog?.let {
+            val builder: AlertDialog.Builder = AlertDialog.Builder(contextForDialog)
+            builder.setMessage(R.string.dialog_logout_title)
+
+            builder.setPositiveButton(R.string.dialog_logout_exitAccount_button
+            ) { dialog, _ ->
+                dialog.dismiss()
+                presenter.logout()
+            }
+            builder.setNegativeButton(R.string.dialog_logout_cancle_btn
+            ) { dialog, _ ->
+                dialog.dismiss()
+            }
+            builder.create().show()
+        }
     }
 
     override fun showErrorSnackBarDownloadProfile(message: String) {

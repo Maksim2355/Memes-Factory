@@ -1,8 +1,6 @@
 package com.lumi.surfeducationproject.data.services.local
 
 import android.content.SharedPreferences
-import com.lumi.surfeducationproject.App
-import com.lumi.surfeducationproject.data.dto.network.NetworkUser
 import com.lumi.surfeducationproject.domain.model.User
 import javax.inject.Inject
 

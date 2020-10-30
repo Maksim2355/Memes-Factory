@@ -7,67 +7,9 @@
         <item name="android:windowBackground">@color/colorPrimary</item>
         <item name="android:itemBackground">@color/colorPrimaryContent</item>
         <item name="android:actionMenuTextColor">@color/colorAccent</item>
-    </style>
 
+        <item name="alertDialogTheme">@style/ExitAccountAlertDialog</item>
 
-    <style name="CustomAuthBtn" parent="Widget.MaterialComponents.CardView">
-        <item name="cardBackgroundColor">@color/colorAccent</item>
-    </style>
-
-    <style name="CustomBtn" parent="TextAppearance.AppCompat.Widget.Button">
-        <item name="android:background">@drawable/ripple</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textSize">17sp</item>
-    </style>
-
-    <style name="Toolbar">
-        <item name="android:background">@color/colorPrimaryContent</item>
-        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
-    </style>
-
-    <style name="ToolbarDark">
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
-    </style>
-
-    <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
-        <item name="android:background">@color/colorPrimaryDark</item>
-        <item name="itemHorizontalTranslationEnabled">false</item>
-        <item name="itemIconTint">@color/selector_bottom_nav_btn</item>
-    </style>
-
-    <style name="FavoriteCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
-        <item name="android:button">@drawable/selector_checkbox_favorite</item>
-    </style>
-
-    <style name="ShareCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
-        <item name="android:button">@drawable/ic_share</item>
-    </style>
-    
-    <style name="AppSearchView">
-        <item name="searchIcon">@drawable/ic_search</item>
-        <item name="queryHint">@string/hint_searchView_memeFeedFr</item>
-        <item name="android:imeActionId">6</item>
-    </style>
-    
-    <style name="MemeNameTv" parent="Widget.AppCompat.TextView">
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">26sp</item>
-    </style>
-
-    <style name="MemeDateCreatedTv" parent="Widget.AppCompat.TextView">
-        <item name="android:textColor">#80FFFFFF</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="MemeDateDescriptionTv" parent="Widget.AppCompat.TextView">
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="ProfileName" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@android:color/white</item>
     </style>
 
 </resources>

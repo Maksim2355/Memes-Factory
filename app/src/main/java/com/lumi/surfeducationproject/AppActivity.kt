@@ -52,6 +52,7 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
         window.statusBarColor = resources.getColor(color)
     }
 
+
     override fun startMemeDetailsScreen(meme: Meme) {
         val bundle = Bundle()
         bundle.putSerializable(Key_Details_Meme, meme)

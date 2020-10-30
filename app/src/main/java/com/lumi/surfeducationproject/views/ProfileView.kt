@@ -3,12 +3,14 @@ package com.lumi.surfeducationproject.views
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.domain.model.User
 import moxy.MvpView
+import moxy.viewstate.strategy.StateStrategyType
 import moxy.viewstate.strategy.alias.AddToEndSingle
+import moxy.viewstate.strategy.alias.SingleState
 import moxy.viewstate.strategy.alias.Skip
 
 interface ProfileView: MvpView {
 
-    @AddToEndSingle
+    @SingleState
     fun showMemes(memeList: List<Meme>)
 
     @Skip
@@ -18,6 +20,9 @@ interface ProfileView: MvpView {
     fun showProfile(user: User)
 
     @AddToEndSingle
+    fun showDialog()
+
+    @Skip
     fun showErrorSnackBarDownloadProfile(message: String)
 
 }

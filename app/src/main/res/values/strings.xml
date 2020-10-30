@@ -11,4 +11,7 @@
     <string name="create_mem_title">Создать</string>
     <string name="logout">Выйти</string>
     <string name="about_app">О приложении</string>
+    <string name="dialog_logout_title">Действительно хотите выйти?</string>
+    <string name="dialog_logout_cancle_btn">Отмена</string>
+    <string name="dialog_logout_exitAccount_button">Выйти</string>
 </resources>

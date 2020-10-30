@@ -3,9 +3,7 @@ package com.lumi.surfeducationproject.data.repository
 import com.lumi.surfeducationproject.data.dto.mappers.UserDtoDataMapper
 import com.lumi.surfeducationproject.data.dto.network.NetworkLoginUserRequest
 import com.lumi.surfeducationproject.data.services.local.SharedPreferenceService
-import com.lumi.surfeducationproject.data.services.local.SharedPreferenceServiceImpl
 import com.lumi.surfeducationproject.data.services.network.AuthService
-import com.lumi.surfeducationproject.data.services.network.AuthServiceImpl
 import com.lumi.surfeducationproject.domain.model.User
 import com.lumi.surfeducationproject.domain.repository.UserRepository
 import io.reactivex.rxjava3.core.Completable
@@ -19,8 +17,8 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
 
 
-    override fun getUser(userRequestRequestNetwork: NetworkLoginUserRequest?): Single<User> {
-        return authService.loginIn(userRequestRequestNetwork)
+    override fun getUser(userRequestNetwork: NetworkLoginUserRequest?): Single<User> {
+        return authService.loginIn(userRequestNetwork)
             .map { mapper.transform(it) }
             .doOnSuccess { sharedPreferenceService.saveUser(it) }
     }
@@ -31,7 +29,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun deleteUser(): Completable {
         return authService.logout()
-            .doFinally { sharedPreferenceService.deleteUser() }
+            .doOnComplete { sharedPreferenceService.deleteUser() }
     }
 
 
