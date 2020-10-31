@@ -19,7 +19,7 @@
         android:layout_height="88dp"
         android:background="@drawable/border_avatar"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="@dimen/large_margin"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/standard_margin"
         tools:text="Никнейм" />
 
     <TextView
@@ -36,22 +36,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginStart="@dimen/large_margin"
+        android:layout_marginEnd="@dimen/large_margin"
+        android:layout_marginBottom="@dimen/large_margin"
         android:gravity="center"
         tools:text="A pessimist is a man who thinks everybody is as nasty as himself, and hates them for it." />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="24dp"
-        android:background="#312F51" />
+        android:layout_height="@dimen/line_height_view"
+        android:layout_marginBottom="@dimen/large_margin"
+        android:background="@color/colorPrimaryContent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/memeList_profile_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 
 </LinearLayout>

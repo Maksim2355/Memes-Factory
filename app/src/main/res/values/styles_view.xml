@@ -11,8 +11,6 @@
         <item name="buttonBarNegativeButtonStyle">@style/DialogNegativeButton</item>
 
         <item name="android:textSize">@dimen/standard_text_size</item>
-
-
     </style>
 
     <style name="DialogPositiveButton">

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.AddMemeFragment">
 
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_add_meme"
         android:layout_width="match_parent"
@@ -13,7 +14,28 @@
         android:theme="@style/Toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_create_meme"
+                android:textSize="@dimen/standard_text_size"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:textColor="@color/colorAccent"
+                android:background=""/>
+
+        </LinearLayout>
+        
+
+    </androidx.appcompat.widget.Toolbar>
 
 
     <ScrollView
@@ -24,6 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_add_meme">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,35 +54,56 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
 
-            <com.google.android.material.textfield.TextInputLayout
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp">
+                android:layout_marginBottom="@dimen/standard_margin"
+                android:textSize="@dimen/large_title_size"
+                android:background="@android:color/transparent"
+                android:layout_margin="@dimen/standard_margin"
+                android:autofillHints=""
+                android:hint="@string/input_title_hint"/>
 
-                <com.google.android.material.textfield.TextInputEditText
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/standard_margin"
+                android:textSize="@dimen/standard_text_size"
+                android:layout_marginLeft="@dimen/standard_margin"
+                android:layout_marginRight="@dimen/standard_margin"
+                android:background="@android:color/transparent"
+                android:hint="@string/input_description_hint" />
+
+
+
+            <FrameLayout
+                android:id="@+id/memeAdd_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:visibility="gone"
+                tools:ignore="UselessParent">
+
+                
+                <ImageButton
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/round_corner_close_btn"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="@dimen/ic_margin"
+                    android:layout_marginTop="@dimen/ic_margin"
+                    android:src="@drawable/ic_close"/>
+
+                <ImageView
+                    android:id="@+id/imageView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="hint" />
+                    tools:src="@tools:sample/avatars" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="hint" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:src="@tools:sample/avatars" />
+            </FrameLayout>
 
         </LinearLayout>
 
@@ -70,11 +114,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:layout_marginBottom="@dimen/standard_margin"
         android:background="@drawable/round_corner"
-        android:padding="8dp"
         android:src="@drawable/ic_attach"
+        android:padding="@dimen/small_padding"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

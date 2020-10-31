@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="@dimen/small_margin"
     android:layout_weight="1"
     android:backgroundTint="@color/colorPrimaryContent"
-    app:cardCornerRadius="6dp">
+    app:cardCornerRadius="@dimen/radius_card_meme_item">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,9 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:layout_marginBottom="@dimen/margin_bottom_item_meme"
             android:orientation="vertical">
 
             <TextView
@@ -45,7 +45,7 @@
                     style="@style/FavoriteCheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp" />
+                    android:layout_marginEnd="@dimen/small_margin" />
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/share_btn"

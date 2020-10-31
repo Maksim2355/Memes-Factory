@@ -15,10 +15,8 @@ import javax.inject.Inject
 
 class AddMemeFragment : MvpAppCompatFragment() {
 
-
     @Inject
     lateinit var styleManager: StyleManager
-
     @Inject
     lateinit var snackBarManager: SnackBarManager
 
