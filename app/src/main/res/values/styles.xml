@@ -8,7 +8,7 @@
         <item name="android:itemBackground">@color/colorPrimaryContent</item>
         <item name="android:actionMenuTextColor">@color/colorAccent</item>
 
-        <item name="alertDialogTheme">@style/ExitAccountAlertDialog</item>
+        <item name="alertDialogTheme">@style/SerfAlertDialog</item>
 
     </style>
 

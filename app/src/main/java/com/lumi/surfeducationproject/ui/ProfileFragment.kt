@@ -1,7 +1,6 @@
 package com.lumi.surfeducationproject.ui
 
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
@@ -28,7 +27,6 @@ import javax.inject.Provider
 
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileView {
-
 
     @Inject
     lateinit var presenterProvider: Provider<ProfilePresenter>
@@ -120,18 +118,20 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         val contextForDialog = context
         contextForDialog?.let {
             val builder: AlertDialog.Builder = AlertDialog.Builder(contextForDialog)
-            builder.setMessage(R.string.dialog_logout_title)
-
-            builder.setPositiveButton(R.string.dialog_logout_exitAccount_button
-            ) { dialog, _ ->
-                dialog.dismiss()
-                presenter.logout()
-            }
-            builder.setNegativeButton(R.string.dialog_logout_cancle_btn
-            ) { dialog, _ ->
-                dialog.dismiss()
-            }
-            builder.create().show()
+            builder.setTitle(R.string.dialog_logout_title)
+                .setMessage("")
+                .setPositiveButton(
+                    R.string.dialog_logout_exitAccount_button
+                ) { dialog, _ ->
+                    dialog.dismiss()
+                    presenter.logout()
+                }
+                .setNegativeButton(
+                    R.string.dialog_logout_cancel_btn
+                ) { dialog, _ ->
+                    dialog.dismiss()
+                }
+            .create().show()
         }
     }
 

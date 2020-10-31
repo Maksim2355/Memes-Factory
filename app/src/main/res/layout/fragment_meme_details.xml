@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.MemeDetailsFragment">
 
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_meme_details"
         android:layout_width="match_parent"
@@ -36,10 +35,7 @@
                 android:layout_marginStart="@dimen/username_margin_toolbar"
                 tools:text="nickanmeDebila" />
         </LinearLayout>
-
     </androidx.appcompat.widget.Toolbar>
-
-
 
     <ScrollView
         android:layout_width="0dp"
@@ -55,10 +51,10 @@
 
             <TextView
                 android:id="@+id/title_meme_tv"
+                style="@style/MemeNameTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/standard_margin"
-                style="@style/MemeNameTv"
                 tools:text="Работай дизайнер! Солнце еще высоко..." />
 
             <ImageView
@@ -71,18 +67,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/standard_margin"
-                android:layout_marginEnd="@dimen/standard_margin"
                 android:layout_marginTop="@dimen/margin_prop_meme"
+                android:layout_marginEnd="@dimen/standard_margin"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/created_date_tv"
+                    style="@style/MemeDateCreatedTv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    style="@style/MemeDateCreatedTv"
                     tools:text="29.06.2020" />
-
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/favorite_detatils_checkBox"
@@ -94,14 +89,13 @@
 
             <TextView
                 android:id="@+id/text_meme_tv"
+                style="@style/MemeDateDescriptionTv"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="@dimen/standard_margin"
                 android:layout_weight="1"
-                style="@style/MemeDateDescriptionTv"
-                tools:text="Описание тестового мема и прочее"/>
+                tools:text="Описание тестового мема и прочее" />
         </LinearLayout>
-
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

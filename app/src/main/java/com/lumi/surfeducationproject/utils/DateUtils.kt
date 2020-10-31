@@ -24,7 +24,7 @@ fun getPostCreateDate(differenceDateMs: Int): String {
     }
     return when {
         differenceDateMs <= SECOND_IN_MSEC -> {
-            return "Только что"
+            "Только что"
         }
         differenceDateMs < MINUTE_IN_MSEC -> {
             val secondPublished = calendar.get(Calendar.SECOND) - calendarPublic.get(Calendar.SECOND)

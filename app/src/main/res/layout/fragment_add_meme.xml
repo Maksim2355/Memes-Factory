@@ -14,7 +14,7 @@
         android:theme="@style/Toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <LinearLayout
@@ -24,16 +24,15 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/create_meme_btn"
+                style="@style/CreateMemeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/btn_create_meme"
-                android:textSize="@dimen/standard_text_size"
                 android:layout_marginEnd="@dimen/small_margin"
-                android:textColor="@color/colorAccent"
-                android:background=""/>
+                android:text="@string/btn_create_meme" />
 
         </LinearLayout>
-        
+
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -57,25 +56,23 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/standard_margin"
-                android:textSize="@dimen/large_title_size"
-                android:background="@android:color/transparent"
                 android:layout_margin="@dimen/standard_margin"
+                android:layout_marginBottom="@dimen/standard_margin"
                 android:autofillHints=""
-                android:hint="@string/input_title_hint"/>
-
+                android:background="@android:color/transparent"
+                android:hint="@string/input_title_hint"
+                android:textSize="@dimen/large_title_size" />
 
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/standard_margin"
-                android:textSize="@dimen/standard_text_size"
                 android:layout_marginLeft="@dimen/standard_margin"
                 android:layout_marginRight="@dimen/standard_margin"
+                android:layout_marginBottom="@dimen/standard_margin"
                 android:background="@android:color/transparent"
-                android:hint="@string/input_description_hint" />
-
+                android:hint="@string/input_description_hint"
+                android:textSize="@dimen/standard_text_size" />
 
 
             <FrameLayout
@@ -87,15 +84,15 @@
                 android:visibility="gone"
                 tools:ignore="UselessParent">
 
-                
+
                 <ImageButton
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:background="@drawable/round_corner_close_btn"
                     android:layout_gravity="right"
-                    android:layout_marginEnd="@dimen/ic_margin"
                     android:layout_marginTop="@dimen/ic_margin"
-                    android:src="@drawable/ic_close"/>
+                    android:layout_marginEnd="@dimen/ic_margin"
+                    android:background="@drawable/round_corner_close_btn"
+                    android:src="@drawable/ic_close" />
 
                 <ImageView
                     android:id="@+id/imageView"
@@ -117,8 +114,8 @@
         android:layout_marginEnd="@dimen/standard_margin"
         android:layout_marginBottom="@dimen/standard_margin"
         android:background="@drawable/round_corner"
-        android:src="@drawable/ic_attach"
         android:padding="@dimen/small_padding"
+        android:src="@drawable/ic_attach"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

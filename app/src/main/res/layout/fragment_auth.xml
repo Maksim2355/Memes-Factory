@@ -11,8 +11,8 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/padding_auth_input_fields_top"
         android:layout_marginLeft="@dimen/standard_padding"
+        android:layout_marginTop="@dimen/padding_auth_input_fields_top"
         android:layout_marginRight="@dimen/standard_padding"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,10 +64,10 @@
 
         <Button
             android:id="@+id/auth_user_btn"
+            style="@style/AuthBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            style="@style/CustomBtn"
             android:paddingTop="@dimen/standard_padding"
             android:paddingBottom="@dimen/standard_padding"
             android:text="@string/loginIn_button_authFragment"
@@ -77,7 +77,7 @@
             android:id="@+id/progress_auth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:indeterminateDrawable="s@drawable/progress_bar"
+            android:indeterminateDrawable="@drawable/progress_bar"
             android:paddingTop="@dimen/small_padding"
             android:paddingBottom="@dimen/small_padding"
             android:visibility="gone" />

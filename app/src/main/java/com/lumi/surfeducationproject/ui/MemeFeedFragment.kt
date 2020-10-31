@@ -65,6 +65,7 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
     override fun onAttach(context: Context) {
         super.onAttach(context)
         App.instance.startFragmentComponent().inject(this)
+
     }
 
     override fun onCreateView(
