@@ -43,5 +43,8 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="TextLimitError" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/colorError</item>
+    </style>
 
 </resources>

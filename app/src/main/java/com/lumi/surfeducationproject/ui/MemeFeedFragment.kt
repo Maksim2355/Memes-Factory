@@ -35,7 +35,6 @@ import javax.inject.Provider
 class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshListener, MemeFeedView,
     RefresherOwner {
 
-
     @Inject
     lateinit var presenterProvider: Provider<MemesFeedPresenter>
     private val presenter by moxyPresenter {
@@ -50,7 +49,6 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
 
     @Inject
     lateinit var styleManager: StyleManager
-
     @Inject
     lateinit var snackBarManager: SnackBarManager
 
@@ -65,7 +63,6 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
     override fun onAttach(context: Context) {
         super.onAttach(context)
         App.instance.startFragmentComponent().inject(this)
-
     }
 
     override fun onCreateView(
@@ -79,31 +76,30 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initToolbar(view)
+        initView(view)
+        initRecyclerView()
+        memeController.memeDetailsClickListener = { presenter.openDetails(it) }
+        memeController.shareClickListener = { presenter.shareMeme(it) }
+        presenter.loadMemes()
+    }
 
-        toolbar = view.findViewById(R.id.toolbar_meme_feed)
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        getActionBar()?.title = "Популярные мемы"
-
+    private fun initView(view: View) {
+        memesRecyclerView = view.findViewById(R.id.state_meme_list_rv)
+        errorView = view.findViewById(R.id.state_error_tv)
+        loadView = view.findViewById(R.id.state_progress_pb)
         refresh = view.findViewById(R.id.refresh_srl)
         with(refresh) {
             setColorSchemeColors(Color.BLACK)
             setProgressBackgroundColorSchemeColor(resources.getColor(R.color.colorAccent))
         }
         refresh.setOnRefreshListener(this)
+    }
 
-
-        memeController.memeDetailsClickListener = {
-            presenter.openDetails(it)
-        }
-        memeController.shareClickListener = { presenter.shareMeme(it) }
-
-        memesRecyclerView = view.findViewById(R.id.state_meme_list_rv)
-        initRecyclerView()
-
-        errorView = view.findViewById(R.id.state_error_tv)
-        loadView = view.findViewById(R.id.state_progress_pb)
-
-        presenter.loadMemes()
+    private fun initToolbar(view: View) {
+        toolbar = view.findViewById(R.id.toolbar_meme_feed)
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        getActionBar()?.title = "Популярные мемы"
     }
 
 
@@ -199,7 +195,6 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
     }
 
     private fun getActionBar() = (activity as AppCompatActivity).supportActionBar
-
 
     override fun onDetach() {
         super.onDetach()

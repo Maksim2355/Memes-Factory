@@ -15,12 +15,21 @@ import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.Key_Details_Meme
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 import com.lumi.surfeducationproject.domain.model.Meme
+import com.lumi.surfeducationproject.domain.model.User
+import com.lumi.surfeducationproject.presenters.MemeDetailsPresenter
 import com.lumi.surfeducationproject.utils.getPostCreateDate
+import com.lumi.surfeducationproject.views.MemeDetailsView
 import moxy.MvpAppCompatFragment
+import moxy.ktx.moxyPresenter
 import javax.inject.Inject
+import javax.inject.Provider
 
 
-class MemeDetailsFragment : MvpAppCompatFragment() {
+class MemeDetailsFragment : MvpAppCompatFragment(), MemeDetailsView {
+
+    @Inject
+    lateinit var presenterProvider: Provider<MemeDetailsPresenter>
+    private val presenter by moxyPresenter { presenterProvider.get() }
 
     private lateinit var toolbar: Toolbar
 
@@ -51,49 +60,36 @@ class MemeDetailsFragment : MvpAppCompatFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        toolbar = view.findViewById(R.id.toolbar_meme_details)
-        toolbar.navigationIcon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_close)}
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        getActionBar()?.title = null
-        toolbar.setNavigationOnClickListener { navBack.back() }
+        initView(view)
+        initToolbar()
+        showMeme()
 
+        presenter.initProfile()
+    }
 
-        memeTitleTv = view.findViewById(R.id.title_meme_tv)
-        memeImgIv = view.findViewById(R.id.img_meme_iv)
-        dateCreateTv = view.findViewById(R.id.created_date_tv)
-        favoriteCheckBox = view.findViewById(R.id.favorite_detatils_checkBox)
-        descriptionTv = view.findViewById(R.id.text_meme_tv)
-
-        avatarsMiniIv = view.findViewById(R.id.avatars_mini_iv)
-        nicknameMiniTv = view.findViewById(R.id.nickname_mini_tv)
-
-//        UserRepositoryImpl().getUser().subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe({
-//                it?.let {
-//                    Glide.with(this).load("https://img.pngio.com/avatar-1-length-of-human-face-hd-png-download-6648260-free-human-face-png-840_640.png")
-//                        .optionalCircleCrop()
-//                        .into(avatarsMiniIv)
-//                    nicknameMiniTv.text = it.firstName
-//                }
-//            },{
-//                //Todo Понять, нужен ли реактивный подход в получении данных с репозитория
-//                nicknameMiniTv.text = "Загадочная личность"
-//            })
-
-
+    private fun showMeme() {
         val meme = arguments?.getSerializable(Key_Details_Meme) as Meme
         meme.let {
             memeTitleTv.text = meme.title
             Glide.with(this).load(meme.photoUrl).into(memeImgIv)
             //Todo сделать преобразования даты
             dateCreateTv.text = getPostCreateDate(meme.createdDate)
-            if (meme.isFavorite){
+            if (meme.isFavorite) {
                 favoriteCheckBox.isChecked = true
             }
             descriptionTv.text = meme.description
         }
+    }
 
+    override fun showUserInfoToolbar(user: User) {
+        Glide.with(this).load("https://img.pngio.com/avatar-1-length-of-human-face-hd-png-download-6648260-free-human-face-png-840_640.png")
+            .optionalCircleCrop()
+            .into(avatarsMiniIv)
+        nicknameMiniTv.text = user.firstName
+    }
+
+    override fun showErrorStateUserInfoToolbar() {
+        nicknameMiniTv.text = getString(R.string.error_message_user_toolbar_meme_details)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -101,12 +97,28 @@ class MemeDetailsFragment : MvpAppCompatFragment() {
         inflater.inflate(R.menu.menu_toolbar_details_meme, menu)
     }
 
+    private fun initToolbar() {
+        toolbar.navigationIcon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_close) }
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        getActionBar()?.title = null
+        toolbar.setNavigationOnClickListener { navBack.back() }
+    }
 
     private fun getActionBar() = (activity as AppCompatActivity).supportActionBar
-
 
     override fun onDetach() {
         super.onDetach()
         App.instance.clearFragmentComponent()
+    }
+
+    private fun initView(view: View) {
+        toolbar = view.findViewById(R.id.toolbar_meme_details)
+        memeTitleTv = view.findViewById(R.id.title_meme_tv)
+        memeImgIv = view.findViewById(R.id.img_meme_iv)
+        dateCreateTv = view.findViewById(R.id.created_date_tv)
+        favoriteCheckBox = view.findViewById(R.id.favorite_detatils_checkBox)
+        descriptionTv = view.findViewById(R.id.text_meme_tv)
+        avatarsMiniIv = view.findViewById(R.id.avatars_mini_iv)
+        nicknameMiniTv = view.findViewById(R.id.nickname_mini_tv)
     }
 }

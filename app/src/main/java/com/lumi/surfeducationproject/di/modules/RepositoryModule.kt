@@ -1,6 +1,7 @@
 package com.lumi.surfeducationproject.di.modules
 
 import com.lumi.surfeducationproject.data.api.MemesApi
+import com.lumi.surfeducationproject.data.db.MemeDao
 import com.lumi.surfeducationproject.data.dto.mappers.MemeDtoDataMapper
 import com.lumi.surfeducationproject.data.dto.mappers.UserDtoDataMapper
 import com.lumi.surfeducationproject.data.repository.MemeRepositoryImpl
@@ -16,7 +17,6 @@ import javax.inject.Singleton
 @Module
 class RepositoryModule {
 
-
     @Provides
     @Singleton
     fun provideUserMapper(): UserDtoDataMapper{
@@ -28,7 +28,6 @@ class RepositoryModule {
     fun provideMemeMapper(): MemeDtoDataMapper{
         return MemeDtoDataMapper()
     }
-
 
     @Provides
     @Singleton
@@ -45,9 +44,10 @@ class RepositoryModule {
     @Singleton
     fun provideMemeRepository(
         memesApi: MemesApi,
+        memeDao: MemeDao,
         mapper: MemeDtoDataMapper
     ): MemeRepository {
-        return MemeRepositoryImpl(memesApi, mapper)
+        return MemeRepositoryImpl(memesApi, memeDao, mapper)
     }
 
 

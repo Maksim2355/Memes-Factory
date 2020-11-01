@@ -17,4 +17,5 @@
     <string name="input_title_hint">Заголовок</string>
     <string name="input_description_hint">Текст</string>
     <string name="btn_create_meme">Создать</string>
+    <string name="error_message_user_toolbar_meme_details">Загадочная личность</string>
 </resources>
