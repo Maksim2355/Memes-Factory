@@ -2,12 +2,17 @@ package com.lumi.surfeducationproject.di.modules
 
 import com.lumi.surfeducationproject.data.api.MemesApi
 import com.lumi.surfeducationproject.data.db.MemeDao
-import com.lumi.surfeducationproject.data.dto.mappers.MemeDtoDataMapper
+import com.lumi.surfeducationproject.data.dto.local.DbMeme
+import com.lumi.surfeducationproject.data.dto.mappers.MemeDataMapper
+import com.lumi.surfeducationproject.data.dto.mappers.MemeDbDataMapper
+import com.lumi.surfeducationproject.data.dto.mappers.MemeNetworkDataMapper
 import com.lumi.surfeducationproject.data.dto.mappers.UserDtoDataMapper
+import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
 import com.lumi.surfeducationproject.data.repository.MemeRepositoryImpl
 import com.lumi.surfeducationproject.data.repository.UserRepositoryImpl
 import com.lumi.surfeducationproject.data.services.local.SharedPreferenceService
 import com.lumi.surfeducationproject.data.services.network.AuthService
+import com.lumi.surfeducationproject.data.storage.Storage
 import com.lumi.surfeducationproject.domain.repository.MemeRepository
 import com.lumi.surfeducationproject.domain.repository.UserRepository
 import dagger.Module
@@ -19,15 +24,11 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideUserMapper(): UserDtoDataMapper{
-        return UserDtoDataMapper()
-    }
+    fun provideUserMapper(): UserDtoDataMapper = UserDtoDataMapper()
 
     @Provides
     @Singleton
-    fun provideMemeMapper(): MemeDtoDataMapper{
-        return MemeDtoDataMapper()
-    }
+    fun provideNetworkMemeMapper(): MemeDataMapper<NetworkMeme> = MemeNetworkDataMapper()
 
     @Provides
     @Singleton
@@ -35,20 +36,16 @@ class RepositoryModule {
         sharedPreferences: SharedPreferenceService,
         authService: AuthService,
         mapper: UserDtoDataMapper
-        ): UserRepository {
-        return UserRepositoryImpl(sharedPreferences, authService, mapper)
-    }
+    ): UserRepository = UserRepositoryImpl(sharedPreferences, authService, mapper)
 
 
     @Provides
     @Singleton
     fun provideMemeRepository(
         memesApi: MemesApi,
-        memeDao: MemeDao,
-        mapper: MemeDtoDataMapper
-    ): MemeRepository {
-        return MemeRepositoryImpl(memesApi, memeDao, mapper)
-    }
+        mapperNetwork: MemeDataMapper<NetworkMeme>,
+        storage: Storage
+    ): MemeRepository = MemeRepositoryImpl(memesApi, mapperNetwork, storage)
 
 
 }

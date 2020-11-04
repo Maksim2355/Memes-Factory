@@ -16,15 +16,13 @@ class ServiceModule {
 
     @Provides
     @Singleton
-    fun provideSharedPreferenceService(sharedPreference: SharedPreferences): SharedPreferenceService {
-        return SharedPreferenceServiceImpl(sharedPreference)
-    }
+    fun provideSharedPreferenceService(sharedPreference: SharedPreferences): SharedPreferenceService =
+        SharedPreferenceServiceImpl(sharedPreference)
+
 
     @Provides
     @Singleton
-    fun provideAuthService(authApi: AuthApi): AuthService {
-        return AuthServiceImpl(authApi)
-    }
+    fun provideAuthService(authApi: AuthApi): AuthService = AuthServiceImpl(authApi)
 
 
 

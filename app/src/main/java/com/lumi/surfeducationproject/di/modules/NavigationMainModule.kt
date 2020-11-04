@@ -11,33 +11,22 @@ class NavigationMainModule(private val activity: Context) {
 
     @Provides
     @ActivityScope
-    fun provideNavigationAuth(): NavigationAuth{
-        return activity as NavigationAuth
-    }
+    fun provideNavigationAuth() = activity as NavigationAuth
 
     @Provides
     @ActivityScope
-    fun provideNavigationBackPressed(): NavigationBackPressed{
-        return activity as NavigationBackPressed
-    }
+    fun provideNavigationBackPressed() = activity as NavigationBackPressed
 
     @Provides
     @ActivityScope
-    fun provideNavigationContent(): NavigationContent{
-        return activity as NavigationContent
-    }
+    fun provideNavigationContent() = activity as NavigationContent
 
     @Provides
     @ActivityScope
-    fun provideNavigationMemeDetails(): NavigationMemeDetails{
-        return activity as NavigationMemeDetails
-    }
+    fun provideNavigationMemeDetails() = activity as NavigationMemeDetails
 
     @Provides
     @ActivityScope
-    fun provideNavigationStartApp(): NavigationStartApp{
-        return activity as NavigationStartApp
-    }
-
+    fun provideNavigationStartApp() = activity as NavigationStartApp
 
 }

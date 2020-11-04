@@ -3,14 +3,13 @@ package com.lumi.surfeducationproject.data.dto.local
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
-import java.io.Serializable
 
 @Entity
 data class DbMeme(
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
-    val id: String,
+    var id: Int? = null,
 
     @ColumnInfo(name = "title")
     val title: String,

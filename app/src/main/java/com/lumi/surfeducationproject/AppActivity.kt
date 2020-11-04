@@ -7,18 +7,14 @@ import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.lumi.surfeducationproject.common.*
-import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
-import com.lumi.surfeducationproject.data.repository.UserRepositoryImpl
-import com.lumi.surfeducationproject.navigation.*
-import com.lumi.surfeducationproject.data.services.local.SharedPreferenceServiceImpl
+import com.lumi.surfeducationproject.common.Key_Details_Meme
+import com.lumi.surfeducationproject.common.SnackBarManager
+import com.lumi.surfeducationproject.common.StyleManager
 import com.lumi.surfeducationproject.domain.model.Meme
+import com.lumi.surfeducationproject.navigation.*
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_profile.*
-import javax.inject.Inject
 
 
 class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, NavigationMemeDetails , StyleManager,

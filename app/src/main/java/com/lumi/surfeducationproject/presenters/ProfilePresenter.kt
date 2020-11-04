@@ -15,7 +15,7 @@ class ProfilePresenter @Inject constructor(
 
 
     fun loadProfile(){
-        userRepository.getUser().subscribeOn(Schedulers.io())
+        userRepository.getUser()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 if (it != null){
@@ -31,7 +31,6 @@ class ProfilePresenter @Inject constructor(
     fun logout(){
         userRepository
             .deleteUser()
-            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 viewState.exitAccount()
@@ -41,7 +40,15 @@ class ProfilePresenter @Inject constructor(
     }
 
     fun loadMemes(){
-        //Todo Добавление и загрузка мемов с БД
+        memeRepository.getUserMemes()
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { viewState.showLoadState() }
+            .doFinally { viewState.hideLoadState() }
+            .subscribe({
+                viewState.showMemes(it)
+            }, {
+
+            })
     }
 
 }

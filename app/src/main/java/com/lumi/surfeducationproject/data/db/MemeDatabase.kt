@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.lumi.surfeducationproject.data.dto.local.DbMeme
 
 
-@Database(entities = [DbMeme::class], version = 1)
+@Database(entities = [DbMeme::class], version = 1, exportSchema = false)
 abstract class MemeDatabase: RoomDatabase() {
     abstract fun memeDao(): MemeDao
 }

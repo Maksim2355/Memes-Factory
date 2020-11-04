@@ -24,6 +24,7 @@ import com.lumi.surfeducationproject.presenters.AuthPresenter
 import com.lumi.surfeducationproject.presenters.MemesFeedPresenter
 import com.lumi.surfeducationproject.views.MemeFeedView
 import kotlinx.android.synthetic.main.fragment_meme_feed.*
+import kotlinx.android.synthetic.main.fragment_meme_feed.view.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.surfstudio.android.easyadapter.EasyAdapter
@@ -35,12 +36,6 @@ import javax.inject.Provider
 class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshListener, MemeFeedView,
     RefresherOwner {
 
-    @Inject
-    lateinit var presenterProvider: Provider<MemesFeedPresenter>
-    private val presenter by moxyPresenter {
-        presenterProvider.get()
-    }
-
     private lateinit var toolbar: Toolbar
     private lateinit var refresh: SwipeRefreshLayout
     private lateinit var memesRecyclerView: RecyclerView
@@ -48,14 +43,22 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
     private lateinit var loadView: FrameLayout
 
     @Inject
-    lateinit var styleManager: StyleManager
-    @Inject
-    lateinit var snackBarManager: SnackBarManager
+    lateinit var easyAdapter: EasyAdapter
 
     @Inject
-    lateinit var easyAdapter: EasyAdapter
-    @Inject
     lateinit var memeController: MemeController
+
+    @Inject
+    lateinit var presenterProvider: Provider<MemesFeedPresenter>
+    private val presenter by moxyPresenter {
+        presenterProvider.get()
+    }
+
+    @Inject
+    lateinit var styleManager: StyleManager
+
+    @Inject
+    lateinit var snackBarManager: SnackBarManager
 
     @Inject
     lateinit var navMemeDetailsFragment: NavigationMemeDetails
@@ -79,21 +82,6 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
         initToolbar(view)
         initView(view)
         initRecyclerView()
-        memeController.memeDetailsClickListener = { presenter.openDetails(it) }
-        memeController.shareClickListener = { presenter.shareMeme(it) }
-        presenter.loadMemes()
-    }
-
-    private fun initView(view: View) {
-        memesRecyclerView = view.findViewById(R.id.state_meme_list_rv)
-        errorView = view.findViewById(R.id.state_error_tv)
-        loadView = view.findViewById(R.id.state_progress_pb)
-        refresh = view.findViewById(R.id.refresh_srl)
-        with(refresh) {
-            setColorSchemeColors(Color.BLACK)
-            setProgressBackgroundColorSchemeColor(resources.getColor(R.color.colorAccent))
-        }
-        refresh.setOnRefreshListener(this)
     }
 
     private fun initToolbar(view: View) {
@@ -102,12 +90,31 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
         getActionBar()?.title = "Популярные мемы"
     }
 
+    private fun initView(view: View) {
+        memesRecyclerView = view.state_meme_list_rv
+        errorView = view.state_error_tv
+        loadView = view.state_progress_pb
+        refresh = view.refresh_srl
+        with(refresh) {
+            setColorSchemeColors(Color.BLACK)
+            setProgressBackgroundColorSchemeColor(resources.getColor(R.color.colorAccent))
+        }
+        refresh.setOnRefreshListener(this)
+    }
 
     private fun initRecyclerView() {
         with(memesRecyclerView) {
             adapter = easyAdapter
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
+        memeController.memeDetailsClickListener = { presenter.openDetails(it) }
+        memeController.shareClickListener = { presenter.shareMeme(it) }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        presenter.loadMemes()
     }
 
 

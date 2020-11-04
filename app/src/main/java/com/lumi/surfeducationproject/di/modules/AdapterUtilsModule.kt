@@ -10,13 +10,9 @@ import ru.surfstudio.android.easyadapter.EasyAdapter
 class AdapterUtilsModule {
 
     @Provides
-    fun provideEasyAdapter(): EasyAdapter{
-        return EasyAdapter()
-    }
+    fun provideEasyAdapter() = EasyAdapter()
 
     @Provides
-    fun provideMemeController(): MemeController{
-        return MemeController()
-    }
+    fun provideMemeController() = MemeController()
 
 }

@@ -13,14 +13,10 @@ class UiManagerModule(private val activity: Context) {
 
     @Provides
     @ActivityScope
-    fun provideStyleManager(): StyleManager {
-        return activity as StyleManager
-    }
+    fun provideStyleManager() = activity as StyleManager
 
     @Provides
     @ActivityScope
-    fun provideSnackBarManager(): SnackBarManager {
-        return activity as SnackBarManager
-    }
+    fun provideSnackBarManager() = activity as SnackBarManager
 
 }

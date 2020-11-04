@@ -5,8 +5,7 @@ import com.lumi.surfeducationproject.domain.model.User
 
 class UserDtoDataMapper {
 
-
-    fun transform(userResponse: NetworkUserResponse): User{
+    fun transform(userResponse: NetworkUserResponse): User {
         val userInfo = userResponse.userInfo
         return User(userInfo.id,
             userInfo.username,

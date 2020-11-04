@@ -10,7 +10,7 @@ import com.lumi.surfeducationproject.di.modules.*
 
 class App : Application() {
 
-    lateinit var appComponent: AppComponent
+    private lateinit var appComponent: AppComponent
     private var activityComponent: ActivityComponent? = null
     private var fragmentComponent: FragmentComponent? = null
 

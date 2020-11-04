@@ -8,6 +8,7 @@ import com.lumi.surfeducationproject.domain.model.User
 import com.lumi.surfeducationproject.domain.repository.UserRepository
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -21,15 +22,18 @@ class UserRepositoryImpl @Inject constructor(
         return authService.loginIn(userRequestNetwork)
             .map { mapper.transform(it) }
             .doOnSuccess { sharedPreferenceService.saveUser(it) }
+            .subscribeOn(Schedulers.io())
     }
 
     override fun getUser(): Single<User?> {
         return Single.fromCallable { sharedPreferenceService.readUser() }
+            .subscribeOn(Schedulers.io())
     }
 
     override fun deleteUser(): Completable {
         return authService.logout()
             .doOnComplete { sharedPreferenceService.deleteUser() }
+            .subscribeOn(Schedulers.io())
     }
 
 

@@ -25,4 +25,9 @@ interface ProfileView: MvpView {
     @Skip
     fun showErrorSnackBarDownloadProfile(message: String)
 
+    @Skip
+    fun showLoadState()
+
+    @Skip
+    fun hideLoadState()
 }

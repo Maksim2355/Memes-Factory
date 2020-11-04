@@ -20,38 +20,31 @@ class NetworkModule() {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
-        return if (BuildConfig.DEBUG) {
-            val builder = OkHttpClient().newBuilder()
-            builder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            builder.build()
-        } else {
-            OkHttpClient()
-        }
+    fun provideOkHttpClient(): OkHttpClient = if (BuildConfig.DEBUG) {
+        val builder = OkHttpClient().newBuilder()
+        builder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+        builder.build()
+    } else {
+        OkHttpClient()
     }
+
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL) // need for interceptors
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-            .build()
-    }
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL) // need for interceptors
+        .client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+        .build()
 
     @Provides
     @Singleton
-    fun provideMemeApi(retrofit: Retrofit): MemesApi {
-        return retrofit.create(MemesApi::class.java)
-    }
+    fun provideMemeApi(retrofit: Retrofit): MemesApi = retrofit.create(MemesApi::class.java)
 
     @Provides
     @Singleton
-    fun provideAuthApi(retrofit: Retrofit): AuthApi {
-        return retrofit.create(AuthApi::class.java)
-    }
+    fun provideAuthApi(retrofit: Retrofit): AuthApi = retrofit.create(AuthApi::class.java)
 
 
 }

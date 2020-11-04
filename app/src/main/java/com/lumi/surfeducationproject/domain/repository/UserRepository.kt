@@ -8,7 +8,7 @@ import io.reactivex.rxjava3.core.Single
 
 interface UserRepository {
 
-    fun getUser(userRequestRequestNetwork: NetworkLoginUserRequest?): Single<User>
+    fun getUser(userRequestNetwork: NetworkLoginUserRequest?): Single<User>
 
     fun getUser(): Single<User?>
 

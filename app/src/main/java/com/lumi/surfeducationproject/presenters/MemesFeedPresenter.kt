@@ -1,22 +1,20 @@
 package com.lumi.surfeducationproject.presenters
 
-import com.lumi.surfeducationproject.data.repository.MemeRepositoryImpl
+import com.lumi.surfeducationproject.data.exceptions.EmptyMemesDatabaseException
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.domain.repository.MemeRepository
 import com.lumi.surfeducationproject.exceptions.NETWORK_EXCEPTIONS
 import com.lumi.surfeducationproject.views.MemeFeedView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 import javax.inject.Inject
 
 class MemesFeedPresenter @Inject constructor(
     private val memeRepository: MemeRepository
-): MvpPresenter<MemeFeedView>() {
+) : MvpPresenter<MemeFeedView>() {
 
-    fun loadMemes(){
+    fun loadMemes() {
         memeRepository.getMemes()
-            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { viewState.showLoadState() }
             .doFinally { viewState.hideLoadState() }
@@ -27,41 +25,43 @@ class MemesFeedPresenter @Inject constructor(
             })
     }
 
-    fun updateMemes(){
+    fun updateMemes() {
         memeRepository.getMemes()
-            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { viewState.showRefresh() }
             .doFinally { viewState.hideRefresh() }
             .subscribe({
+                println(it)
                 showMemes(it)
             }, {
+                println(it.javaClass)
                 errorProcessing(it)
             })
     }
 
-    private fun showMemes(memeList: List<Meme>){
-        viewState.showMemes(memeList)
-    }
-
-    private fun errorProcessing(throwable: Throwable){
-        if (NETWORK_EXCEPTIONS.contains(throwable.javaClass)) {
-            viewState.showErrorSnackbar("Отсутствует подключение к интернету \nПодключитесь к сети и попробуйте снова")
+    private fun showMemes(memeList: List<Meme>) {
+        if (memeList.isNotEmpty()){
+            viewState.showMemes(memeList)
         }else {
-            viewState.showErrorState()
+            errorProcessing(EmptyMemesDatabaseException())
         }
     }
 
-    fun shareMeme(it: Meme) {
+    fun shareMeme(meme: Meme) {
 
     }
 
-    fun openDetails(it: Meme) {
-        viewState.openMemeDetails(it)
+    fun openDetails(meme: Meme) {
+        viewState.openMemeDetails(meme)
     }
 
-    fun filterMemeList(searchText: String) {
-        viewState.showErrorSnackbar(searchText)
+    private fun errorProcessing(throwable: Throwable) {
+        if (NETWORK_EXCEPTIONS.contains(throwable.javaClass)) {
+            viewState.showErrorSnackbar("Отсутствует подключение к интернету \nПодключитесь к сети и попробуйте снова")
+            viewState.showErrorState()
+        } else {
+            viewState.showErrorState()
+        }
     }
 
 

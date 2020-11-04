@@ -1,6 +1,5 @@
 package com.lumi.surfeducationproject.domain.model
 
-import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class Meme(

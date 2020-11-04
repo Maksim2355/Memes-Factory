@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.SnackBarManager
 import com.lumi.surfeducationproject.common.StyleManager
+import com.lumi.surfeducationproject.controllers.MemeController
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.domain.model.User
 import com.lumi.surfeducationproject.navigation.NavigationAuth
@@ -22,6 +24,8 @@ import com.lumi.surfeducationproject.views.ProfileView
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import ru.surfstudio.android.easyadapter.EasyAdapter
+import ru.surfstudio.android.easyadapter.ItemList
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -43,11 +47,18 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
     @Inject
     lateinit var navLogout: NavigationAuth
 
+    @Inject
+    lateinit var easyAdapter: EasyAdapter
+
+    @Inject
+    lateinit var memeController: MemeController
+
     private lateinit var toolbar: Toolbar
     private lateinit var avatarIv: ImageView
     private lateinit var nicknameTv: TextView
     private lateinit var descriptionTv: TextView
     private lateinit var recycler: RecyclerView
+    private lateinit var progressBarView: ProgressBar
 
 
     override fun onAttach(context: Context) {
@@ -69,14 +80,25 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         toolbar = view.toolbar_profile
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.title = ""
+        initView(view)
+        presenter.loadProfile()
+        presenter.loadMemes()
+    }
 
+    private fun initView(view: View) {
         avatarIv = view.avatars_iv
         nicknameTv = view.nickname_tv
         descriptionTv = view.descriptionProfile_tv
 
+        progressBarView = view.progress_view
         recycler = view.memeList_profile_rv
-
-        presenter.loadProfile()
+        with(recycler) {
+            adapter = easyAdapter
+            layoutManager = androidx.recyclerview.widget.StaggeredGridLayoutManager(
+                2,
+                androidx.recyclerview.widget.StaggeredGridLayoutManager.VERTICAL
+            )
+        }
     }
 
 
@@ -97,7 +119,10 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
     }
 
     override fun showMemes(memeList: List<Meme>) {
-        TODO("Not yet implemented")
+        val itemList = ItemList.create().apply {
+            addAll(memeList, memeController)
+        }
+        easyAdapter.setItems(itemList)
     }
 
     override fun exitAccount() {
@@ -131,12 +156,22 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
                 ) { dialog, _ ->
                     dialog.dismiss()
                 }
-            .create().show()
+                .create().show()
         }
     }
 
     override fun showErrorSnackBarDownloadProfile(message: String) {
         snackBarManager.showErrorMessage(message)
+    }
+
+    override fun showLoadState() {
+        progressBarView.visibility = View.VISIBLE
+        recycler.visibility = View.GONE
+    }
+
+    override fun hideLoadState() {
+        recycler.visibility = View.VISIBLE
+        progressBarView.visibility = View.GONE
     }
 
 

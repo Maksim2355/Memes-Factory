@@ -12,41 +12,39 @@ class PresenterModule {
 
     @Provides
     @FragmentScope
-    fun provideSplashPresenter(userRepository: UserRepository): SplashPresenter{
-        return SplashPresenter(userRepository)
-    }
+    fun provideSplashPresenter(userRepository: UserRepository) = SplashPresenter(userRepository)
+
 
     @Provides
     @FragmentScope
-    fun provideAuthPresenter(userRepository: UserRepository): AuthPresenter{
-        return AuthPresenter(userRepository)
-    }
+    fun provideAuthPresenter(userRepository: UserRepository) = AuthPresenter(userRepository)
 
     @Provides
     @FragmentScope
-    fun provideMemeFeedPresenter(memeRepository: MemeRepository): MemesFeedPresenter{
-        return MemesFeedPresenter(memeRepository)
-    }
+    fun provideMemeFeedPresenter(memeRepository: MemeRepository) =
+        MemesFeedPresenter(memeRepository)
+
 
     @Provides
     @FragmentScope
-    fun provideAddMemePresenter(userRepository: UserRepository,
-                                memeRepository: MemeRepository): AddMemePresenter{
-        return AddMemePresenter(memeRepository, userRepository)
-    }
+    fun provideAddMemePresenter(
+        userRepository: UserRepository,
+        memeRepository: MemeRepository
+    ) = AddMemePresenter(memeRepository, userRepository)
 
     @Provides
     @FragmentScope
-    fun provideProfilePresenter(userRepository: UserRepository,
-                                memeRepository: MemeRepository): ProfilePresenter{
-        return ProfilePresenter(userRepository, memeRepository)
-    }
+    fun provideProfilePresenter(
+        userRepository: UserRepository,
+        memeRepository: MemeRepository
+    ) = ProfilePresenter(userRepository, memeRepository)
+
 
     @Provides
     @FragmentScope
-    fun provideMemeDetailsPresenter(userRepository: UserRepository,
-                                    memeRepository: MemeRepository): MemeDetailsPresenter{
-        return MemeDetailsPresenter(userRepository, memeRepository)
-    }
+    fun provideMemeDetailsPresenter(
+        userRepository: UserRepository,
+        memeRepository: MemeRepository
+    ) = MemeDetailsPresenter(userRepository, memeRepository)
 
 }
