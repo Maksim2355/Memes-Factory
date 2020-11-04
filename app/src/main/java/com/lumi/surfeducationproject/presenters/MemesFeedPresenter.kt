@@ -3,7 +3,7 @@ package com.lumi.surfeducationproject.presenters
 import com.lumi.surfeducationproject.data.exceptions.EmptyMemesDatabaseException
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.domain.repository.MemeRepository
-import com.lumi.surfeducationproject.exceptions.NETWORK_EXCEPTIONS
+import com.lumi.surfeducationproject.common.exceptions.NETWORK_EXCEPTIONS
 import com.lumi.surfeducationproject.views.MemeFeedView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
@@ -31,10 +31,8 @@ class MemesFeedPresenter @Inject constructor(
             .doOnSubscribe { viewState.showRefresh() }
             .doFinally { viewState.hideRefresh() }
             .subscribe({
-                println(it)
                 showMemes(it)
             }, {
-                println(it.javaClass)
                 errorProcessing(it)
             })
     }
@@ -58,10 +56,9 @@ class MemesFeedPresenter @Inject constructor(
     private fun errorProcessing(throwable: Throwable) {
         if (NETWORK_EXCEPTIONS.contains(throwable.javaClass)) {
             viewState.showErrorSnackbar("Отсутствует подключение к интернету \nПодключитесь к сети и попробуйте снова")
-            viewState.showErrorState()
-        } else {
-            viewState.showErrorState()
         }
+        viewState.showErrorState()
+
     }
 
 

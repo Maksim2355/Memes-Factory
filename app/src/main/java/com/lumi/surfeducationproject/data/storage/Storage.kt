@@ -11,8 +11,8 @@ interface Storage {
 
     fun removeMemes()
 
-    fun getAllMemes(): Single<List<Meme>>
+    fun getAllMemes(): List<Meme>
 
-    fun getUserMemes(): Single<List<Meme>>
+    fun getUserMemes(): List<Meme>
 
 }

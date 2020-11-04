@@ -7,7 +7,7 @@ import java.util.ArrayList
 class MemeDbDataMapper : MemeDataMapper<DbMeme> {
 
     override fun transform(meme: DbMeme) = Meme(
-        id = meme.id!!,
+        id = meme.id,
         title = meme.title,
         createdDate = meme.createdDate,
         description = meme.description,
@@ -15,13 +15,12 @@ class MemeDbDataMapper : MemeDataMapper<DbMeme> {
         photoUrl = meme.photoUrl
     )
 
-
     override fun transformList(list: List<DbMeme>): List<Meme> {
         val listMeme = ArrayList<Meme>()
         for (meme in list) {
             listMeme.add(
                 Meme(
-                    id = meme.id!!,
+                    id = meme.id,
                     title = meme.title,
                     createdDate = meme.createdDate,
                     description = meme.description,
@@ -29,12 +28,12 @@ class MemeDbDataMapper : MemeDataMapper<DbMeme> {
                     photoUrl = meme.photoUrl
                 )
             )
-
         }
         return listMeme
     }
 
     override fun reverseTransform(meme: Meme): DbMeme = DbMeme(
+        id = meme.id,
         title = meme.title,
         createdDate = meme.createdDate,
         description = meme.description,
@@ -47,6 +46,7 @@ class MemeDbDataMapper : MemeDataMapper<DbMeme> {
         for (meme in list) {
             listMeme.add(
                 DbMeme(
+                    id = meme.id,
                     title = meme.title,
                     createdDate = meme.createdDate,
                     description = meme.description,

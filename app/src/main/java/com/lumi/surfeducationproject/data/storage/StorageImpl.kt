@@ -15,29 +15,25 @@ class StorageImpl @Inject constructor(
 ) : Storage {
 
     override fun insertUserMeme(memeUser: Meme) {
-        Completable.fromRunnable {
-            val dbMeme = mapper.reverseTransform(memeUser)
-            dbMeme.isLocalUserCreated = true
-            dao.insertMeme(dbMeme)
-        }.subscribeOn(Schedulers.io())
+        val dbMeme = mapper.reverseTransform(memeUser)
+        dbMeme.isLocalUserCreated = true
+        dao.insertMeme(dbMeme)
     }
 
     override fun insertMemes(memeList: List<Meme>) {
-        Completable.fromRunnable {
-            val dbMemeList = mapper.reverseTransformList(memeList)
-            dao.insertMemeList(dbMemeList)
-        }.subscribeOn(Schedulers.io())
+        val dbMemeList = mapper.reverseTransformList(memeList)
+        dao.insertMemeList(dbMemeList)
     }
 
-    override fun getAllMemes(): Single<List<Meme>> = Single.fromCallable {
+    override fun getAllMemes(): List<Meme> {
         val dbMemeList = dao.getAllMemes()
-        mapper.transformList(dbMemeList)
-    }.subscribeOn(Schedulers.io())
+        return mapper.transformList(dbMemeList)
+    }
 
-    override fun getUserMemes(): Single<List<Meme>> = Single.fromCallable {
+    override fun getUserMemes(): List<Meme> {
         val dbMemeList = dao.getAllUserMemes()
-        mapper.transformList(dbMemeList)
-    }.subscribeOn(Schedulers.io())
+        return mapper.transformList(dbMemeList)
+    }
 
     override fun removeMemes() {
         TODO("Not yet implemented")

@@ -2,9 +2,8 @@ package com.lumi.surfeducationproject.presenters
 
 import com.lumi.surfeducationproject.common.EmptyFields
 import com.lumi.surfeducationproject.data.dto.network.NetworkLoginUserRequest
-import com.lumi.surfeducationproject.data.repository.UserRepositoryImpl
 import com.lumi.surfeducationproject.domain.repository.UserRepository
-import com.lumi.surfeducationproject.exceptions.NETWORK_EXCEPTIONS
+import com.lumi.surfeducationproject.common.exceptions.NETWORK_EXCEPTIONS
 import com.lumi.surfeducationproject.views.AuthView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers

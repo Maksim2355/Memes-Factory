@@ -1,4 +1,4 @@
-package com.lumi.surfeducationproject.exceptions
+package com.lumi.surfeducationproject.common.exceptions
 
 import java.net.ConnectException
 import java.net.SocketTimeoutException

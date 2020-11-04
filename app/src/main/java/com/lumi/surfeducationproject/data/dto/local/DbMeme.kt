@@ -7,9 +7,9 @@ import androidx.room.PrimaryKey
 @Entity
 data class DbMeme(
 
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "_id")
-    var id: Int? = null,
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    val id: Int,
 
     @ColumnInfo(name = "title")
     val title: String,

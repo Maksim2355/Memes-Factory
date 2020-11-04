@@ -23,7 +23,7 @@ interface MemeDao {
     @Query("SELECT * FROM DbMeme WHERE is_local_user_created = 1")
     fun getAllUserMemes(): List<DbMeme>
 
-    @Query("SELECT * FROM DbMeme WHERE _id = :id")
+    @Query("SELECT * FROM DbMeme WHERE id = :id")
     fun getMemeById(id: Int): DbMeme
 
     @Update

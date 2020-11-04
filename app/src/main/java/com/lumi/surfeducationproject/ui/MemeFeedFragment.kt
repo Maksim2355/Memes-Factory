@@ -17,6 +17,7 @@ import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.*
 import com.lumi.surfeducationproject.controllers.MemeController
+import com.lumi.surfeducationproject.data.db.MemeDao
 import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
@@ -119,6 +120,7 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
 
 
     override fun showMemes(memesList: List<Meme>) {
+        initRecyclerView()
         val itemList = ItemList.create().apply {
             addAll(memesList, memeController)
         }
