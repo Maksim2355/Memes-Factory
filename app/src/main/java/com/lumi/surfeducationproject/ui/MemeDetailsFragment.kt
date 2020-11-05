@@ -63,8 +63,41 @@ class MemeDetailsFragment : MvpAppCompatFragment(), MemeDetailsView {
         initView(view)
         initToolbar()
         showMeme()
-
         presenter.initProfile()
+    }
+
+    private fun initView(view: View) {
+        toolbar = view.findViewById(R.id.meme_details_toolbar)
+        memeTitleTv = view.findViewById(R.id.title_meme_tv)
+        memeImgIv = view.findViewById(R.id.img_meme_iv)
+        dateCreateTv = view.findViewById(R.id.created_date_tv)
+        favoriteCheckBox = view.findViewById(R.id.favorite_details_chb)
+        descriptionTv = view.findViewById(R.id.text_meme_tv)
+        avatarsMiniIv = view.findViewById(R.id.avatars_mini_iv)
+        nicknameMiniTv = view.findViewById(R.id.nickname_mini_tv)
+    }
+
+    private fun initToolbar() {
+        toolbar.navigationIcon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_close) }
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        getActionBar()?.title = null
+        toolbar.setNavigationOnClickListener { navBack.back() }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_toolbar_details_meme, menu)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        App.instance.clearFragmentComponent()
+    }
+
+    private fun getActionBar() = (activity as AppCompatActivity).supportActionBar
+
+    override fun showErrorStateUserInfoToolbar() {
+        nicknameMiniTv.text = getString(R.string.memeDetails_errorToolbarUser_message)
     }
 
     private fun showMeme() {
@@ -86,39 +119,5 @@ class MemeDetailsFragment : MvpAppCompatFragment(), MemeDetailsView {
             .optionalCircleCrop()
             .into(avatarsMiniIv)
         nicknameMiniTv.text = user.firstName
-    }
-
-    override fun showErrorStateUserInfoToolbar() {
-        nicknameMiniTv.text = getString(R.string.error_message_user_toolbar_meme_details)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_toolbar_details_meme, menu)
-    }
-
-    private fun initToolbar() {
-        toolbar.navigationIcon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_close) }
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        getActionBar()?.title = null
-        toolbar.setNavigationOnClickListener { navBack.back() }
-    }
-
-    private fun getActionBar() = (activity as AppCompatActivity).supportActionBar
-
-    override fun onDetach() {
-        super.onDetach()
-        App.instance.clearFragmentComponent()
-    }
-
-    private fun initView(view: View) {
-        toolbar = view.findViewById(R.id.toolbar_meme_details)
-        memeTitleTv = view.findViewById(R.id.title_meme_tv)
-        memeImgIv = view.findViewById(R.id.img_meme_iv)
-        dateCreateTv = view.findViewById(R.id.created_date_tv)
-        favoriteCheckBox = view.findViewById(R.id.favorite_detatils_checkBox)
-        descriptionTv = view.findViewById(R.id.text_meme_tv)
-        avatarsMiniIv = view.findViewById(R.id.avatars_mini_iv)
-        nicknameMiniTv = view.findViewById(R.id.nickname_mini_tv)
     }
 }

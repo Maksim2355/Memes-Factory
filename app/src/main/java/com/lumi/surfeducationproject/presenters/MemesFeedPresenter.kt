@@ -1,6 +1,6 @@
 package com.lumi.surfeducationproject.presenters
 
-import com.lumi.surfeducationproject.data.exceptions.EmptyMemesDatabaseException
+import com.lumi.surfeducationproject.common.exceptions.EmptyMemesDatabaseException
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.domain.repository.MemeRepository
 import com.lumi.surfeducationproject.common.exceptions.NETWORK_EXCEPTIONS

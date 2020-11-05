@@ -1,21 +1,18 @@
 <resources>
     <string name="app_name">Surf Education</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="login_hint_authFragment">Логин</string>
-    <string name="password_hint_authFragment">Пароль</string>
-    <string name="loginIn_button_authFragment">Войти</string>
-    <string name="error_fieldsIsEmpty_authFragment">Поля не могут быть пустыми</string>
-    <string name="message_error_state">Не удалось загрузить ленту \nОбновите экран или попробуйте позже</string>
-    <string name="hint_searchView_memeFeedFr">Поиск</string>
-    <string name="create_mem_title">Создать</string>
-    <string name="logout">Выйти</string>
-    <string name="about_app">О приложении</string>
-    <string name="dialog_logout_title">Действительно хотите выйти?</string>
-    <string name="dialog_logout_cancel_btn">Отмена</string>
-    <string name="dialog_logout_exitAccount_button">Выйти</string>
-    <string name="input_title_hint">Заголовок</string>
-    <string name="input_description_hint">Текст</string>
-    <string name="btn_create_meme">Создать</string>
-    <string name="error_message_user_toolbar_meme_details">Загадочная личность</string>
+    <string name="auth_login_hint">Логин</string>
+    <string name="auth_password_hint">Пароль</string>
+    <string name="auth_loginIn_btn">Войти</string>
+    <string name="auth_errorFieldsIsEmpty_message">Поля не могут быть пустыми</string>
+    <string name="errorState_message">Не удалось загрузить ленту \nОбновите экран или попробуйте позже</string>
+    <string name="memeFeed_search_hint">Поиск</string>
+    <string name="profile_logout_btn">Выйти</string>
+    <string name="profile_aboutApp_btn">О приложении</string>
+    <string name="dialogLogout_exit_btn">Действительно хотите выйти?</string>
+    <string name="dialogLogout_cancel_btn">Отмена</string>
+    <string name="dialogLogout_exitAccount_btn">Выйти</string>
+    <string name="addMeme_title_hint">Заголовок</string>
+    <string name="addMeme_description_hint">Текст</string>
+    <string name="addMeme_create_btn">Создать</string>
+    <string name="memeDetails_errorToolbarUser_message">Загадочная личность</string>
 </resources>

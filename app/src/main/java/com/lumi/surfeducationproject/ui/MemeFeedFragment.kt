@@ -12,19 +12,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.material.snackbar.Snackbar
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.*
 import com.lumi.surfeducationproject.controllers.MemeController
-import com.lumi.surfeducationproject.data.db.MemeDao
-import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
-import com.lumi.surfeducationproject.presenters.AuthPresenter
 import com.lumi.surfeducationproject.presenters.MemesFeedPresenter
 import com.lumi.surfeducationproject.views.MemeFeedView
-import kotlinx.android.synthetic.main.fragment_meme_feed.*
 import kotlinx.android.synthetic.main.fragment_meme_feed.view.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -38,10 +33,10 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
     RefresherOwner {
 
     private lateinit var toolbar: Toolbar
-    private lateinit var refresh: SwipeRefreshLayout
-    private lateinit var memesRecyclerView: RecyclerView
-    private lateinit var errorView: TextView
-    private lateinit var loadView: FrameLayout
+    private lateinit var refreshContainer: SwipeRefreshLayout
+    private lateinit var memeListRv: RecyclerView
+    private lateinit var stateErrorView: TextView
+    private lateinit var stateLoadView: FrameLayout
 
     @Inject
     lateinit var easyAdapter: EasyAdapter
@@ -86,25 +81,25 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
     }
 
     private fun initToolbar(view: View) {
-        toolbar = view.findViewById(R.id.toolbar_meme_feed)
+        toolbar = view.findViewById(R.id.meme_feed_toolbar)
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         getActionBar()?.title = "Популярные мемы"
     }
 
     private fun initView(view: View) {
-        memesRecyclerView = view.state_meme_list_rv
-        errorView = view.state_error_tv
-        loadView = view.state_progress_pb
-        refresh = view.refresh_srl
-        with(refresh) {
+        memeListRv = view.meme_list_rv
+        stateErrorView = view.state_error_tv
+        stateLoadView = view.state_progress_container
+        refreshContainer = view.refresh_container
+        with(refreshContainer) {
             setColorSchemeColors(Color.BLACK)
             setProgressBackgroundColorSchemeColor(resources.getColor(R.color.colorAccent))
         }
-        refresh.setOnRefreshListener(this)
+        refreshContainer.setOnRefreshListener(this)
     }
 
     private fun initRecyclerView() {
-        with(memesRecyclerView) {
+        with(memeListRv) {
             adapter = easyAdapter
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
@@ -125,30 +120,30 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
             addAll(memesList, memeController)
         }
         easyAdapter.setItems(itemList)
-        memesRecyclerView.visibility = View.VISIBLE
-        errorView.visibility = View.GONE
+        memeListRv.visibility = View.VISIBLE
+        stateErrorView.visibility = View.GONE
     }
 
     override fun showErrorState() {
-        memesRecyclerView.visibility = View.GONE
-        errorView.visibility = View.VISIBLE
+        memeListRv.visibility = View.GONE
+        stateErrorView.visibility = View.VISIBLE
     }
 
     override fun showLoadState() {
-        loadView.visibility = View.VISIBLE
+        stateLoadView.visibility = View.VISIBLE
     }
 
     override fun hideLoadState() {
-        loadView.visibility = View.GONE
+        stateLoadView.visibility = View.GONE
     }
 
     override fun showRefresh() {
-        refresh.isRefreshing = true
+        refreshContainer.isRefreshing = true
         setRefresherState(true)
     }
 
     override fun hideRefresh() {
-        refresh.isRefreshing = false
+        refreshContainer.isRefreshing = false
         setRefresherState(false)
     }
 
@@ -165,7 +160,7 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
     }
 
     override fun setRefresherState(refresherState: Boolean) {
-        refresh.post { refresh.isRefreshing = refresherState }
+        refreshContainer.post { refreshContainer.isRefreshing = refresherState }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

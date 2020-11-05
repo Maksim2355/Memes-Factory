@@ -8,7 +8,7 @@
 
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_add_meme"
+        android:id="@+id/add_meme_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/Toolbar"
@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/small_margin"
-                android:text="@string/btn_create_meme" />
+                android:text="@string/addMeme_create_btn" />
 
         </LinearLayout>
 
@@ -43,7 +43,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_add_meme">
+        app:layout_constraintTop_toBottomOf="@+id/add_meme_toolbar">
 
 
         <LinearLayout
@@ -64,11 +64,11 @@
                 app:counterOverflowTextAppearance="@style/TextLimitError">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_title_meme_etText"
+                    android:id="@+id/input_title_meme_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:hint="@string/input_title_hint"
+                    android:hint="@string/addMeme_title_hint"
                     android:textSize="@dimen/large_title_size" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -85,18 +85,18 @@
                 app:counterOverflowTextAppearance="@style/TextLimitError">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_description_meme_etText"
+                    android:id="@+id/input_description_meme_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:hint="@string/input_description_hint"
+                    android:hint="@string/addMeme_description_hint"
                     android:textSize="@dimen/standard_text_size" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <FrameLayout
-                android:id="@+id/img_meme_view"
+                android:id="@+id/img_meme_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/standard_margin"
@@ -105,7 +105,7 @@
                 tools:ignore="UselessParent">
 
                 <ImageButton
-                    android:id="@+id/img_close_btn"
+                    android:id="@+id/img_close_ibtn"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="end"
@@ -127,7 +127,7 @@
     </ScrollView>
 
     <ImageButton
-        android:id="@+id/img_add_btn"
+        android:id="@+id/add_img_ibtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"

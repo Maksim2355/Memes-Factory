@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_meme_feed"
+        android:id="@+id/meme_feed_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/Toolbar" />
@@ -18,7 +18,7 @@
         android:layout_height="match_parent">
 
         <FrameLayout
-            android:id="@+id/state_progress_pb"
+            android:id="@+id/state_progress_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorTransparentDarkBackground"
@@ -32,7 +32,7 @@
 
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/refresh_srl"
+            android:id="@+id/refresh_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".ui.MemeFeedFragment">
@@ -43,7 +43,7 @@
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/state_meme_list_rv"
+                    android:id="@+id/meme_list_rv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="gone" />
@@ -53,7 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="@string/message_error_state"
+                    android:text="@string/errorState_message"
                     android:visibility="gone" />
             </LinearLayout>
 

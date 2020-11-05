@@ -1,17 +1,14 @@
 package com.lumi.surfeducationproject.data.storage
 
 import com.lumi.surfeducationproject.data.db.MemeDao
-import com.lumi.surfeducationproject.data.dto.local.DbMeme
-import com.lumi.surfeducationproject.data.dto.mappers.MemeDataMapper
+import com.lumi.surfeducationproject.data.dto.local.MemeDbo
+import com.lumi.surfeducationproject.data.dto.mappers.meme.MemeDataMapper
 import com.lumi.surfeducationproject.domain.model.Meme
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 class StorageImpl @Inject constructor(
     private val dao: MemeDao,
-    private val mapper: MemeDataMapper<DbMeme>
+    private val mapper: MemeDataMapper<MemeDbo>
 ) : Storage {
 
     override fun insertUserMeme(memeUser: Meme) {

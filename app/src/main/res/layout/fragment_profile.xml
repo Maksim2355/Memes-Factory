@@ -8,7 +8,7 @@
 
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_profile"
+        android:id="@+id/profile_toolbar"
         style="@style/ToolbarDark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -32,7 +32,7 @@
         tools:text="Никнейм" />
 
     <TextView
-        android:id="@+id/descriptionProfile_tv"
+        android:id="@+id/description_profile_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -53,14 +53,14 @@
         android:layout_height="match_parent">
 
         <ProgressBar
-            android:id="@+id/progress_view"
+            android:id="@+id/load_memes_pb"
             android:layout_width="wrap_content"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:visibility="gone"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/memeList_profile_rv"
+            android:id="@+id/meme_list_profile_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible"/>

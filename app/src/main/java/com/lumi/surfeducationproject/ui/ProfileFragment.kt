@@ -32,6 +32,13 @@ import javax.inject.Provider
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
+    private lateinit var toolbar: Toolbar
+    private lateinit var avatarIv: ImageView
+    private lateinit var nicknameTv: TextView
+    private lateinit var descriptionTv: TextView
+    private lateinit var memeListRv: RecyclerView
+    private lateinit var loadStatePb: ProgressBar
+
     @Inject
     lateinit var presenterProvider: Provider<ProfilePresenter>
     private val presenter by moxyPresenter {
@@ -53,13 +60,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
     @Inject
     lateinit var memeController: MemeController
 
-    private lateinit var toolbar: Toolbar
-    private lateinit var avatarIv: ImageView
-    private lateinit var nicknameTv: TextView
-    private lateinit var descriptionTv: TextView
-    private lateinit var recycler: RecyclerView
-    private lateinit var progressBarView: ProgressBar
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -77,7 +77,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        toolbar = view.toolbar_profile
+        toolbar = view.profile_toolbar
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.title = ""
         initView(view)
@@ -88,11 +88,11 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
     private fun initView(view: View) {
         avatarIv = view.avatars_iv
         nicknameTv = view.nickname_tv
-        descriptionTv = view.descriptionProfile_tv
+        descriptionTv = view.description_profile_tv
 
-        progressBarView = view.progress_view
-        recycler = view.memeList_profile_rv
-        with(recycler) {
+        loadStatePb = view.load_memes_pb
+        memeListRv = view.meme_list_profile_rv
+        with(memeListRv) {
             adapter = easyAdapter
             layoutManager = androidx.recyclerview.widget.StaggeredGridLayoutManager(
                 2,
@@ -107,6 +107,10 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        App.instance.clearFragmentComponent()
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
@@ -143,16 +147,16 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         val contextForDialog = context
         contextForDialog?.let {
             val builder: AlertDialog.Builder = AlertDialog.Builder(contextForDialog)
-            builder.setTitle(R.string.dialog_logout_title)
+            builder.setTitle(R.string.dialogLogout_exit_btn)
                 .setMessage("")
                 .setPositiveButton(
-                    R.string.dialog_logout_exitAccount_button
+                    R.string.dialogLogout_exitAccount_btn
                 ) { dialog, _ ->
                     dialog.dismiss()
                     presenter.logout()
                 }
                 .setNegativeButton(
-                    R.string.dialog_logout_cancel_btn
+                    R.string.dialogLogout_cancel_btn
                 ) { dialog, _ ->
                     dialog.dismiss()
                 }
@@ -165,19 +169,14 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
     }
 
     override fun showLoadState() {
-        progressBarView.visibility = View.VISIBLE
-        recycler.visibility = View.GONE
+        loadStatePb.visibility = View.VISIBLE
+        memeListRv.visibility = View.GONE
     }
+
 
     override fun hideLoadState() {
-        recycler.visibility = View.VISIBLE
-        progressBarView.visibility = View.GONE
-    }
-
-
-    override fun onDetach() {
-        super.onDetach()
-        App.instance.clearFragmentComponent()
+        memeListRv.visibility = View.VISIBLE
+        loadStatePb.visibility = View.GONE
     }
 
 }

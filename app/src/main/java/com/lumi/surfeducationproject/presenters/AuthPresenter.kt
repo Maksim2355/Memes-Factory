@@ -1,7 +1,7 @@
 package com.lumi.surfeducationproject.presenters
 
 import com.lumi.surfeducationproject.common.EmptyFields
-import com.lumi.surfeducationproject.data.dto.network.NetworkLoginUserRequest
+import com.lumi.surfeducationproject.data.dto.network.LoginUserRequest
 import com.lumi.surfeducationproject.domain.repository.UserRepository
 import com.lumi.surfeducationproject.common.exceptions.NETWORK_EXCEPTIONS
 import com.lumi.surfeducationproject.views.AuthView
@@ -17,7 +17,7 @@ class AuthPresenter @Inject constructor(
 
     fun authUser(login: String, password: String) {
         if (checkFields(login, password)) {
-            val userAuth = NetworkLoginUserRequest(login, password)
+            val userAuth = LoginUserRequest(login, password)
             userRepository.getUser(userAuth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

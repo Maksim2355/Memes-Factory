@@ -1,7 +1,7 @@
 package com.lumi.surfeducationproject.data.repository
 
 import com.lumi.surfeducationproject.data.dto.mappers.UserDtoDataMapper
-import com.lumi.surfeducationproject.data.dto.network.NetworkLoginUserRequest
+import com.lumi.surfeducationproject.data.dto.network.LoginUserRequest
 import com.lumi.surfeducationproject.data.services.local.SharedPreferenceService
 import com.lumi.surfeducationproject.data.services.network.AuthService
 import com.lumi.surfeducationproject.domain.model.User
@@ -18,8 +18,8 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
 
 
-    override fun getUser(userRequestNetwork: NetworkLoginUserRequest?): Single<User> {
-        return authService.loginIn(userRequestNetwork)
+    override fun getUser(userRequest: LoginUserRequest?): Single<User> {
+        return authService.loginIn(userRequest)
             .map { mapper.transform(it) }
             .doOnSuccess { sharedPreferenceService.saveUser(it) }
             .subscribeOn(Schedulers.io())

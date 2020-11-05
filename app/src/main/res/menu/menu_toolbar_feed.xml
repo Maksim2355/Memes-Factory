@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_search"
-        android:title="@string/hint_searchView_memeFeedFr"
+        android:title="@string/memeFeed_search_hint"
         android:icon="@drawable/ic_search"
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="always" />

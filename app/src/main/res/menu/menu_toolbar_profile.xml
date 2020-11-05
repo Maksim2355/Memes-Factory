@@ -10,10 +10,10 @@
         <menu>
             <item
                 android:id="@+id/menu_about"
-                android:title="@string/about_app" />
+                android:title="@string/profile_aboutApp_btn" />
             <item
                 android:id="@+id/action_logout"
-                android:title="@string/logout" />
+                android:title="@string/profile_logout_btn" />
         </menu>
     </item>
 

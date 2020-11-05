@@ -21,11 +21,11 @@ class MemeController: BindableItemController<Meme, MemeController.Holder>() {
 
     inner class Holder(parent: ViewGroup?): BindableViewHolder<Meme>(
         parent,
-        R.layout.item_mem
+        R.layout.list_item_mem
     ) {
-        private val photoMeme: ImageView = itemView.findViewById(R.id.photoMeme_iv)
-        private val nameMeme: TextView = itemView.findViewById(R.id.memeName_tv)
-        private val favoriteBtn: CheckBox = itemView.findViewById(R.id.favorite_btn)
+        private val photoMeme: ImageView = itemView.findViewById(R.id.photo_meme_iv)
+        private val nameMeme: TextView = itemView.findViewById(R.id.meme_name_tv)
+        private val favoriteBtn: CheckBox = itemView.findViewById(R.id.favorite_chb)
         private val shareBtn: CheckBox = itemView.findViewById(R.id.share_btn)
 
         override fun bind(data: Meme) {

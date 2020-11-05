@@ -1,4 +1,4 @@
-package com.lumi.surfeducationproject.data.dto.mappers
+package com.lumi.surfeducationproject.data.dto.mappers.meme
 
 import com.lumi.surfeducationproject.domain.model.Meme
 

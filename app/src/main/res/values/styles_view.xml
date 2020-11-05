@@ -13,13 +13,13 @@
     <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="android:background">@color/colorPrimaryDark</item>
         <item name="itemHorizontalTranslationEnabled">false</item>
-        <item name="itemIconTint">@color/selector_bottom_nav_btn</item>
+        <item name="itemIconTint">@color/bottom_nav_btn_selector</item>
     </style>
 
 
     <style name="AppSearchView">
         <item name="searchIcon">@drawable/ic_search</item>
-        <item name="queryHint">@string/hint_searchView_memeFeedFr</item>
+        <item name="queryHint">@string/memeFeed_search_hint</item>
         <item name="android:imeActionId">6</item>
     </style>
 

@@ -2,7 +2,7 @@ package com.lumi.surfeducationproject.data.dto.network
 
 import com.google.gson.annotations.SerializedName
 
-data class NetworkErrorResponse(
+data class ErrorResponse(
     @SerializedName("code")
     val code: String,
 

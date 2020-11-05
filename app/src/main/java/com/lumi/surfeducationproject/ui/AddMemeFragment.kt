@@ -25,6 +25,15 @@ import javax.inject.Provider
 
 class AddMemeFragment : MvpAppCompatFragment(), AddMemeView, View.OnClickListener {
 
+    private lateinit var toolbar: Toolbar
+    private lateinit var createMemeBtnToolbar: Button
+    private lateinit var inputTitleMemeEt: TextInputEditText
+    private lateinit var inputDescriptionMemeEt: TextInputEditText
+    private lateinit var memeView: FrameLayout
+    private lateinit var closeBtnIbtn: ImageButton
+    private lateinit var imgMemeIv: ImageView
+    private lateinit var addImgIbtn: ImageButton
+
     @Inject
     lateinit var presenterProvider: Provider<AddMemePresenter>
     private val presenter by moxyPresenter {
@@ -37,20 +46,8 @@ class AddMemeFragment : MvpAppCompatFragment(), AddMemeView, View.OnClickListene
     @Inject
     lateinit var snackBarManager: SnackBarManager
 
-    private lateinit var toolbar: Toolbar
-    private lateinit var createMemeBtnToolbar: Button
-
-    private lateinit var inputTitleMemeEt: TextInputEditText
-    private lateinit var inputDescriptionMemeEt: TextInputEditText
-
-    private lateinit var imageMemeView: FrameLayout
-    private lateinit var closeBtnImBtn: ImageButton
-    private lateinit var imgMemeIv: ImageView
-    private lateinit var addImgImBtn: ImageButton
-
     @Inject
     lateinit var navBack: NavigationBackPressed
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -69,23 +66,29 @@ class AddMemeFragment : MvpAppCompatFragment(), AddMemeView, View.OnClickListene
         super.onViewCreated(view, savedInstanceState)
         initView(view)
         initToolbar(view)
-
     }
 
     private fun initToolbar(view: View) {
-        toolbar = view.toolbar_add_meme
+        toolbar = view.add_meme_toolbar
         createMemeBtnToolbar = view.create_meme_btn
         toolbar.navigationIcon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_close) }
         toolbar.setNavigationOnClickListener { navBack.back() }
     }
 
     private fun initView(view: View) {
-        inputTitleMemeEt = view.input_title_meme_etText
-        inputDescriptionMemeEt = view.input_description_meme_etText
-        imageMemeView = view.img_meme_view
-        closeBtnImBtn = view.img_close_btn
+        inputTitleMemeEt = view.input_title_meme_et
+        inputDescriptionMemeEt = view.input_description_meme_et
+        memeView = view.img_meme_container
+
         imgMemeIv = view.img_add_meme_iv
-        addImgImBtn = view.img_add_btn
+        closeBtnIbtn = view.img_close_ibtn
+        closeBtnIbtn.setOnClickListener {
+            presenter.closeImg()
+        }
+        addImgIbtn = view.add_img_ibtn
+        addImgIbtn.setOnClickListener {
+            showAddImg()
+        }
     }
 
 
@@ -97,13 +100,13 @@ class AddMemeFragment : MvpAppCompatFragment(), AddMemeView, View.OnClickListene
     override fun onClick(v: View?) {
         v?.let {
             when (v.id) {
-                R.id.img_close_btn -> {
+                R.id.img_close_ibtn -> {
                     closeImg()
                 }
                 R.id.create_meme_btn -> {
 
                 }
-                R.id.img_add_btn ->{
+                R.id.add_img_ibtn -> {
 
                 }
             }

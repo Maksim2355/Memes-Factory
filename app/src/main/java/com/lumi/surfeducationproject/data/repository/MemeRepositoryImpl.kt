@@ -1,7 +1,7 @@
 package com.lumi.surfeducationproject.data.repository
 
 import com.lumi.surfeducationproject.data.api.MemesApi
-import com.lumi.surfeducationproject.data.dto.mappers.MemeDataMapper
+import com.lumi.surfeducationproject.data.dto.mappers.meme.MemeDataMapper
 import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
 import com.lumi.surfeducationproject.data.storage.Storage
 import com.lumi.surfeducationproject.domain.model.Meme

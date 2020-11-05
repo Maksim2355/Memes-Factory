@@ -1,21 +1,21 @@
-package com.lumi.surfeducationproject.data.dto.mappers
+package com.lumi.surfeducationproject.data.dto.mappers.meme
 
-import com.lumi.surfeducationproject.data.dto.local.DbMeme
+import com.lumi.surfeducationproject.data.dto.local.MemeDbo
 import com.lumi.surfeducationproject.domain.model.Meme
 import java.util.ArrayList
 
-class MemeDbDataMapper : MemeDataMapper<DbMeme> {
+class MemeDbDataMapper : MemeDataMapper<MemeDbo> {
 
-    override fun transform(meme: DbMeme) = Meme(
-        id = meme.id,
-        title = meme.title,
-        createdDate = meme.createdDate,
-        description = meme.description,
-        isFavorite = meme.isFavorite,
-        photoUrl = meme.photoUrl
+    override fun transform(memeDbo: MemeDbo) = Meme(
+        id = memeDbo.id,
+        title = memeDbo.title,
+        createdDate = memeDbo.createdDate,
+        description = memeDbo.description,
+        isFavorite = memeDbo.isFavorite,
+        photoUrl = memeDbo.photoUrl
     )
 
-    override fun transformList(list: List<DbMeme>): List<Meme> {
+    override fun transformList(list: List<MemeDbo>): List<Meme> {
         val listMeme = ArrayList<Meme>()
         for (meme in list) {
             listMeme.add(
@@ -32,7 +32,7 @@ class MemeDbDataMapper : MemeDataMapper<DbMeme> {
         return listMeme
     }
 
-    override fun reverseTransform(meme: Meme): DbMeme = DbMeme(
+    override fun reverseTransform(meme: Meme): MemeDbo = MemeDbo(
         id = meme.id,
         title = meme.title,
         createdDate = meme.createdDate,
@@ -41,11 +41,11 @@ class MemeDbDataMapper : MemeDataMapper<DbMeme> {
         photoUrl = meme.photoUrl
         )
 
-    override fun reverseTransformList(list: List<Meme>): List<DbMeme> {
-        val listMeme = ArrayList<DbMeme>()
+    override fun reverseTransformList(list: List<Meme>): List<MemeDbo> {
+        val listMeme = ArrayList<MemeDbo>()
         for (meme in list) {
             listMeme.add(
-                DbMeme(
+                MemeDbo(
                     id = meme.id,
                     title = meme.title,
                     createdDate = meme.createdDate,

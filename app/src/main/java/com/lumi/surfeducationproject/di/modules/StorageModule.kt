@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import com.lumi.surfeducationproject.data.db.MemeDao
 import com.lumi.surfeducationproject.data.db.MemeDatabase
-import com.lumi.surfeducationproject.data.dto.local.DbMeme
-import com.lumi.surfeducationproject.data.dto.mappers.MemeDataMapper
-import com.lumi.surfeducationproject.data.dto.mappers.MemeDbDataMapper
+import com.lumi.surfeducationproject.data.dto.local.MemeDbo
+import com.lumi.surfeducationproject.data.dto.mappers.meme.MemeDataMapper
+import com.lumi.surfeducationproject.data.dto.mappers.meme.MemeDbDataMapper
 import com.lumi.surfeducationproject.data.storage.Storage
 import com.lumi.surfeducationproject.data.storage.StorageImpl
 import dagger.Module
@@ -23,7 +23,7 @@ class StorageModule {
 
     @Provides
     @Singleton
-    fun provideDbMemeMapper(): MemeDataMapper<DbMeme> = MemeDbDataMapper()
+    fun provideDbMemeMapper(): MemeDataMapper<MemeDbo> = MemeDbDataMapper()
 
     @Provides
     @Singleton
@@ -40,7 +40,7 @@ class StorageModule {
 
     @Provides
     @Singleton
-    fun provideStorage(memeDao: MemeDao, mapperDb: MemeDataMapper<DbMeme>): Storage =
-        StorageImpl(memeDao, mapperDb)
+    fun provideStorage(memeDao: MemeDao, mapperDbo: MemeDataMapper<MemeDbo>): Storage =
+        StorageImpl(memeDao, mapperDbo)
 
 }

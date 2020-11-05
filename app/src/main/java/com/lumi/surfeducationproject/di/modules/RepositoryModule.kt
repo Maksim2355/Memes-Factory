@@ -1,11 +1,8 @@
 package com.lumi.surfeducationproject.di.modules
 
 import com.lumi.surfeducationproject.data.api.MemesApi
-import com.lumi.surfeducationproject.data.db.MemeDao
-import com.lumi.surfeducationproject.data.dto.local.DbMeme
-import com.lumi.surfeducationproject.data.dto.mappers.MemeDataMapper
-import com.lumi.surfeducationproject.data.dto.mappers.MemeDbDataMapper
-import com.lumi.surfeducationproject.data.dto.mappers.MemeNetworkDataMapper
+import com.lumi.surfeducationproject.data.dto.mappers.meme.MemeDataMapper
+import com.lumi.surfeducationproject.data.dto.mappers.meme.MemeNetworkDataMapper
 import com.lumi.surfeducationproject.data.dto.mappers.UserDtoDataMapper
 import com.lumi.surfeducationproject.data.dto.network.NetworkMeme
 import com.lumi.surfeducationproject.data.repository.MemeRepositoryImpl

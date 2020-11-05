@@ -36,14 +36,14 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
     @Inject
     lateinit var snackBarManager: SnackBarManager
 
-    private lateinit var loginInputField: TextFieldBoxes
-    private lateinit var loginEditText: ExtendedEditText
+    private lateinit var loginInputTfb: TextFieldBoxes
+    private lateinit var loginEditEt: ExtendedEditText
 
-    private lateinit var passwordInputField: TextFieldBoxes
-    private lateinit var passwordEditText: ExtendedEditText
+    private lateinit var passwordInputTfb: TextFieldBoxes
+    private lateinit var passwordEt: ExtendedEditText
 
     private lateinit var authUserBtn: TextView;
-    private lateinit var progressAuth: ProgressBar;
+    private lateinit var authPb: ProgressBar;
 
     private var isPasswordVisible: Boolean = false
     private var isEnablePasswordBtnVisible: Boolean = false
@@ -54,7 +54,6 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
     override fun onAttach(context: Context) {
         super.onAttach(context)
         App.instance.startFragmentComponent().inject(this)
-
     }
 
     override fun onCreateView(
@@ -67,17 +66,14 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loginInputField = view.findViewById(R.id.login_field_boxes)
-        loginEditText = view.findViewById(R.id.login_edit_text)
-
-        passwordInputField = view.findViewById(R.id.password_field_boxes)
-        passwordEditText = view.findViewById(R.id.password_edit_text)
-        passwordEditText.onFocusChangeListener = this
-
+        loginInputTfb = view.findViewById(R.id.input_login_fb)
+        loginEditEt = view.findViewById(R.id.login_input_et)
+        passwordInputTfb = view.findViewById(R.id.input_password_fb)
+        passwordEt = view.findViewById(R.id.password_et)
+        passwordEt.onFocusChangeListener = this
         authUserBtn = view.findViewById(R.id.auth_user_btn)
         authUserBtn.setOnClickListener { authUser() }
-
-        progressAuth = view.findViewById(R.id.progress_auth)
+        authPb = view.findViewById(R.id.auth_pb)
     }
 
     private fun authUser() {
@@ -87,17 +83,17 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
     override fun enableIconEye() {
         isEnablePasswordBtnVisible = true
         if (isPasswordVisible) {
-            passwordInputField.setEndIcon(R.drawable.ic_eye_on)
+            passwordInputTfb.setEndIcon(R.drawable.ic_eye_on)
         } else {
-            passwordInputField.setEndIcon(R.drawable.ic_eye_off)
+            passwordInputTfb.setEndIcon(R.drawable.ic_eye_off)
         }
-        passwordInputField.endIconImageButton.setOnClickListener {
+        passwordInputTfb.endIconImageButton.setOnClickListener {
             isPasswordVisible = !isPasswordVisible
             if (isPasswordVisible) {
-                passwordInputField.setEndIcon(R.drawable.ic_eye_on)
+                passwordInputTfb.setEndIcon(R.drawable.ic_eye_on)
                 showPassword()
             } else {
-                passwordInputField.setEndIcon(R.drawable.ic_eye_off)
+                passwordInputTfb.setEndIcon(R.drawable.ic_eye_off)
                 hidePassword()
             }
         }
@@ -105,7 +101,7 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
 
     override fun disableIconEye() {
         isEnablePasswordBtnVisible = false
-        passwordInputField.removeEndIcon()
+        passwordInputTfb.removeEndIcon()
     }
 
     override fun openContentFragment() {
@@ -113,11 +109,11 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
     }
 
     override fun showPassword() {
-        passwordEditText.transformationMethod = HideReturnsTransformationMethod.getInstance();
+        passwordEt.transformationMethod = HideReturnsTransformationMethod.getInstance();
     }
 
     override fun hidePassword() {
-        passwordEditText.transformationMethod = PasswordTransformationMethod.getInstance();
+        passwordEt.transformationMethod = PasswordTransformationMethod.getInstance();
     }
 
     override fun showErrorSnackbar(messageError: String) {
@@ -127,40 +123,40 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
     override fun showMessageErrorInputField(emptyFields: EmptyFields, messageError: String) {
         when (emptyFields) {
             EmptyFields.LOGIN -> {
-                loginInputField.setError(messageError, false)
+                loginInputTfb.setError(messageError, false)
             }
             EmptyFields.PASSWORD -> {
-                passwordInputField.setError(messageError, false)
+                passwordInputTfb.setError(messageError, false)
             }
             EmptyFields.ALL -> {
-                loginInputField.setError(messageError, false)
-                passwordInputField.setError(messageError, false)
+                loginInputTfb.setError(messageError, false)
+                passwordInputTfb.setError(messageError, false)
             }
         }
     }
 
     override fun showPasswordHelper(lengthPassword: Int) {
-        passwordInputField.helperText = "Длина пароля должна состоять из $lengthPassword символов"
+        passwordInputTfb.helperText = "Длина пароля должна состоять из $lengthPassword символов"
     }
 
     override fun hidePasswordHelper() {
-        passwordInputField.helperText = null
+        passwordInputTfb.helperText = null
     }
 
     override fun showProgressBar() {
         authUserBtn.visibility = View.GONE
-        progressAuth.visibility = View.VISIBLE
+        authPb.visibility = View.VISIBLE
     }
 
     override fun hideProgressBar() {
         authUserBtn.visibility = View.VISIBLE
-        progressAuth.visibility = View.GONE
+        authPb.visibility = View.GONE
     }
 
     override fun onFocusChange(v: View?, hasFocus: Boolean) {
         v?.let {
             when (v.id) {
-                R.id.password_edit_text -> {
+                R.id.password_et -> {
                     if (hasFocus) {
                         presenter.enableCheckPasswordField()
                     } else {
@@ -171,8 +167,8 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
         }
     }
 
-    private fun getInputPassword() = passwordEditText.text.toString()
-    private fun getInputLogin() = loginEditText.text.toString()
+    private fun getInputPassword() = passwordEt.text.toString()
+    private fun getInputLogin() = loginEditEt.text.toString()
 
 
     override fun onDetach() {

@@ -73,7 +73,7 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
         val textView =
             snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
         textView.setTextColor(Color.WHITE)
-        textView.textSize = 16f
+        textView.textSize = resources.getDimension(R.dimen.standard_text_size)
         snackbar.show()
     }
 
