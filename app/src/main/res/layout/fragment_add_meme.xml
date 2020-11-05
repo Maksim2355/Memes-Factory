@@ -25,7 +25,7 @@
 
             <Button
                 android:id="@+id/create_meme_btn"
-                style="@style/CreateMemeBtn"
+                style="@style/CreateBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/small_margin"

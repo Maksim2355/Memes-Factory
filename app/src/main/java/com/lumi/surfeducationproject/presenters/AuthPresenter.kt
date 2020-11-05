@@ -1,5 +1,6 @@
 package com.lumi.surfeducationproject.presenters
 
+import com.lumi.surfeducationproject.common.BasePresenter
 import com.lumi.surfeducationproject.common.EmptyFields
 import com.lumi.surfeducationproject.data.dto.network.LoginUserRequest
 import com.lumi.surfeducationproject.domain.repository.UserRepository
@@ -12,13 +13,13 @@ import javax.inject.Inject
 
 class AuthPresenter @Inject constructor(
     private val userRepository: UserRepository
-): MvpPresenter<AuthView>() {
+): BasePresenter<AuthView>() {
 
 
     fun authUser(login: String, password: String) {
         if (checkFields(login, password)) {
             val userAuth = LoginUserRequest(login, password)
-            userRepository.getUser(userAuth)
+            compositeDisposable.add(   userRepository.getUser(userAuth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { viewState.showProgressBar() }
@@ -32,6 +33,8 @@ class AuthPresenter @Inject constructor(
                         viewState.showErrorSnackbar("Вы ввели неверные данные.\nПопробуйте еще раз")
                     }
                 })
+            )
+
         }
     }
 

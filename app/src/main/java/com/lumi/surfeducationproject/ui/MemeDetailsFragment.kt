@@ -12,20 +12,21 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.common.Key_Details_Meme
+import com.lumi.surfeducationproject.common.BaseFragment
+import com.lumi.surfeducationproject.common.ControlDispose
+import com.lumi.surfeducationproject.common.EXTRA_DETAILS_MEME
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.domain.model.User
 import com.lumi.surfeducationproject.presenters.MemeDetailsPresenter
 import com.lumi.surfeducationproject.utils.getPostCreateDate
 import com.lumi.surfeducationproject.views.MemeDetailsView
-import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 import javax.inject.Provider
 
 
-class MemeDetailsFragment : MvpAppCompatFragment(), MemeDetailsView {
+class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
 
     @Inject
     lateinit var presenterProvider: Provider<MemeDetailsPresenter>
@@ -89,19 +90,17 @@ class MemeDetailsFragment : MvpAppCompatFragment(), MemeDetailsView {
         inflater.inflate(R.menu.menu_toolbar_details_meme, menu)
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        App.instance.clearFragmentComponent()
-    }
+    override fun disposeControl(): ControlDispose = presenter
 
-    private fun getActionBar() = (activity as AppCompatActivity).supportActionBar
+
+    override fun getActionBar() = (activity as AppCompatActivity).supportActionBar
 
     override fun showErrorStateUserInfoToolbar() {
         nicknameMiniTv.text = getString(R.string.memeDetails_errorToolbarUser_message)
     }
 
     private fun showMeme() {
-        val meme = arguments?.getSerializable(Key_Details_Meme) as Meme
+        val meme = arguments?.getSerializable(EXTRA_DETAILS_MEME) as Meme
         meme.let {
             memeTitleTv.text = meme.title
             Glide.with(this).load(meme.photoUrl).into(memeImgIv)

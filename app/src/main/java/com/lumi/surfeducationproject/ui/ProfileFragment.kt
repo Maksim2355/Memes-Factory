@@ -6,6 +6,7 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -13,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.common.SnackBarManager
-import com.lumi.surfeducationproject.common.StyleManager
+import com.lumi.surfeducationproject.common.*
 import com.lumi.surfeducationproject.controllers.MemeController
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.domain.model.User
@@ -23,6 +23,7 @@ import com.lumi.surfeducationproject.presenters.ProfilePresenter
 import com.lumi.surfeducationproject.views.ProfileView
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import moxy.MvpAppCompatFragment
+import moxy.MvpView
 import moxy.ktx.moxyPresenter
 import ru.surfstudio.android.easyadapter.EasyAdapter
 import ru.surfstudio.android.easyadapter.ItemList
@@ -30,7 +31,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 
-class ProfileFragment : MvpAppCompatFragment(), ProfileView {
+class ProfileFragment : BaseFragment(), ProfileView {
 
     private lateinit var toolbar: Toolbar
     private lateinit var avatarIv: ImageView
@@ -107,10 +108,11 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        App.instance.clearFragmentComponent()
-    }
+    override fun disposeControl(): ControlDispose = presenter
+
+    override fun getActionBar(): ActionBar? =
+        (activity as AppCompatActivity).supportActionBar
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
@@ -134,6 +136,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
     }
 
     override fun showProfile(user: User) {
+        //Todo добавить картинку-заглушку в ассеты или кэшировать
         Glide.with(this)
             .load("https://img.pngio.com/avatar-1-length-of-human-face-hd-png-download-6648260-free-human-face-png-840_640.png")
             .circleCrop()

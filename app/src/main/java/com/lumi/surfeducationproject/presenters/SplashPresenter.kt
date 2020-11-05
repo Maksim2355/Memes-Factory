@@ -15,16 +15,15 @@ class SplashPresenter @Inject constructor(
         viewState.startAnimation()
         Handler().postDelayed({
             userRepository.getUser().subscribe({
-                if (it != null){
+                if (it != null) {
                     viewState.startApp(true)
-                }else{
+                } else {
                     viewState.startApp(false)
                 }
             }, {
                 //Todo добавить обарботку ошибки
                 viewState.startApp(false)
             })
-
         }, 500)
 
     }

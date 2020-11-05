@@ -29,7 +29,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 
-class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshListener, MemeFeedView,
+class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, MemeFeedView,
     RefresherOwner {
 
     private lateinit var toolbar: Toolbar
@@ -198,10 +198,8 @@ class MemeFeedFragment : MvpAppCompatFragment(), SwipeRefreshLayout.OnRefreshLis
 
     }
 
-    private fun getActionBar() = (activity as AppCompatActivity).supportActionBar
+    override fun getActionBar() = (activity as AppCompatActivity).supportActionBar
 
-    override fun onDetach() {
-        super.onDetach()
-        App.instance.clearFragmentComponent()
-    }
+    override fun disposeControl(): ControlDispose = presenter
+
 }

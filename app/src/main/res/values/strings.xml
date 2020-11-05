@@ -15,4 +15,7 @@
     <string name="addMeme_description_hint">Текст</string>
     <string name="addMeme_create_btn">Создать</string>
     <string name="memeDetails_errorToolbarUser_message">Загадочная личность</string>
+    <string name="add_img_title_dialog">Выбрать фото</string>
+    <string name="add_img_gallery_text">"Из галерии "</string>
+    <string name="add_img_camera_text">Из камеры</string>
 </resources>

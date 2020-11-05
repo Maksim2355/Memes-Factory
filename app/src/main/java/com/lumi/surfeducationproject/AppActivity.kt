@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.lumi.surfeducationproject.common.Key_Details_Meme
+import com.lumi.surfeducationproject.common.EXTRA_DETAILS_MEME
 import com.lumi.surfeducationproject.common.SnackBarManager
 import com.lumi.surfeducationproject.common.StyleManager
 import com.lumi.surfeducationproject.domain.model.Meme
@@ -51,7 +51,7 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
 
     override fun startMemeDetailsScreen(meme: Meme) {
         val bundle = Bundle()
-        bundle.putSerializable(Key_Details_Meme, meme)
+        bundle.putSerializable(EXTRA_DETAILS_MEME, meme)
         navController.navigate(R.id.action_tabFragment_to_memeDetailsFragment, bundle)
     }
 

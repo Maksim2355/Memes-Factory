@@ -1,29 +1,41 @@
 package com.lumi.surfeducationproject.ui
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.google.android.material.textfield.TextInputEditText
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.common.SnackBarManager
-import com.lumi.surfeducationproject.common.StyleManager
+import com.lumi.surfeducationproject.common.*
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 import com.lumi.surfeducationproject.presenters.AddMemePresenter
+import com.lumi.surfeducationproject.ui.dialogs.AddImgDialog
 import com.lumi.surfeducationproject.views.AddMemeView
+import io.reactivex.rxjava3.core.Observable
 import kotlinx.android.synthetic.main.fragment_add_meme.view.*
-import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 import javax.inject.Provider
 
 
-class AddMemeFragment : MvpAppCompatFragment(), AddMemeView, View.OnClickListener {
+class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
+
+    companion object {
+        private val REQUEST_DIALOG_WAY_GET_IMG = 100
+        private val REQUEST_CODE_CAMERA = 101
+        private val REQUST_CODE_GALLERY = 102
+    }
 
     private lateinit var toolbar: Toolbar
     private lateinit var createMemeBtnToolbar: Button
@@ -70,6 +82,7 @@ class AddMemeFragment : MvpAppCompatFragment(), AddMemeView, View.OnClickListene
 
     private fun initToolbar(view: View) {
         toolbar = view.add_meme_toolbar
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
         createMemeBtnToolbar = view.create_meme_btn
         toolbar.navigationIcon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_close) }
         toolbar.setNavigationOnClickListener { navBack.back() }
@@ -79,49 +92,84 @@ class AddMemeFragment : MvpAppCompatFragment(), AddMemeView, View.OnClickListene
         inputTitleMemeEt = view.input_title_meme_et
         inputDescriptionMemeEt = view.input_description_meme_et
         memeView = view.img_meme_container
-
         imgMemeIv = view.img_add_meme_iv
         closeBtnIbtn = view.img_close_ibtn
-        closeBtnIbtn.setOnClickListener {
-            presenter.closeImg()
-        }
         addImgIbtn = view.add_img_ibtn
-        addImgIbtn.setOnClickListener {
-            showAddImg()
-        }
-    }
-
-
-    override fun onDetach() {
-        super.onDetach()
-        App.instance.clearFragmentComponent()
     }
 
     override fun onClick(v: View?) {
         v?.let {
             when (v.id) {
-                R.id.img_close_ibtn -> {
-                    closeImg()
+                R.id.img_close_ibtn -> presenter.deleteImg()
+                R.id.create_meme_btn -> presenter.createMeme()
+                R.id.add_img_ibtn -> presenter.addMeme()
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //Создаем потоки, содержащие измененей полей
+        presenter.observableTitleMeme = Observable.create { subscriber ->
+            inputTitleMemeEt.addTextChangedListener(
+                object : TextWatcher {
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                    override fun afterTextChanged(s: Editable?){}
+
+                    override fun onTextChanged(s: CharSequence?,
+                                               start: Int,
+                                               before: Int,
+                                               count: Int) {
+                        subscriber.onNext(inputTitleMemeEt.text.toString())
+                    }
                 }
-                R.id.create_meme_btn -> {
+            )
+        }
+        presenter.observableDescriptionMeme = Observable.create { subscriber ->
+            inputDescriptionMemeEt.addTextChangedListener(
+                object : TextWatcher {
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                    override fun afterTextChanged(s: Editable?){}
+
+                    override fun onTextChanged(s: CharSequence?,
+                                               start: Int,
+                                               before: Int,
+                                               count: Int) {
+                        subscriber.onNext(inputDescriptionMemeEt.text.toString())
+                    }
+                }
+            )
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK){
+            when(requestCode){
+                REQUEST_DIALOG_WAY_GET_IMG -> {
+                    //Получаем выбор нашего пользователя из диалога
+                }
+                REQUEST_CODE_CAMERA -> {
 
                 }
-                R.id.add_img_ibtn -> {
+                REQUST_CODE_GALLERY -> {
 
                 }
             }
         }
     }
 
-    private fun closeImg() {
+    private fun onClickCloseImg() {
         TODO("Not yet implemented")
     }
 
-    override fun showAddImg() {
+    override fun showImg() {
         TODO("Not yet implemented")
     }
 
-    override fun hideAddImg() {
+    override fun hideImg() {
         TODO("Not yet implemented")
     }
 
@@ -134,7 +182,12 @@ class AddMemeFragment : MvpAppCompatFragment(), AddMemeView, View.OnClickListene
     }
 
     override fun showAddImgDialog() {
-        TODO("Not yet implemented")
+        val addImgDialog = AddImgDialog()
+        addImgDialog.setTargetFragment(this, REQUEST_DIALOG_WAY_GET_IMG)
+        fragmentManager?.let { addImgDialog.show(it, EXTRA_WAY_GET_IMG) }
     }
 
+    override fun disposeControl(): ControlDispose = presenter
+
+    override fun getActionBar(): ActionBar? = (activity as AppCompatActivity).supportActionBar
 }

@@ -9,8 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.app.ActionBar
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
+import com.lumi.surfeducationproject.common.BaseFragment
+import com.lumi.surfeducationproject.common.ControlDispose
 import com.lumi.surfeducationproject.common.EmptyFields
 import com.lumi.surfeducationproject.common.SnackBarManager
 import com.lumi.surfeducationproject.navigation.NavigationContent
@@ -24,8 +27,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 
-class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListener {
-
+class AuthFragment : BaseFragment(), AuthView, View.OnFocusChangeListener {
 
     @Inject
     lateinit var presenterProvider: Provider<AuthPresenter>
@@ -168,12 +170,11 @@ class AuthFragment : MvpAppCompatFragment(), AuthView, View.OnFocusChangeListene
     }
 
     private fun getInputPassword() = passwordEt.text.toString()
+
     private fun getInputLogin() = loginEditEt.text.toString()
 
+    override fun disposeControl(): ControlDispose = presenter
 
-    override fun onDetach() {
-        super.onDetach()
-        App.instance.clearFragmentComponent()
-    }
+    override fun getActionBar(): ActionBar? = null
 
 }

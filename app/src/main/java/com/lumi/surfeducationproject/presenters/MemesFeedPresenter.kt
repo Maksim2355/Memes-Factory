@@ -1,5 +1,6 @@
 package com.lumi.surfeducationproject.presenters
 
+import com.lumi.surfeducationproject.common.BasePresenter
 import com.lumi.surfeducationproject.common.exceptions.EmptyMemesDatabaseException
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.domain.repository.MemeRepository
@@ -11,30 +12,35 @@ import javax.inject.Inject
 
 class MemesFeedPresenter @Inject constructor(
     private val memeRepository: MemeRepository
-) : MvpPresenter<MemeFeedView>() {
+) : BasePresenter<MemeFeedView>() {
 
     fun loadMemes() {
-        memeRepository.getMemes()
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { viewState.showLoadState() }
-            .doFinally { viewState.hideLoadState() }
-            .subscribe({
-                showMemes(it)
-            }, {
-                errorProcessing(it)
-            })
+        compositeDisposable.add(
+            memeRepository.getMemes()
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { viewState.showLoadState() }
+                .doFinally { viewState.hideLoadState() }
+                .subscribe({
+                    showMemes(it)
+                }, {
+                    errorProcessing(it)
+                })
+        )
     }
 
     fun updateMemes() {
-        memeRepository.getMemes()
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { viewState.showRefresh() }
-            .doFinally { viewState.hideRefresh() }
-            .subscribe({
-                showMemes(it)
-            }, {
-                errorProcessing(it)
-            })
+        compositeDisposable.add(
+            memeRepository.getMemes()
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { viewState.showRefresh() }
+                .doFinally { viewState.hideRefresh() }
+                .subscribe({
+                    showMemes(it)
+                }, {
+                    errorProcessing(it)
+                })
+        )
+
     }
 
     private fun showMemes(memeList: List<Meme>) {

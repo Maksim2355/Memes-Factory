@@ -1,5 +1,6 @@
 package com.lumi.surfeducationproject.presenters
 
+import com.lumi.surfeducationproject.common.BasePresenter
 import com.lumi.surfeducationproject.domain.repository.MemeRepository
 import com.lumi.surfeducationproject.domain.repository.UserRepository
 import com.lumi.surfeducationproject.views.MemeDetailsView
@@ -11,19 +12,22 @@ import javax.inject.Inject
 class MemeDetailsPresenter @Inject constructor(
     private val userRepository: UserRepository,
     private val memeRepository: MemeRepository
-): MvpPresenter<MemeDetailsView>() {
+) : BasePresenter<MemeDetailsView>() {
 
 
-    fun initProfile(){
-        userRepository.getUser().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                it?.let {
-                    viewState.showUserInfoToolbar(it)
-                }
-            }, {
-                viewState.showErrorStateUserInfoToolbar()
-            })
+    fun initProfile() {
+        compositeDisposable.add(
+            userRepository.getUser().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    it?.let {
+                        viewState.showUserInfoToolbar(it)
+                    }
+                }, {
+                    viewState.showErrorStateUserInfoToolbar()
+                })
+        )
+
     }
 
 

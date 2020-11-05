@@ -23,22 +23,22 @@
         <item name="android:imeActionId">6</item>
     </style>
 
-    <style name="MemeNameTv" parent="Widget.AppCompat.TextView">
+    <style name="TitleLargeTv" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/large_title_size</item>
     </style>
 
-    <style name="MemeDateCreatedTv" parent="Widget.AppCompat.TextView">
+    <style name="TextSmallTv" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">#80FFFFFF</item>
         <item name="android:textSize">@dimen/small_text_size</item>
     </style>
 
-    <style name="MemeDateDescriptionTv" parent="Widget.AppCompat.TextView">
+    <style name="TextStandardTv" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/standard_text_size</item>
     </style>
 
-    <style name="ProfileName" parent="Widget.AppCompat.TextView">
+    <style name="TitleTv" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">@dimen/title_text_size</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
