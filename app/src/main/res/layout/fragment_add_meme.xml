@@ -29,6 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/small_margin"
+                android:clickable="false"
                 android:text="@string/addMeme_create_btn" />
 
         </LinearLayout>
@@ -60,8 +61,8 @@
                 android:layout_marginBottom="@dimen/standard_margin"
                 app:counterEnabled="true"
                 app:counterMaxLength="140"
-                app:hintEnabled="false"
-                app:counterOverflowTextAppearance="@style/TextLimitError">
+                app:counterOverflowTextAppearance="@style/TextLimitError"
+                app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_title_meme_et"
@@ -81,8 +82,8 @@
                 android:layout_marginBottom="@dimen/standard_margin"
                 app:counterEnabled="true"
                 app:counterMaxLength="1000"
-                app:hintEnabled="false"
-                app:counterOverflowTextAppearance="@style/TextLimitError">
+                app:counterOverflowTextAppearance="@style/TextLimitError"
+                app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_description_meme_et"
@@ -104,6 +105,12 @@
                 android:visibility="gone"
                 tools:ignore="UselessParent">
 
+                <ImageView
+                    android:id="@+id/img_add_meme_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:src="@tools:sample/avatars" />
+
                 <ImageButton
                     android:id="@+id/img_close_ibtn"
                     android:layout_width="32dp"
@@ -113,12 +120,6 @@
                     android:layout_marginEnd="@dimen/ic_margin"
                     android:background="@drawable/round_corner_close_btn"
                     android:src="@drawable/ic_close" />
-
-                <ImageView
-                    android:id="@+id/img_add_meme_iv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:src="@tools:sample/avatars" />
 
             </FrameLayout>
 
@@ -133,11 +134,12 @@
         android:layout_gravity="end"
         android:layout_marginEnd="@dimen/standard_margin"
         android:layout_marginBottom="@dimen/standard_margin"
-        android:background="@drawable/round_corner"
+        android:background="@drawable/add_img_meme_btn"
         android:padding="@dimen/small_padding"
         android:src="@drawable/ic_attach"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

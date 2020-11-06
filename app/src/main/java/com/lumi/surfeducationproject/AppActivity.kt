@@ -1,24 +1,27 @@
 package com.lumi.surfeducationproject
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.lumi.surfeducationproject.common.EXTRA_DETAILS_MEME
-import com.lumi.surfeducationproject.common.SnackBarManager
-import com.lumi.surfeducationproject.common.StyleManager
+import com.lumi.surfeducationproject.common.*
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.navigation.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, NavigationMemeDetails , StyleManager,
-    NavigationBackPressed, NavigationAuth, SnackBarManager {
+class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent,
+    NavigationMemeDetails, StyleManager,
+    NavigationBackPressed, NavigationAuth, SnackBarManager, PermissionManager {
 
     private val navController: NavController by lazy {
         findNavController(R.id.nav_host_fragment_container)
@@ -31,9 +34,9 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
     }
 
     override fun startApp(isAuthUser: Boolean) {
-        if (isAuthUser){
+        if (isAuthUser) {
             navController.navigate(R.id.action_splashFragment_to_tabFragment)
-        }else{
+        } else {
             navController.navigate(R.id.action_splashFragment_to_authFragment)
         }
     }
@@ -80,6 +83,66 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
     override fun onDestroy() {
         super.onDestroy()
         App.instance.clearActivityComponent()
+    }
+
+    override fun requestPermissionGallery(): Boolean {
+        val permissionReadExternalStorage =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        return if (permissionReadExternalStorage == PackageManager.PERMISSION_GRANTED) {
+            true
+        } else {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ),
+                REQUEST_CODE_PERMISSION_GALLERY
+            )
+            false
+        }
+    }
+
+    override fun requestPermissionCamera(): Boolean {
+        val permissionWriteExternalStorage =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        val permissionReadExternalStorage =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        return if (permissionWriteExternalStorage != PackageManager.PERMISSION_GRANTED ||
+            permissionReadExternalStorage != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (permissionWriteExternalStorage != PackageManager.PERMISSION_GRANTED &&
+                permissionReadExternalStorage != PackageManager.PERMISSION_GRANTED
+            ){
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ),
+                    REQUEST_CODE_PERMISSION_CAMERA
+                )
+
+            }else if (permissionWriteExternalStorage != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ),
+                    REQUEST_CODE_PERMISSION_CAMERA
+                )
+
+            }else{
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ),
+                    REQUEST_CODE_PERMISSION_CAMERA
+                )
+
+            }
+            false
+        } else true
     }
 
 }

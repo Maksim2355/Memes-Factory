@@ -68,7 +68,6 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        setHasOptionsMenu(true)
         styleManager.setColorStatusBar(R.color.colorPrimaryContent)
         return inflater.inflate(R.layout.fragment_meme_feed, container, false)
     }
@@ -105,12 +104,6 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
         }
         memeController.memeDetailsClickListener = { presenter.openDetails(it) }
         memeController.shareClickListener = { presenter.shareMeme(it) }
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-        presenter.loadMemes()
     }
 
 
@@ -164,38 +157,8 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_toolbar_feed, menu)
         super.onCreateOptionsMenu(menu, inflater)
-
-        val searchView: SearchView = menu.findItem(R.id.action_search).actionView as SearchView
-
-//        searchView.setOnQueryTextFocusChangeListener { view: View, b: Boolean ->
-//            getActionBar()?.title = ""
-//            toolbar.setNavigationIcon(R.drawable.ic_back)
-//        }
-//        searchView.setOnCloseListener {
-//            getActionBar()?.title = TITLE_ACTION_BAR
-//            toolbar.navigationIcon = null
-//            false
-//        }
-
-//        Observable.create(ObservableOnSubscribe<String> { subscriber ->
-//            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//                override fun onQueryTextSubmit(query: String?): Boolean {
-//                    subscriber.onNext(query!!)
-//                    return false
-//                }
-//
-//                override fun onQueryTextChange(newText: String?): Boolean {
-//                    subscriber.onNext(newText!!)
-//                    return false
-//                }
-//
-//            })
-//        }).subscribe {
-//            presenter.filterMemeList(it)
-//        }
-
+        inflater.inflate(R.menu.menu_toolbar_feed, menu)
     }
 
     override fun getActionBar() = (activity as AppCompatActivity).supportActionBar

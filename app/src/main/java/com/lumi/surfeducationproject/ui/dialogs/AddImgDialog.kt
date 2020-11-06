@@ -16,6 +16,11 @@ import kotlinx.android.synthetic.main.dialog_add_img.view.*
 
 class AddImgDialog: DialogFragment() {
 
+    companion object{
+        val CAMERA_MESSAGE = 0
+        val GALLERY_MESSAGE = 1
+    }
+
     private lateinit var addImgForGalleryBtn: Button
     private lateinit var addImgForCameraBtn: Button
 
@@ -32,7 +37,6 @@ class AddImgDialog: DialogFragment() {
         addImgForCameraBtn = view.add_img_for_camera_btn
         addImgForCameraBtn.setOnClickListener {
             sendMessageParentFragmentAndCloseDialog(ActionsIntentImg.CAMERA)
-
         }
         addImgForGalleryBtn = view.add_img_for_gallery_btn
         addImgForGalleryBtn.setOnClickListener {
@@ -42,7 +46,11 @@ class AddImgDialog: DialogFragment() {
 
     private fun sendMessageParentFragmentAndCloseDialog(action: ActionsIntentImg){
         val intent = Intent()
-        intent.putExtra(EXTRA_WAY_GET_IMG, action)
+        if (action == ActionsIntentImg.CAMERA) {
+            intent.putExtra(EXTRA_WAY_GET_IMG, CAMERA_MESSAGE)
+        }else{
+            intent.putExtra(EXTRA_WAY_GET_IMG, GALLERY_MESSAGE)
+        }
         targetFragment?.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent)
         dismiss()
     }

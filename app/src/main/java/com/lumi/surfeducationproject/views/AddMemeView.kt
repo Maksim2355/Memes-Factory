@@ -7,8 +7,8 @@ import moxy.viewstate.strategy.alias.Skip
 
 interface AddMemeView: MvpView {
 
-    @AddToEndSingle
-    fun showImg()
+    @AddToEnd
+    fun showImg(url: String)
 
     @AddToEnd
     fun hideImg()
@@ -19,7 +19,10 @@ interface AddMemeView: MvpView {
     @AddToEnd
     fun enableCreateMemeBtn()
 
-    @Skip
+    @AddToEndSingle
     fun showAddImgDialog()
+
+    @Skip
+    fun clearFieldsAndImg()
 
 }

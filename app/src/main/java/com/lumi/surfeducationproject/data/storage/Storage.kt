@@ -1,18 +1,19 @@
 package com.lumi.surfeducationproject.data.storage
 
 import com.lumi.surfeducationproject.domain.model.Meme
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 interface Storage {
 
-    fun insertUserMeme(memeUser: Meme)
+    fun insertUserMeme(memeUser: Meme): Completable
 
-    fun insertMemes(memeList: List<Meme>)
+    fun insertMemes(memeList: List<Meme>): Completable
 
-    fun removeMemes()
+    fun removeMemes(): Completable
 
-    fun getAllMemes(): List<Meme>
+    fun getAllMemes(): Single<List<Meme>>
 
-    fun getUserMemes(): List<Meme>
+    fun getUserMemes(): Single<List<Meme>>
 
 }

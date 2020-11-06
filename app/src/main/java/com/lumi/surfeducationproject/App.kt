@@ -35,7 +35,7 @@ class App : Application() {
         if (activityComponent == null) {
             activityComponent = appComponent.addActivityComponent(
                 NavigationMainModule(activity),
-                UiManagerModule(activity)
+                ManagerModule(activity)
             )
         }
         return activityComponent!!

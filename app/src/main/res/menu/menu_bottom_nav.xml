@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/memes_feed_nav_mi"
+        android:id="@+id/memeFeedFragment"
         android:icon="@drawable/ic_nav_feed_meme"
         android:title=""
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/memes_add_nav_mi"
+        android:id="@+id/addMemeFragment"
         android:icon="@drawable/ic_nav_add_meme"
         android:title=""
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/profile_nav_mi"
+        android:id="@+id/profileFragment"
         android:icon="@drawable/ic_nav_profile"
         android:title=""
         app:showAsAction="ifRoom" />

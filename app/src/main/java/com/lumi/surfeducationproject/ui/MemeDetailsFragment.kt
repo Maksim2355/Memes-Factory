@@ -55,7 +55,6 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_meme_details, container, false)
     }
 

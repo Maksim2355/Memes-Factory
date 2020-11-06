@@ -71,7 +71,6 @@ class ProfileFragment : BaseFragment(), ProfileView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        setHasOptionsMenu(true)
         styleManager.setColorStatusBar(R.color.colorPrimary)
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
@@ -82,8 +81,6 @@ class ProfileFragment : BaseFragment(), ProfileView {
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.title = ""
         initView(view)
-        presenter.loadProfile()
-        presenter.loadMemes()
     }
 
     private fun initView(view: View) {
@@ -146,11 +143,10 @@ class ProfileFragment : BaseFragment(), ProfileView {
     }
 
     override fun showDialog() {
-        //Todo сдаться и просто поставить восклицательные знаки
-        val contextForDialog = context
-        contextForDialog?.let {
-            val builder: AlertDialog.Builder = AlertDialog.Builder(contextForDialog)
+        context?.let {
+            val builder: AlertDialog.Builder = AlertDialog.Builder(it)
             builder.setTitle(R.string.dialogLogout_exit_btn)
+                .setCancelable(false)
                 .setMessage("")
                 .setPositiveButton(
                     R.string.dialogLogout_exitAccount_btn

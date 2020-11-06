@@ -3,30 +3,67 @@ package com.lumi.surfeducationproject.presenters
 import com.lumi.surfeducationproject.common.BasePresenter
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.domain.repository.MemeRepository
-import com.lumi.surfeducationproject.domain.repository.UserRepository
 import com.lumi.surfeducationproject.views.AddMemeView
-import io.reactivex.rxjava3.core.Observable
-import moxy.MvpPresenter
+import java.security.SecureRandom
+import java.util.*
 import javax.inject.Inject
 
 class AddMemePresenter @Inject constructor(
-    memeRepository: MemeRepository,
-    userRepository: UserRepository
+    private val memeRepository: MemeRepository
 ) : BasePresenter<AddMemeView>() {
 
-    var observableTitleMeme: Observable<String>? = null
-    var observableDescriptionMeme: Observable<String>? = null
-    var photoMemeUrl: String? = null
-
-    private val createdDate by lazy { getCreatedData() }
+    private var titleMeme: String? = null
+    private var descriptionMeme: String? = null
+    private var photoMemeUrl: String? = null
 
 
-    private fun getCreatedData(): String {
-        TODO("Not yet implemented")
+    /*
+    Observable отслеживает изменение заголовка и описания и дергает методы в презентере
+    Мы устанавливаем значения в презентере, проверяем все поля и активируем кнопку
+    */
+    fun updateTitle(title: String) {
+        titleMeme = title
+        checkFieldsAndImg()
     }
 
-    fun addMeme() {
-        viewState.showAddImgDialog()
+    fun updateDescription(description: String) {
+        descriptionMeme = description
+        checkFieldsAndImg()
+    }
+
+    fun updateImg(url: String){
+        photoMemeUrl = url
+        viewState.showImg(url)
+        checkFieldsAndImg()
+    }
+
+    private fun checkFieldsAndImg() {
+        if (photoMemeUrl != null &&
+            checkValidTitleInput(titleMeme) &&
+            checkValidDescriptionInput(descriptionMeme)
+        ) {
+            println(titleMeme)
+            println(photoMemeUrl)
+            println(descriptionMeme)
+            viewState.enableCreateMemeBtn()
+        } else {
+            viewState.disableCreateMemeBtn()
+        }
+    }
+
+
+    //Создание мема из данных и обновления бд
+    fun createMeme() {
+        val meme = Meme(
+            SecureRandom().nextInt(),
+            titleMeme!!,
+            getCreatedData(),
+            descriptionMeme!!,
+            true,
+            photoMemeUrl!!
+        )
+        memeRepository.addMeme(meme)
+        clearData()
     }
 
     fun deleteImg() {
@@ -34,24 +71,25 @@ class AddMemePresenter @Inject constructor(
         viewState.hideImg()
     }
 
-    //Создание мема из данных и обновления бд
-    fun createMeme() {
-
+    private fun clearData(){
+        titleMeme = null
+        descriptionMeme = null
+        photoMemeUrl = null
+        viewState.hideImg()
+        viewState.clearFieldsAndImg()
     }
 
-    private fun checkFieldsAndImg(title: String, description: String) {
-        if (photoMemeUrl != null &&
-            checkTitleInput(title) &&
-            checkDescriptionInput(description)
-        ) {
-            createMeme()
-        }
+    private fun getCreatedData(): Int {
+        return Random().nextInt(1000000)
     }
 
-    private fun checkTitleInput(title: String): Boolean = (5 < title.length && title.length > 140)
+    private fun checkValidTitleInput(title: String?): Boolean =
+        if (title != null) (title.length in 5..100)
+        else false
 
-    private fun checkDescriptionInput(description: String): Boolean =
-        (20 < description.length && description.length > 1000)
+    private fun checkValidDescriptionInput(description: String?): Boolean =
+        if (description != null) (description.length in 20..999)
+        else false
 
 
 }

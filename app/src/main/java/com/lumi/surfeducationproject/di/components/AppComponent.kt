@@ -12,5 +12,5 @@ import javax.inject.Singleton
 )
 interface AppComponent {
     fun addActivityComponent(navigationMainModule: NavigationMainModule,
-                             uiManagerModule: UiManagerModule): ActivityComponent
+                             managerModule: ManagerModule): ActivityComponent
 }

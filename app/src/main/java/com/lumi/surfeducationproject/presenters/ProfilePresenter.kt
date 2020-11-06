@@ -15,7 +15,12 @@ class ProfilePresenter @Inject constructor(
 ) : BasePresenter<ProfileView>() {
 
 
-    fun loadProfile() {
+    init {
+        loadProfile()
+        loadMemes()
+    }
+
+    private fun loadProfile() {
         compositeDisposable.add(
             userRepository.getUser()
                 .observeOn(AndroidSchedulers.mainThread())

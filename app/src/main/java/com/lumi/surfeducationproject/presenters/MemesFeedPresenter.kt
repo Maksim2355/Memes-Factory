@@ -14,7 +14,12 @@ class MemesFeedPresenter @Inject constructor(
     private val memeRepository: MemeRepository
 ) : BasePresenter<MemeFeedView>() {
 
-    fun loadMemes() {
+    init {
+        loadMemes()
+    }
+
+
+    private fun loadMemes() {
         compositeDisposable.add(
             memeRepository.getMemes()
                 .observeOn(AndroidSchedulers.mainThread())

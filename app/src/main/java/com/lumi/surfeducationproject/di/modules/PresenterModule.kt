@@ -14,7 +14,6 @@ class PresenterModule {
     @FragmentScope
     fun provideSplashPresenter(userRepository: UserRepository) = SplashPresenter(userRepository)
 
-
     @Provides
     @FragmentScope
     fun provideAuthPresenter(userRepository: UserRepository) = AuthPresenter(userRepository)
@@ -24,13 +23,11 @@ class PresenterModule {
     fun provideMemeFeedPresenter(memeRepository: MemeRepository) =
         MemesFeedPresenter(memeRepository)
 
-
     @Provides
     @FragmentScope
     fun provideAddMemePresenter(
-        userRepository: UserRepository,
         memeRepository: MemeRepository
-    ) = AddMemePresenter(memeRepository, userRepository)
+    ) = AddMemePresenter(memeRepository)
 
     @Provides
     @FragmentScope
@@ -38,7 +35,6 @@ class PresenterModule {
         userRepository: UserRepository,
         memeRepository: MemeRepository
     ) = ProfilePresenter(userRepository, memeRepository)
-
 
     @Provides
     @FragmentScope

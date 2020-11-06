@@ -51,6 +51,12 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/meme_list_profile_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"/>
 
         <ProgressBar
             android:id="@+id/load_memes_pb"
@@ -58,12 +64,6 @@
             android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:visibility="gone"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/meme_list_profile_rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible"/>
     </FrameLayout>
 
 </LinearLayout>

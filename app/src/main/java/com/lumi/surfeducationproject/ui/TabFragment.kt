@@ -5,10 +5,11 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lumi.surfeducationproject.R
 
-class TabFragment : Fragment(), BottomNavigationView.OnNavigationItemSelectedListener {
+class TabFragment : Fragment() {
 
     private lateinit var navControllerTab: NavController
 
@@ -24,36 +25,8 @@ class TabFragment : Fragment(), BottomNavigationView.OnNavigationItemSelectedLis
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bottomNavView = view.findViewById(R.id.bottom_navigation_view)
-        bottomNavView.setOnNavigationItemSelectedListener(this)
         navControllerTab = Navigation.findNavController(view.findViewById(R.id.nav_host_fragment_content))
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
-            R.id.memes_feed_nav_mi -> {
-                navigateMemesFeed()
-                true
-            }R.id.memes_add_nav_mi -> {
-                navigateAddMeme()
-                true
-            }R.id.profile_nav_mi -> {
-                navigateProfile()
-                true
-            }
-            else -> false
-        }
-    }
-
-    private fun navigateAddMeme() {
-        navControllerTab.navigate(R.id.addMemeFragment)
-    }
-
-    private fun navigateMemesFeed() {
-        navControllerTab.navigate(R.id.memeFeedFragment)
-    }
-
-    private fun navigateProfile() {
-        navControllerTab.navigate(R.id.profileFragment)
+        NavigationUI.setupWithNavController(bottomNavView, navControllerTab);
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

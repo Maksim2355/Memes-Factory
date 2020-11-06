@@ -3,26 +3,35 @@ package com.lumi.surfeducationproject.ui
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.*
+import com.lumi.surfeducationproject.domain.model.User
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 import com.lumi.surfeducationproject.presenters.AddMemePresenter
 import com.lumi.surfeducationproject.ui.dialogs.AddImgDialog
 import com.lumi.surfeducationproject.views.AddMemeView
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import kotlinx.android.synthetic.main.fragment_add_meme.view.*
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
@@ -38,10 +47,10 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
     }
 
     private lateinit var toolbar: Toolbar
-    private lateinit var createMemeBtnToolbar: Button
+    private lateinit var createMemeBtn: Button
     private lateinit var inputTitleMemeEt: TextInputEditText
     private lateinit var inputDescriptionMemeEt: TextInputEditText
-    private lateinit var memeView: FrameLayout
+    private lateinit var imgContainer: FrameLayout
     private lateinit var closeBtnIbtn: ImageButton
     private lateinit var imgMemeIv: ImageView
     private lateinit var addImgIbtn: ImageButton
@@ -57,6 +66,9 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
 
     @Inject
     lateinit var snackBarManager: SnackBarManager
+
+    @Inject
+    lateinit var permissionManager: PermissionManager
 
     @Inject
     lateinit var navBack: NavigationBackPressed
@@ -82,19 +94,23 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
 
     private fun initToolbar(view: View) {
         toolbar = view.add_meme_toolbar
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        createMemeBtnToolbar = view.create_meme_btn
         toolbar.navigationIcon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_close) }
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar.setNavigationOnClickListener { navBack.back() }
     }
 
     private fun initView(view: View) {
         inputTitleMemeEt = view.input_title_meme_et
         inputDescriptionMemeEt = view.input_description_meme_et
-        memeView = view.img_meme_container
+        imgContainer = view.img_meme_container
         imgMemeIv = view.img_add_meme_iv
+
+        createMemeBtn = view.create_meme_btn
+        createMemeBtn.setOnClickListener(this)
         closeBtnIbtn = view.img_close_ibtn
+        closeBtnIbtn.setOnClickListener(this)
         addImgIbtn = view.add_img_ibtn
+        addImgIbtn.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -102,7 +118,7 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
             when (v.id) {
                 R.id.img_close_ibtn -> presenter.deleteImg()
                 R.id.create_meme_btn -> presenter.createMeme()
-                R.id.add_img_ibtn -> presenter.addMeme()
+                R.id.add_img_ibtn -> showAddImgDialog()
             }
         }
     }
@@ -110,81 +126,156 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
     override fun onResume() {
         super.onResume()
         //Создаем потоки, содержащие измененей полей
-        presenter.observableTitleMeme = Observable.create { subscriber ->
+        //TODO основная проблема в бизнес логики этого компонента. Решить
+        Observable.create(ObservableOnSubscribe<String> { subscriber ->
             inputTitleMemeEt.addTextChangedListener(
                 object : TextWatcher {
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                    override fun beforeTextChanged(
+                        s: CharSequence?, start: Int,
+                        count: Int, after: Int
+                    ) {
+                    }
 
-                    override fun afterTextChanged(s: Editable?){}
+                    override fun afterTextChanged(s: Editable?) {}
 
-                    override fun onTextChanged(s: CharSequence?,
-                                               start: Int,
-                                               before: Int,
-                                               count: Int) {
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
                         subscriber.onNext(inputTitleMemeEt.text.toString())
                     }
                 }
             )
+        }).subscribe {
+            presenter.updateTitle(it)
         }
-        presenter.observableDescriptionMeme = Observable.create { subscriber ->
+        Observable.create(ObservableOnSubscribe<String> { subscriber ->
             inputDescriptionMemeEt.addTextChangedListener(
                 object : TextWatcher {
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                    override fun beforeTextChanged(
+                        s: CharSequence?, start: Int,
+                        count: Int, after: Int
+                    ) {
+                    }
 
-                    override fun afterTextChanged(s: Editable?){}
+                    override fun afterTextChanged(s: Editable?) {}
 
-                    override fun onTextChanged(s: CharSequence?,
-                                               start: Int,
-                                               before: Int,
-                                               count: Int) {
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
                         subscriber.onNext(inputDescriptionMemeEt.text.toString())
                     }
                 }
             )
+        }).subscribe {
+            presenter.updateDescription(it)
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK){
-            when(requestCode){
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
                 REQUEST_DIALOG_WAY_GET_IMG -> {
                     //Получаем выбор нашего пользователя из диалога
+                    val action = data?.getIntExtra(EXTRA_WAY_GET_IMG, 3)
+                    if (action == AddImgDialog.CAMERA_MESSAGE) {
+                        getImgFromCamera()
+                    } else {
+                        gemImgFromGallery()
+                    }
                 }
                 REQUEST_CODE_CAMERA -> {
 
                 }
                 REQUST_CODE_GALLERY -> {
-
+                    data?.let {
+                        presenter.updateImg(it.data.toString())
+                    }
                 }
             }
         }
     }
 
-    private fun onClickCloseImg() {
-        TODO("Not yet implemented")
+    private fun gemImgFromGallery() {
+        if (permissionManager.requestPermissionGallery()){
+            val galleryIntent = Intent(
+                Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            )
+            startActivityForResult(galleryIntent, REQUST_CODE_GALLERY)
+        }
     }
 
-    override fun showImg() {
-        TODO("Not yet implemented")
+    private fun getImgFromCamera() {
+        if (permissionManager.requestPermissionCamera()) {
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(intent, REQUEST_CODE_CAMERA)
+        }
+    }
+
+
+    override fun showImg(url: String) {
+        imgContainer.visibility = View.VISIBLE
+        Glide.with(this).load(url).into(imgMemeIv)
     }
 
     override fun hideImg() {
-        TODO("Not yet implemented")
+        imgContainer.visibility = View.GONE
     }
 
     override fun disableCreateMemeBtn() {
-        TODO("Not yet implemented")
+        createMemeBtn.setTextColor(resources.getColor(R.color.colorAccentTransparent))
+        createMemeBtn.isClickable = false
     }
 
     override fun enableCreateMemeBtn() {
-        TODO("Not yet implemented")
+        createMemeBtn.setTextColor(resources.getColor(R.color.colorAccent))
+        createMemeBtn.isClickable = true
     }
 
     override fun showAddImgDialog() {
         val addImgDialog = AddImgDialog()
         addImgDialog.setTargetFragment(this, REQUEST_DIALOG_WAY_GET_IMG)
-        fragmentManager?.let { addImgDialog.show(it, EXTRA_WAY_GET_IMG) }
+        fragmentManager?.let {
+            addImgDialog.show(it, EXTRA_WAY_GET_IMG)
+        }
+    }
+
+    override fun clearFieldsAndImg() {
+        inputTitleMemeEt.text = null
+        inputDescriptionMemeEt.text = null
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when (requestCode) {
+            REQUEST_CODE_PERMISSION_CAMERA -> {
+                if (grantResults.size > 2
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED
+                ) {
+                    getImgFromCamera()
+                }
+            }
+            REQUEST_CODE_PERMISSION_GALLERY -> {
+                if (grantResults.size > 1
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                ) {
+                    gemImgFromGallery()
+                }
+            }
+        }
     }
 
     override fun disposeControl(): ControlDispose = presenter
