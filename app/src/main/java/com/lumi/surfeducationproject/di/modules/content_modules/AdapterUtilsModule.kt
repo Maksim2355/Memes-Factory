@@ -1,4 +1,4 @@
-package com.lumi.surfeducationproject.di.modules
+package com.lumi.surfeducationproject.di.modules.content_modules
 
 import com.lumi.surfeducationproject.controllers.MemeController
 import dagger.Module

@@ -23,7 +23,6 @@ abstract class BaseFragment: MvpAppCompatFragment()  {
     override fun onDetach() {
         super.onDetach()
         disposeControl().disposeAll()
-        App.instance.clearFragmentComponent()
     }
 
     abstract fun getActionBar(): ActionBar?

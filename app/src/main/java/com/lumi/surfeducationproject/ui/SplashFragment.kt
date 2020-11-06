@@ -20,7 +20,6 @@ import javax.inject.Provider
 
 class SplashFragment : MvpAppCompatFragment(), SplashView {
 
-
     private lateinit var icLogoIv: ImageView
 
     @Inject
@@ -30,9 +29,11 @@ class SplashFragment : MvpAppCompatFragment(), SplashView {
     @Inject
     lateinit var navigationStartApp: NavigationStartApp
 
+    private var isAuthUser: Boolean = false
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        App.instance.startFragmentComponent().inject(this)
+        App.instance.getFragmentAuthComponentOrCreateIfNull().inject(this)
     }
 
     override fun onCreateView(
@@ -59,13 +60,16 @@ class SplashFragment : MvpAppCompatFragment(), SplashView {
     }
 
     override fun startApp(isAuthUser: Boolean) {
+        this.isAuthUser = isAuthUser
         navigationStartApp.startApp(isAuthUser)
     }
 
 
     override fun onDetach() {
         super.onDetach()
-        App.instance.clearFragmentComponent()
+        if (isAuthUser){
+            App.instance.clearFragmentAuthComponent()
+        }
     }
 
 }

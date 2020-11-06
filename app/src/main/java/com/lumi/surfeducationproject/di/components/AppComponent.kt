@@ -1,6 +1,8 @@
 package com.lumi.surfeducationproject.di.components
 
-import com.lumi.surfeducationproject.di.modules.*
+import com.lumi.surfeducationproject.di.modules.activity_modules.ActivityModule
+import com.lumi.surfeducationproject.di.modules.activity_modules.NavigationMainModule
+import com.lumi.surfeducationproject.di.modules.app_modules.*
 import dagger.Component
 import javax.inject.Singleton
 
@@ -12,5 +14,6 @@ import javax.inject.Singleton
 )
 interface AppComponent {
     fun addActivityComponent(navigationMainModule: NavigationMainModule,
-                             managerModule: ManagerModule): ActivityComponent
+                             activityModule: ActivityModule
+    ): ActivityComponent
 }

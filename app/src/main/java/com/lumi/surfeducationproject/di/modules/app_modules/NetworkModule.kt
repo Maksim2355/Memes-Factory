@@ -1,4 +1,4 @@
-package com.lumi.surfeducationproject.di.modules
+package com.lumi.surfeducationproject.di.modules.app_modules
 
 import com.lumi.surfeducationproject.BuildConfig
 import com.lumi.surfeducationproject.data.api.AuthApi
@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 
 @Module
-class NetworkModule() {
+class NetworkModule {
 
     private val BASE_URL = "https://r2.mocker.surfstudio.ru/android_vsu/"
 

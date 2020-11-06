@@ -34,18 +34,10 @@
             app:destination="@id/tabFragment" />
     </fragment>
     <fragment
-        android:id="@+id/memeDetailsFragment"
-        android:name="com.lumi.surfeducationproject.ui.MemeDetailsFragment"
-        android:label="fragment_meme_details"
-        tools:layout="@layout/fragment_meme_details" />
-    <fragment
         android:id="@+id/tabFragment"
         android:name="com.lumi.surfeducationproject.ui.TabFragment"
         android:label="fragment_tab"
         tools:layout="@layout/fragment_tab" >
-        <action
-            android:id="@+id/action_tabFragment_to_memeDetailsFragment"
-            app:destination="@id/memeDetailsFragment" />
         <action
             android:id="@+id/action_tabFragment_to_authFragment"
             app:popUpTo="@id/nav_main"

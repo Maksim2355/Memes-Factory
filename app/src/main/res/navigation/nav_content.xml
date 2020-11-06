@@ -9,15 +9,28 @@
         android:id="@+id/memeFeedFragment"
         android:name="com.lumi.surfeducationproject.ui.MemeFeedFragment"
         android:label="fragment_meme_feed"
-        tools:layout="@layout/fragment_meme_feed" />
+        tools:layout="@layout/fragment_meme_feed" >
+        <action
+            android:id="@+id/action_memeFeedFragment_to_memeDetailsFragment"
+            app:destination="@id/memeDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.lumi.surfeducationproject.ui.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_memeDetailsFragment"
+            app:destination="@id/memeDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addMemeFragment"
         android:name="com.lumi.surfeducationproject.ui.AddMemeFragment"
         android:label="fragment_add_meme"
         tools:layout="@layout/fragment_add_meme" />
+    <fragment
+        android:id="@+id/memeDetailsFragment"
+        android:name="com.lumi.surfeducationproject.ui.MemeDetailsFragment"
+        android:label="fragment_meme_details"
+        tools:layout="@layout/fragment_meme_details" />
 </navigation>

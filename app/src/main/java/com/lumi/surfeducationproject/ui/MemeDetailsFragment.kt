@@ -48,7 +48,7 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        App.instance.startFragmentComponent().inject(this)
+        App.instance.getFragmentContentComponentOrCreateIfNull().inject(this)
     }
 
     override fun onCreateView(

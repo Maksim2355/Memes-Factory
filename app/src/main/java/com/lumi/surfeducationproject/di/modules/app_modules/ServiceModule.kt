@@ -1,4 +1,4 @@
-package com.lumi.surfeducationproject.di.modules
+package com.lumi.surfeducationproject.di.modules.app_modules
 
 import android.content.SharedPreferences
 import com.lumi.surfeducationproject.data.api.AuthApi
@@ -19,11 +19,8 @@ class ServiceModule {
     fun provideSharedPreferenceService(sharedPreference: SharedPreferences): SharedPreferenceService =
         SharedPreferenceServiceImpl(sharedPreference)
 
-
     @Provides
     @Singleton
     fun provideAuthService(authApi: AuthApi): AuthService = AuthServiceImpl(authApi)
-
-
 
 }

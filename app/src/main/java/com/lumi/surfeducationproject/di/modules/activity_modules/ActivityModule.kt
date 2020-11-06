@@ -1,4 +1,4 @@
-package com.lumi.surfeducationproject.di.modules
+package com.lumi.surfeducationproject.di.modules.activity_modules
 
 import android.content.Context
 import com.lumi.surfeducationproject.common.PermissionManager
@@ -10,7 +10,7 @@ import dagger.Provides
 
 
 @Module
-class ManagerModule(private val activity: Context) {
+class ActivityModule(private val activity: Context) {
 
     @Provides
     @ActivityScope

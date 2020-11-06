@@ -22,8 +22,6 @@ import com.lumi.surfeducationproject.navigation.NavigationAuth
 import com.lumi.surfeducationproject.presenters.ProfilePresenter
 import com.lumi.surfeducationproject.views.ProfileView
 import kotlinx.android.synthetic.main.fragment_profile.view.*
-import moxy.MvpAppCompatFragment
-import moxy.MvpView
 import moxy.ktx.moxyPresenter
 import ru.surfstudio.android.easyadapter.EasyAdapter
 import ru.surfstudio.android.easyadapter.ItemList
@@ -64,7 +62,7 @@ class ProfileFragment : BaseFragment(), ProfileView {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        App.instance.startFragmentComponent().inject(this)
+        App.instance.getFragmentContentComponentOrCreateIfNull().inject(this)
     }
 
     override fun onCreateView(

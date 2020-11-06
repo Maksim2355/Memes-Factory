@@ -1,4 +1,4 @@
-package com.lumi.surfeducationproject.di.modules
+package com.lumi.surfeducationproject.di.modules.app_modules
 
 import android.content.Context
 import androidx.room.Room

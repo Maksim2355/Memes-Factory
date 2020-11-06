@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
@@ -25,7 +24,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.*
-import com.lumi.surfeducationproject.domain.model.User
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 import com.lumi.surfeducationproject.presenters.AddMemePresenter
 import com.lumi.surfeducationproject.ui.dialogs.AddImgDialog
@@ -71,11 +69,14 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
     lateinit var permissionManager: PermissionManager
 
     @Inject
+    lateinit var bottomBarVisible: BottomBarVisible
+
+    @Inject
     lateinit var navBack: NavigationBackPressed
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        App.instance.startFragmentComponent().inject(this)
+        App.instance.getFragmentContentComponentOrCreateIfNull().inject(this)
     }
 
     override fun onCreateView(
@@ -121,6 +122,11 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
                 R.id.add_img_ibtn -> showAddImgDialog()
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        bottomBarVisible.hideBottomNavigationBar()
     }
 
     override fun onResume() {
@@ -175,6 +181,11 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
         }).subscribe {
             presenter.updateDescription(it)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        bottomBarVisible.showBottomNavigationBar()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

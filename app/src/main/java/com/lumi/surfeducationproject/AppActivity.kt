@@ -19,9 +19,8 @@ import com.lumi.surfeducationproject.navigation.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent,
-    NavigationMemeDetails, StyleManager,
-    NavigationBackPressed, NavigationAuth, SnackBarManager, PermissionManager {
+class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, StyleManager,
+    NavigationAuth, SnackBarManager, PermissionManager {
 
     private val navController: NavController by lazy {
         findNavController(R.id.nav_host_fragment_container)
@@ -49,17 +48,6 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent,
         val window: Window = window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = resources.getColor(color)
-    }
-
-
-    override fun startMemeDetailsScreen(meme: Meme) {
-        val bundle = Bundle()
-        bundle.putSerializable(EXTRA_DETAILS_MEME, meme)
-        navController.navigate(R.id.action_tabFragment_to_memeDetailsFragment, bundle)
-    }
-
-    override fun back() {
-        navController.popBackStack()
     }
 
     override fun startAuthScreen() {

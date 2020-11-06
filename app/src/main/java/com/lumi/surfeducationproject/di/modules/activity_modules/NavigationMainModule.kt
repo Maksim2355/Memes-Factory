@@ -1,4 +1,4 @@
-package com.lumi.surfeducationproject.di.modules
+package com.lumi.surfeducationproject.di.modules.activity_modules
 
 import android.content.Context
 import com.lumi.surfeducationproject.di.scopes.ActivityScope
@@ -15,15 +15,7 @@ class NavigationMainModule(private val activity: Context) {
 
     @Provides
     @ActivityScope
-    fun provideNavigationBackPressed() = activity as NavigationBackPressed
-
-    @Provides
-    @ActivityScope
     fun provideNavigationContent() = activity as NavigationContent
-
-    @Provides
-    @ActivityScope
-    fun provideNavigationMemeDetails() = activity as NavigationMemeDetails
 
     @Provides
     @ActivityScope

@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
-import android.widget.SearchView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -21,7 +20,6 @@ import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
 import com.lumi.surfeducationproject.presenters.MemesFeedPresenter
 import com.lumi.surfeducationproject.views.MemeFeedView
 import kotlinx.android.synthetic.main.fragment_meme_feed.view.*
-import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.surfstudio.android.easyadapter.EasyAdapter
 import ru.surfstudio.android.easyadapter.ItemList
@@ -61,7 +59,7 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        App.instance.startFragmentComponent().inject(this)
+        App.instance.getFragmentContentComponentOrCreateIfNull().inject(this)
     }
 
     override fun onCreateView(

@@ -19,7 +19,6 @@ import com.lumi.surfeducationproject.common.SnackBarManager
 import com.lumi.surfeducationproject.navigation.NavigationContent
 import com.lumi.surfeducationproject.presenters.AuthPresenter
 import com.lumi.surfeducationproject.views.AuthView
-import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes
@@ -55,7 +54,6 @@ class AuthFragment : BaseFragment(), AuthView, View.OnFocusChangeListener {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        App.instance.startFragmentComponent().inject(this)
     }
 
     override fun onCreateView(
@@ -167,6 +165,11 @@ class AuthFragment : BaseFragment(), AuthView, View.OnFocusChangeListener {
                 }
             }
         }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        App.instance.clearFragmentAuthComponent()
     }
 
     private fun getInputPassword() = passwordEt.text.toString()
