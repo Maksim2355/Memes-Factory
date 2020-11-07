@@ -33,4 +33,12 @@ interface MemeFeedView: MvpView {
     @OneExecution
     fun openMemeDetails(data: Meme)
 
+    @Skip
+    fun enableSearchView()
+
+    @Skip
+    fun disableSearchView()
+
+
+
 }

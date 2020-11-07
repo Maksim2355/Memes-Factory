@@ -17,35 +17,38 @@ class MemesFeedPresenter @Inject constructor(
         loadMemes()
     }
 
+    private var memeList: List<Meme>? = null
+    private var memeSearchingList: List<Meme>? = null
+
+
     private fun loadMemes() {
-        compositeDisposable.add(
-            memeRepository.getMemes()
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { viewState.showLoadState() }
-                .doFinally { viewState.hideLoadState() }
-                .subscribe({
-                    showMemes(it)
-                }, {
-                    errorProcessing(it)
-                })
-        )
+        memeRepository.getMemes()
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { viewState.showLoadState() }
+            .doFinally { viewState.hideLoadState() }
+            .subscribe({
+                showAndSaveMemes(it)
+            }, {
+                errorProcessing(it)
+            })
 
     }
 
     fun updateMemes() {
-            memeRepository.getMemes()
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { viewState.showRefresh() }
-                .doFinally { viewState.hideRefresh() }
-                .subscribe({
-                    showMemes(it)
-                }, {
-                    errorProcessing(it)
-                })
+        memeRepository.getMemes()
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { viewState.showRefresh() }
+            .doFinally { viewState.hideRefresh() }
+            .subscribe({
+                showAndSaveMemes(it)
+            }, {
+                errorProcessing(it)
+            })
     }
 
-    private fun showMemes(memeList: List<Meme>) {
+    private fun showAndSaveMemes(memeList: List<Meme>) {
         if (memeList.isNotEmpty()) {
+            this.memeList = memeList
             viewState.showMemes(memeList)
         } else {
             errorProcessing(EmptyMemesDatabaseException())
@@ -66,6 +69,18 @@ class MemesFeedPresenter @Inject constructor(
             viewState.showErrorSnackbar("Отсутствует подключение к интернету \nПодключитесь к сети и попробуйте снова")
         }
         viewState.showErrorState()
+    }
+
+    fun startSearch() {
+        viewState.enableSearchView()
+    }
+
+    fun stopSearch() {
+        viewState.disableSearchView()
+    }
+
+    fun filterMemesByTitle(searchText: String?) {
+
     }
 
 

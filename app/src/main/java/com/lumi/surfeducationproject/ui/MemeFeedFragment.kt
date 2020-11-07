@@ -5,9 +5,11 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -22,10 +24,13 @@ import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
 import com.lumi.surfeducationproject.presenters.MemesFeedPresenter
 import com.lumi.surfeducationproject.views.MemeFeedView
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import kotlinx.android.synthetic.main.fragment_meme_feed.view.*
 import moxy.ktx.moxyPresenter
 import ru.surfstudio.android.easyadapter.EasyAdapter
 import ru.surfstudio.android.easyadapter.ItemList
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -38,6 +43,8 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
     private lateinit var memeListRv: RecyclerView
     private lateinit var stateErrorView: TextView
     private lateinit var stateLoadView: FrameLayout
+
+    private lateinit var searchView: SearchView
 
     @Inject
     lateinit var presenterProvider: Provider<MemesFeedPresenter>
@@ -147,6 +154,16 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
         navMemeDetailsFragment.startMemeDetailsScreen(data)
     }
 
+    override fun enableSearchView() {
+        toolbar.title = ""
+        toolbar.setNavigationOnClickListener { presenter.stopSearch() }
+    }
+
+    override fun disableSearchView() {
+        toolbar.title = getString(R.string.meme_feed_title_toolbar_text)
+        toolbar.navigationIcon = null
+    }
+
     override fun onRefresh() {
         presenter.updateMemes()
     }
@@ -158,6 +175,32 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_toolbar_feed, menu)
+
+        searchView = menu.findItem(R.id.action_search)?.actionView as SearchView
+        searchView.setOnFocusChangeListener { _, _ -> presenter.startSearch() }
+        searchView.setOnCloseListener {
+            presenter.stopSearch()
+            false
+        }
+
+        //TODO могу ли я словить утечку памяти?
+        Observable.create(ObservableOnSubscribe<String> { subscriber ->
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    subscriber.onNext(query!!)
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    subscriber.onNext(newText!!)
+                    return false
+                }
+            })
+        }).subscribe { searchText ->
+            presenter.filterMemesByTitle(searchText)
+        }
+
+
     }
 
     override fun getActionBar() = (activity as AppCompatActivity).supportActionBar
