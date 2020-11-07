@@ -12,12 +12,10 @@ import moxy.MvpAppCompatFragment
 abstract class BaseFragment: MvpAppCompatFragment()  {
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
     }
-
 
     abstract fun getActionBar(): ActionBar?
 

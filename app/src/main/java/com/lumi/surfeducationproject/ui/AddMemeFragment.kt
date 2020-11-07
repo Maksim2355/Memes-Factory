@@ -28,10 +28,7 @@ import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.REQUEST_CODE_PERMISSION_CAMERA
 import com.lumi.surfeducationproject.common.REQUEST_CODE_PERMISSION_GALLERY
 import com.lumi.surfeducationproject.common.base_view.BaseFragment
-import com.lumi.surfeducationproject.common.managers.BottomBarVisible
-import com.lumi.surfeducationproject.common.managers.PermissionManager
-import com.lumi.surfeducationproject.common.managers.SnackBarManager
-import com.lumi.surfeducationproject.common.managers.StyleManager
+import com.lumi.surfeducationproject.common.managers.*
 import com.lumi.surfeducationproject.common.params.EXTRA_WAY_GET_IMG
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 import com.lumi.surfeducationproject.presenters.AddMemePresenter
@@ -77,6 +74,9 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
 
     @Inject
     lateinit var permissionManager: PermissionManager
+
+    @Inject
+    lateinit var fileManager: FileManager
 
     @Inject
     lateinit var bottomBarVisible: BottomBarVisible
@@ -212,8 +212,11 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
                     }
                 }
                 REQUEST_CODE_CAMERA -> {
-                    val imgMemeBtmp = data?.extras?.get("data") as Bitmap
-                    saveFile(imgMemeBtmp)
+                    val imgBtmp = data?.extras?.get("data") as Bitmap
+                    imgBtmp.let {
+                        val url = fileManager.saveImg(it)
+                        if (url != null) presenter.updateImg(url)
+                    }
                 }
                 REQUEST_CODE_GALLERY -> {
                     data?.let {
@@ -224,20 +227,9 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
         }
     }
 
-    private fun saveFile(imgBtmp: Bitmap) {
-        val storageDir = File(
-                Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_PICTURES
-                ),
-                getImgFileName()
-            )
-
-    }
-
-    private fun getImgFileName(): String = "Meme_${System.currentTimeMillis().toString()}.png"
 
     private fun gemImgFromGallery() {
-        if (permissionManager.requestPermissionGallery()){
+        if (permissionManager.requestPermissionGallery()) {
             val galleryIntent = Intent(
                 Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI
@@ -249,7 +241,7 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
     private fun getImgFromCamera() {
         if (permissionManager.requestPermissionCamera()) {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(intent, REQUEST_CODE_CAMERA)
+            val photoFile = startActivityForResult(intent, REQUEST_CODE_CAMERA)
         }
     }
 

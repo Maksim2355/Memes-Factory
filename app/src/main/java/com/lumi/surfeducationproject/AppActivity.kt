@@ -2,6 +2,7 @@ package com.lumi.surfeducationproject
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Window
@@ -10,19 +11,27 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.lumi.surfeducationproject.common.*
+import com.lumi.surfeducationproject.common.REQUEST_CODE_PERMISSION_CAMERA
+import com.lumi.surfeducationproject.common.REQUEST_CODE_PERMISSION_GALLERY
+import com.lumi.surfeducationproject.common.managers.FileManager
 import com.lumi.surfeducationproject.common.managers.PermissionManager
 import com.lumi.surfeducationproject.common.managers.SnackBarManager
 import com.lumi.surfeducationproject.common.managers.StyleManager
-import com.lumi.surfeducationproject.navigation.*
+import com.lumi.surfeducationproject.navigation.NavigationAuth
+import com.lumi.surfeducationproject.navigation.NavigationContent
+import com.lumi.surfeducationproject.navigation.NavigationStartApp
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, StyleManager,
-    NavigationAuth, SnackBarManager, PermissionManager {
+    NavigationAuth, SnackBarManager, PermissionManager, FileManager {
 
     private val navController: NavController by lazy {
         findNavController(R.id.nav_host_fragment_container)
@@ -102,7 +111,7 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
         ) {
             if (permissionWriteExternalStorage != PackageManager.PERMISSION_GRANTED &&
                 permissionReadExternalStorage != PackageManager.PERMISSION_GRANTED
-            ){
+            ) {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(
@@ -112,7 +121,7 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
                     REQUEST_CODE_PERMISSION_CAMERA
                 )
 
-            }else if (permissionWriteExternalStorage != PackageManager.PERMISSION_GRANTED){
+            } else if (permissionWriteExternalStorage != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(
@@ -121,7 +130,7 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
                     REQUEST_CODE_PERMISSION_CAMERA
                 )
 
-            }else{
+            } else {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(
@@ -134,5 +143,27 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
             false
         } else true
     }
+
+    //TODO уменьшить размытие картинки
+    override fun saveImg(imgBtmp: Bitmap): String? {
+        val saveDir = File(cacheDir, "meme")
+        return try {
+            if (!saveDir.exists()) saveDir.mkdir()
+            val file = File(saveDir, getImgFileName())
+            val outStr = FileOutputStream(file)
+            imgBtmp.compress(Bitmap.CompressFormat.JPEG, 100, outStr) // bmp is your Bitmap instance
+            outStr.flush()
+            outStr.close()
+            FileProvider.getUriForFile(
+                this,
+                BuildConfig.APPLICATION_ID,
+                file
+            ).toString()
+        } catch (ex: IOException) {
+            null
+        }
+    }
+
+    private fun getImgFileName(): String = "Meme_${System.currentTimeMillis()}"
 
 }
