@@ -63,16 +63,14 @@ class AddMemePresenter @Inject constructor(
             true,
             photoMemeUrl!!
         )
-        compositeDisposable.add(
-            memeRepository.addMeme(meme)
-                .observeOn(AndroidSchedulers.mainThread())
-                .doFinally { viewState.disableCreateMemeBtn() }
-                .subscribe({
-                    clearData()
-                }, {
-                    viewState.showErrorSnackBar("Ошибка при добавлении. Попробуйте снова")
-                })
-        )
+        memeRepository.addMeme(meme)
+            .observeOn(AndroidSchedulers.mainThread())
+            .doFinally { viewState.disableCreateMemeBtn() }
+            .subscribe({
+                clearData()
+            }, {
+                viewState.showErrorSnackBar("Ошибка при добавлении. Попробуйте снова")
+            })
     }
 
     fun deleteImg() {
@@ -90,7 +88,7 @@ class AddMemePresenter @Inject constructor(
     }
 
     private fun getCreatedData(): Int {
-        return Random().nextInt(100000000)
+        return Random().nextInt(100000)
     }
 
     private fun checkValidTitleInput(title: String?): Boolean =

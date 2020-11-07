@@ -4,7 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
@@ -23,7 +25,8 @@ import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.common.*
+import com.lumi.surfeducationproject.common.REQUEST_CODE_PERMISSION_CAMERA
+import com.lumi.surfeducationproject.common.REQUEST_CODE_PERMISSION_GALLERY
 import com.lumi.surfeducationproject.common.base_view.BaseFragment
 import com.lumi.surfeducationproject.common.managers.BottomBarVisible
 import com.lumi.surfeducationproject.common.managers.PermissionManager
@@ -38,6 +41,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import kotlinx.android.synthetic.main.fragment_add_meme.view.*
 import moxy.ktx.moxyPresenter
+import java.io.File
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -45,9 +49,9 @@ import javax.inject.Provider
 class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
 
     companion object {
-        private val REQUEST_DIALOG_WAY_GET_IMG = 100
-        private val REQUEST_CODE_CAMERA = 101
-        private val REQUST_CODE_GALLERY = 102
+        private const val REQUEST_DIALOG_WAY_GET_IMG = 100
+        private const val REQUEST_CODE_CAMERA = 101
+        private const val REQUEST_CODE_GALLERY = 102
     }
 
     private lateinit var toolbar: Toolbar
@@ -208,9 +212,10 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
                     }
                 }
                 REQUEST_CODE_CAMERA -> {
-
+                    val imgMemeBtmp = data?.extras?.get("data") as Bitmap
+                    saveFile(imgMemeBtmp)
                 }
-                REQUST_CODE_GALLERY -> {
+                REQUEST_CODE_GALLERY -> {
                     data?.let {
                         presenter.updateImg(it.data.toString())
                     }
@@ -219,13 +224,25 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
         }
     }
 
+    private fun saveFile(imgBtmp: Bitmap) {
+        val storageDir = File(
+                Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_PICTURES
+                ),
+                getImgFileName()
+            )
+
+    }
+
+    private fun getImgFileName(): String = "Meme_${System.currentTimeMillis().toString()}.png"
+
     private fun gemImgFromGallery() {
         if (permissionManager.requestPermissionGallery()){
             val galleryIntent = Intent(
                 Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             )
-            startActivityForResult(galleryIntent, REQUST_CODE_GALLERY)
+            startActivityForResult(galleryIntent, REQUEST_CODE_GALLERY)
         }
     }
 
