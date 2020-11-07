@@ -1,13 +1,12 @@
 package com.lumi.surfeducationproject.presenters
 
-import com.lumi.surfeducationproject.common.BasePresenter
+import com.lumi.surfeducationproject.common.base_view.BasePresenter
 import com.lumi.surfeducationproject.common.exceptions.EmptyMemesDatabaseException
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.domain.repository.MemeRepository
 import com.lumi.surfeducationproject.common.exceptions.NETWORK_EXCEPTIONS
 import com.lumi.surfeducationproject.views.MemeFeedView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import moxy.MvpPresenter
 import javax.inject.Inject
 
 class MemesFeedPresenter @Inject constructor(
@@ -17,7 +16,6 @@ class MemesFeedPresenter @Inject constructor(
     init {
         loadMemes()
     }
-
 
     private fun loadMemes() {
         compositeDisposable.add(
@@ -31,10 +29,10 @@ class MemesFeedPresenter @Inject constructor(
                     errorProcessing(it)
                 })
         )
+
     }
 
     fun updateMemes() {
-        compositeDisposable.add(
             memeRepository.getMemes()
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { viewState.showRefresh() }
@@ -44,14 +42,12 @@ class MemesFeedPresenter @Inject constructor(
                 }, {
                     errorProcessing(it)
                 })
-        )
-
     }
 
     private fun showMemes(memeList: List<Meme>) {
-        if (memeList.isNotEmpty()){
+        if (memeList.isNotEmpty()) {
             viewState.showMemes(memeList)
-        }else {
+        } else {
             errorProcessing(EmptyMemesDatabaseException())
         }
     }
@@ -65,11 +61,11 @@ class MemesFeedPresenter @Inject constructor(
     }
 
     private fun errorProcessing(throwable: Throwable) {
+        println(throwable.javaClass)
         if (NETWORK_EXCEPTIONS.contains(throwable.javaClass)) {
             viewState.showErrorSnackbar("Отсутствует подключение к интернету \nПодключитесь к сети и попробуйте снова")
         }
         viewState.showErrorState()
-
     }
 
 

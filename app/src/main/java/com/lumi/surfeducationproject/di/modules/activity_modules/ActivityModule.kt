@@ -1,9 +1,9 @@
 package com.lumi.surfeducationproject.di.modules.activity_modules
 
 import android.content.Context
-import com.lumi.surfeducationproject.common.PermissionManager
-import com.lumi.surfeducationproject.common.SnackBarManager
-import com.lumi.surfeducationproject.common.StyleManager
+import com.lumi.surfeducationproject.common.managers.PermissionManager
+import com.lumi.surfeducationproject.common.managers.SnackBarManager
+import com.lumi.surfeducationproject.common.managers.StyleManager
 import com.lumi.surfeducationproject.di.scopes.ActivityScope
 import dagger.Module
 import dagger.Provides

@@ -10,7 +10,8 @@ import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.common.BottomBarVisible
+import com.lumi.surfeducationproject.common.managers.BottomBarVisible
+import com.lumi.surfeducationproject.common.params.EXTRA_DETAILS_MEME
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
@@ -63,12 +64,20 @@ class TabFragment : Fragment(), NavigationBackPressed, NavigationMemeDetails, Bo
     }
 
     override fun startMemeDetailsScreen(meme: Meme) {
+        val bundle = Bundle()
+        bundle.putSerializable(EXTRA_DETAILS_MEME, meme)
         when (navControllerTab.currentDestination?.label) {
             LABEL_MEME_FEED -> {
-                navControllerTab.navigate(R.id.action_memeFeedFragment_to_memeDetailsFragment)
+                navControllerTab.navigate(
+                    R.id.action_memeFeedFragment_to_memeDetailsFragment,
+                    bundle
+                )
             }
             LABEL_PROFILE -> {
-                navControllerTab.navigate(R.id.action_profileFragment_to_memeDetailsFragment)
+                navControllerTab.navigate(
+                    R.id.action_profileFragment_to_memeDetailsFragment,
+                    bundle
+                )
             }
         }
     }

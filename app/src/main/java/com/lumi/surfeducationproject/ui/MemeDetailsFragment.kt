@@ -12,9 +12,10 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.common.BaseFragment
-import com.lumi.surfeducationproject.common.ControlDispose
-import com.lumi.surfeducationproject.common.EXTRA_DETAILS_MEME
+import com.lumi.surfeducationproject.common.base_view.BaseFragment
+import com.lumi.surfeducationproject.common.managers.BottomBarVisible
+import com.lumi.surfeducationproject.common.params.EXTRA_DETAILS_MEME
+import com.lumi.surfeducationproject.common.managers.StyleManager
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.domain.model.User
@@ -44,11 +45,18 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
     private lateinit var nicknameMiniTv: TextView
 
     @Inject
+    lateinit var styleManager: StyleManager
+
+    @Inject
     lateinit var navBack: NavigationBackPressed
+
+    @Inject
+    lateinit var bottomBarVisible: BottomBarVisible
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         App.instance.getFragmentContentComponentOrCreateIfNull().inject(this)
+        styleManager.setColorStatusBar(R.color.colorPrimaryContent)
     }
 
     override fun onCreateView(
@@ -64,6 +72,16 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
         initToolbar()
         showMeme()
         presenter.initProfile()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        bottomBarVisible.hideBottomNavigationBar()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        bottomBarVisible.showBottomNavigationBar()
     }
 
     private fun initView(view: View) {
@@ -88,9 +106,6 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_toolbar_details_meme, menu)
     }
-
-    override fun disposeControl(): ControlDispose = presenter
-
 
     override fun getActionBar() = (activity as AppCompatActivity).supportActionBar
 

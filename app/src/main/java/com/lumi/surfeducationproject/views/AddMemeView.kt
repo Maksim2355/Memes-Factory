@@ -25,4 +25,7 @@ interface AddMemeView: MvpView {
     @Skip
     fun clearFieldsAndImg()
 
+    @AddToEndSingle
+    fun showErrorSnackBar(messageError: String)
+
 }

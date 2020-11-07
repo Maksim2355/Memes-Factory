@@ -1,6 +1,6 @@
 package com.lumi.surfeducationproject.di.modules.content_modules
 
-import com.lumi.surfeducationproject.common.BottomBarVisible
+import com.lumi.surfeducationproject.common.managers.BottomBarVisible
 import com.lumi.surfeducationproject.di.scopes.FragmentContentScope
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails

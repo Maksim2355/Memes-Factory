@@ -1,9 +1,10 @@
 package com.lumi.surfeducationproject.presenters
 
-import com.lumi.surfeducationproject.common.BasePresenter
+import com.lumi.surfeducationproject.common.base_view.BasePresenter
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.domain.repository.MemeRepository
 import com.lumi.surfeducationproject.views.AddMemeView
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import java.security.SecureRandom
 import java.util.*
 import javax.inject.Inject
@@ -16,6 +17,9 @@ class AddMemePresenter @Inject constructor(
     private var descriptionMeme: String? = null
     private var photoMemeUrl: String? = null
 
+    init {
+        viewState.disableCreateMemeBtn()
+    }
 
     /*
     Observable отслеживает изменение заголовка и описания и дергает методы в презентере
@@ -31,7 +35,7 @@ class AddMemePresenter @Inject constructor(
         checkFieldsAndImg()
     }
 
-    fun updateImg(url: String){
+    fun updateImg(url: String) {
         photoMemeUrl = url
         viewState.showImg(url)
         checkFieldsAndImg()
@@ -42,9 +46,6 @@ class AddMemePresenter @Inject constructor(
             checkValidTitleInput(titleMeme) &&
             checkValidDescriptionInput(descriptionMeme)
         ) {
-            println(titleMeme)
-            println(photoMemeUrl)
-            println(descriptionMeme)
             viewState.enableCreateMemeBtn()
         } else {
             viewState.disableCreateMemeBtn()
@@ -62,16 +63,25 @@ class AddMemePresenter @Inject constructor(
             true,
             photoMemeUrl!!
         )
-        memeRepository.addMeme(meme)
-        clearData()
+        compositeDisposable.add(
+            memeRepository.addMeme(meme)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally { viewState.disableCreateMemeBtn() }
+                .subscribe({
+                    clearData()
+                }, {
+                    viewState.showErrorSnackBar("Ошибка при добавлении. Попробуйте снова")
+                })
+        )
     }
 
     fun deleteImg() {
         photoMemeUrl = null
         viewState.hideImg()
+        checkFieldsAndImg()
     }
 
-    private fun clearData(){
+    private fun clearData() {
         titleMeme = null
         descriptionMeme = null
         photoMemeUrl = null
@@ -80,7 +90,7 @@ class AddMemePresenter @Inject constructor(
     }
 
     private fun getCreatedData(): Int {
-        return Random().nextInt(1000000)
+        return Random().nextInt(100000000)
     }
 
     private fun checkValidTitleInput(title: String?): Boolean =
@@ -88,7 +98,7 @@ class AddMemePresenter @Inject constructor(
         else false
 
     private fun checkValidDescriptionInput(description: String?): Boolean =
-        if (description != null) (description.length in 20..999)
+        if (description != null) (description.length in 10..999)
         else false
 
 

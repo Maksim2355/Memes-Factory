@@ -14,7 +14,9 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.lumi.surfeducationproject.common.*
-import com.lumi.surfeducationproject.domain.model.Meme
+import com.lumi.surfeducationproject.common.managers.PermissionManager
+import com.lumi.surfeducationproject.common.managers.SnackBarManager
+import com.lumi.surfeducationproject.common.managers.StyleManager
 import com.lumi.surfeducationproject.navigation.*
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -64,7 +66,7 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
         val textView =
             snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
         textView.setTextColor(Color.WHITE)
-        textView.textSize = resources.getDimension(R.dimen.standard_text_size)
+        textView.textSize = 16f
         snackbar.show()
     }
 

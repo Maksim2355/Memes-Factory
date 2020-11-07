@@ -12,10 +12,9 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.common.BaseFragment
-import com.lumi.surfeducationproject.common.ControlDispose
+import com.lumi.surfeducationproject.common.base_view.BaseFragment
 import com.lumi.surfeducationproject.common.EmptyFields
-import com.lumi.surfeducationproject.common.SnackBarManager
+import com.lumi.surfeducationproject.common.managers.SnackBarManager
 import com.lumi.surfeducationproject.navigation.NavigationContent
 import com.lumi.surfeducationproject.presenters.AuthPresenter
 import com.lumi.surfeducationproject.views.AuthView
@@ -54,6 +53,7 @@ class AuthFragment : BaseFragment(), AuthView, View.OnFocusChangeListener {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        App.instance.getFragmentAuthComponentOrCreateIfNull().inject(this)
     }
 
     override fun onCreateView(
@@ -175,8 +175,6 @@ class AuthFragment : BaseFragment(), AuthView, View.OnFocusChangeListener {
     private fun getInputPassword() = passwordEt.text.toString()
 
     private fun getInputLogin() = loginEditEt.text.toString()
-
-    override fun disposeControl(): ControlDispose = presenter
 
     override fun getActionBar(): ActionBar? = null
 

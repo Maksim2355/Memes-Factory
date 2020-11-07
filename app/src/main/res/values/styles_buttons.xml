@@ -8,7 +8,7 @@
     </style>
 
     <style name="CreateBtn" parent="TextAppearance.AppCompat.Widget.Button">
-        <item name="android:textColor">@color/colorAccentTransparent</item>
+        <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">@dimen/standard_text_size</item>
         <item name="android:background">@null</item>
     </style>

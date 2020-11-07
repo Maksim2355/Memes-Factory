@@ -14,11 +14,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.common.*
+import com.lumi.surfeducationproject.common.base_view.BaseFragment
+import com.lumi.surfeducationproject.common.managers.SnackBarManager
+import com.lumi.surfeducationproject.common.managers.StyleManager
 import com.lumi.surfeducationproject.controllers.MemeController
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.domain.model.User
 import com.lumi.surfeducationproject.navigation.NavigationAuth
+import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
 import com.lumi.surfeducationproject.presenters.ProfilePresenter
 import com.lumi.surfeducationproject.views.ProfileView
 import kotlinx.android.synthetic.main.fragment_profile.view.*
@@ -54,11 +57,13 @@ class ProfileFragment : BaseFragment(), ProfileView {
     lateinit var navLogout: NavigationAuth
 
     @Inject
+    lateinit var navMemeDetailsFragment: NavigationMemeDetails
+
+    @Inject
     lateinit var easyAdapter: EasyAdapter
 
     @Inject
     lateinit var memeController: MemeController
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -77,7 +82,7 @@ class ProfileFragment : BaseFragment(), ProfileView {
         super.onViewCreated(view, savedInstanceState)
         toolbar = view.profile_toolbar
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        (activity as AppCompatActivity).supportActionBar?.title = ""
+        getActionBar()?.title = ""
         initView(view)
     }
 
@@ -85,9 +90,10 @@ class ProfileFragment : BaseFragment(), ProfileView {
         avatarIv = view.avatars_iv
         nicknameTv = view.nickname_tv
         descriptionTv = view.description_profile_tv
-
         loadStatePb = view.load_memes_pb
         memeListRv = view.meme_list_profile_rv
+        memeController.memeDetailsClickListener = { presenter.openDetails(it) }
+        memeController.shareClickListener = { presenter.shareMeme(it) }
         with(memeListRv) {
             adapter = easyAdapter
             layoutManager = androidx.recyclerview.widget.StaggeredGridLayoutManager(
@@ -97,13 +103,17 @@ class ProfileFragment : BaseFragment(), ProfileView {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        presenter.loadProfile()
+        presenter.loadMemes()
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_toolbar_profile, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
-
-    override fun disposeControl(): ControlDispose = presenter
 
     override fun getActionBar(): ActionBar? =
         (activity as AppCompatActivity).supportActionBar
@@ -174,6 +184,10 @@ class ProfileFragment : BaseFragment(), ProfileView {
     override fun hideLoadState() {
         memeListRv.visibility = View.VISIBLE
         loadStatePb.visibility = View.GONE
+    }
+
+    override fun openMemeDetails(data: Meme) {
+        navMemeDetailsFragment.startMemeDetailsScreen(data)
     }
 
 }

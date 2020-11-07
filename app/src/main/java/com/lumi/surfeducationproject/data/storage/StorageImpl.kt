@@ -25,7 +25,7 @@ class StorageImpl @Inject constructor(
     override fun insertMemes(memeList: List<Meme>): Completable = Completable.fromCallable {
         val dbMemeList = mapper.reverseTransformList(memeList)
         dao.insertMemeList(dbMemeList)
-    }
+    }.subscribeOn(Schedulers.io())
 
     override fun getAllMemes(): Single<List<Meme>> = Single.fromCallable {
         val dbMemeList = dao.getAllMemes()

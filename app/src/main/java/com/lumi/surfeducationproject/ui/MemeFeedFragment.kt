@@ -14,6 +14,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.*
+import com.lumi.surfeducationproject.common.base_view.BaseFragment
+import com.lumi.surfeducationproject.common.managers.SnackBarManager
+import com.lumi.surfeducationproject.common.managers.StyleManager
 import com.lumi.surfeducationproject.controllers.MemeController
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
@@ -37,12 +40,6 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
     private lateinit var stateLoadView: FrameLayout
 
     @Inject
-    lateinit var easyAdapter: EasyAdapter
-
-    @Inject
-    lateinit var memeController: MemeController
-
-    @Inject
     lateinit var presenterProvider: Provider<MemesFeedPresenter>
     private val presenter by moxyPresenter {
         presenterProvider.get()
@@ -56,6 +53,12 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
 
     @Inject
     lateinit var navMemeDetailsFragment: NavigationMemeDetails
+
+    @Inject
+    lateinit var easyAdapter: EasyAdapter
+
+    @Inject
+    lateinit var memeController: MemeController
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -80,7 +83,7 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
     private fun initToolbar(view: View) {
         toolbar = view.findViewById(R.id.meme_feed_toolbar)
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        getActionBar()?.title = "Популярные мемы"
+        getActionBar()?.title = getString(R.string.meme_feed_title_toolbar_text)
     }
 
     private fun initView(view: View) {
@@ -129,12 +132,10 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
     }
 
     override fun showRefresh() {
-        refreshContainer.isRefreshing = true
         setRefresherState(true)
     }
 
     override fun hideRefresh() {
-        refreshContainer.isRefreshing = false
         setRefresherState(false)
     }
 
@@ -161,6 +162,5 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
 
     override fun getActionBar() = (activity as AppCompatActivity).supportActionBar
 
-    override fun disposeControl(): ControlDispose = presenter
 
 }

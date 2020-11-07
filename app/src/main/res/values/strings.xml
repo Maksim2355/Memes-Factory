@@ -18,4 +18,6 @@
     <string name="add_img_title_dialog">Выбрать фото</string>
     <string name="add_img_gallery_text">"Из галерии "</string>
     <string name="add_img_camera_text">Из камеры</string>
+    <string name="meme_feed_title_toolbar_text">Популярные мемы</string>
+    <string name="add_meme_error_save_meme_message">Ошибка при добавлении. Попробуйте снова</string>
 </resources>

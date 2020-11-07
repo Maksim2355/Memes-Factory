@@ -10,7 +10,7 @@ import android.widget.Button
 import androidx.fragment.app.DialogFragment
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.ActionsIntentImg
-import com.lumi.surfeducationproject.common.EXTRA_WAY_GET_IMG
+import com.lumi.surfeducationproject.common.params.EXTRA_WAY_GET_IMG
 import kotlinx.android.synthetic.main.dialog_add_img.view.*
 
 

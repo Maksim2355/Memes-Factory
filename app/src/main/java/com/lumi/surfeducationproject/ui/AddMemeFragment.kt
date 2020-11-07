@@ -24,6 +24,12 @@ import com.google.android.material.textfield.TextInputEditText
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.*
+import com.lumi.surfeducationproject.common.base_view.BaseFragment
+import com.lumi.surfeducationproject.common.managers.BottomBarVisible
+import com.lumi.surfeducationproject.common.managers.PermissionManager
+import com.lumi.surfeducationproject.common.managers.SnackBarManager
+import com.lumi.surfeducationproject.common.managers.StyleManager
+import com.lumi.surfeducationproject.common.params.EXTRA_WAY_GET_IMG
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 import com.lumi.surfeducationproject.presenters.AddMemePresenter
 import com.lumi.surfeducationproject.ui.dialogs.AddImgDialog
@@ -230,7 +236,6 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
         }
     }
 
-
     override fun showImg(url: String) {
         imgContainer.visibility = View.VISIBLE
         Glide.with(this).load(url).into(imgMemeIv)
@@ -263,6 +268,10 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
         inputDescriptionMemeEt.text = null
     }
 
+    override fun showErrorSnackBar(messageError: String) {
+        snackBarManager.showErrorMessage(messageError)
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -288,8 +297,6 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
             }
         }
     }
-
-    override fun disposeControl(): ControlDispose = presenter
 
     override fun getActionBar(): ActionBar? = (activity as AppCompatActivity).supportActionBar
 }

@@ -32,14 +32,8 @@ class MemeRepositoryImpl @Inject constructor(
 
     override fun getUserMemes(): Single<List<Meme>> = storage.getUserMemes()
 
-    override fun addMeme(meme: Meme) {
-        storage.insertUserMeme(meme)
-            .subscribe({
-                println("Гуд жоп")
-            }, {
-                println(it.javaClass)
-            })
-    }
+    override fun addMeme(meme: Meme) = storage.insertUserMeme(meme)
+
 
 }
 

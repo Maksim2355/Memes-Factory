@@ -5,6 +5,7 @@ import com.lumi.surfeducationproject.domain.model.User
 import moxy.MvpView
 import moxy.viewstate.strategy.StateStrategyType
 import moxy.viewstate.strategy.alias.AddToEndSingle
+import moxy.viewstate.strategy.alias.OneExecution
 import moxy.viewstate.strategy.alias.SingleState
 import moxy.viewstate.strategy.alias.Skip
 
@@ -30,4 +31,7 @@ interface ProfileView: MvpView {
 
     @Skip
     fun hideLoadState()
+
+    @OneExecution
+    fun openMemeDetails(data: Meme)
 }

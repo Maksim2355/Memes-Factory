@@ -1,4 +1,4 @@
-package com.lumi.surfeducationproject.common
+package com.lumi.surfeducationproject.common.managers
 
 interface SnackBarManager {
 
