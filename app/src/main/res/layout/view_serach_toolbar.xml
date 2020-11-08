@@ -20,7 +20,7 @@
             android:visibility="gone">
 
             <ImageButton
-                android:id="@+id/close_search_btn"
+                android:id="@+id/close_search_Ibtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -58,13 +58,13 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/title_search_text"
+                android:id="@+id/title_search_tv"
                 style="@style/TitleTv"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/search_btn"
+                app:layout_constraintEnd_toStartOf="@+id/search_Ibtn"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -72,9 +72,10 @@
 
 
             <ImageButton
-                android:id="@+id/search_btn"
+                android:id="@+id/search_Ibtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
                 android:background="@null"
                 android:padding="@dimen/small_padding"
                 android:src="@drawable/ic_search"

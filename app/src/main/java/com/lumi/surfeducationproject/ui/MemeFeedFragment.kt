@@ -103,6 +103,12 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
         refreshContainer.setOnRefreshListener(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        searchToolbar.observableIsSearchMode.subscribe({}, {})
+        searchToolbar.observableSearchText?.subscribe({}, {})
+    }
+
     private fun initRecyclerView() {
         with(memeListRv) {
             adapter = easyAdapter
