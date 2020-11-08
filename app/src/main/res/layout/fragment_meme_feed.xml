@@ -7,57 +7,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/meme_feed_toolbar"
+    <com.lumi.surfeducationproject.ui.custom_view.ToolbarSearchView
+        android:id="@+id/meme_feed_Stoolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/Toolbar" >
-
-        <LinearLayout
-            android:id="@+id/container_search"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:visibility="visible">
-
-            <ImageButton
-                android:id="@+id/close_search_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:padding="@dimen/small_padding"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_back"/>
-
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:counterMaxLength="40"
-                app:counterOverflowTextAppearance="@style/TextLimitError"
-                app:hintEnabled="false">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_title_meme_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
-                    android:hint="@string/memeFeed_search_hint"
-                    android:padding="@dimen/standard_padding"
-                    android:textSize="@dimen/standard_text_size"
-                    android:drawableEnd="@drawable/ic_close"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
-        </LinearLayout>
-
-    </androidx.appcompat.widget.Toolbar>
-
+        app:titleToolbar="@string/meme_feed_title_toolbar_text"
+        android:layout_height="wrap_content"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -99,7 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="@string/errorState_message"
+                    android:text="@string/errorDownloadMemeState_message"
                     android:visibility="gone" />
             </LinearLayout>
 

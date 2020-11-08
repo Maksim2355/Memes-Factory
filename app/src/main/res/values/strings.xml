@@ -4,7 +4,8 @@
     <string name="auth_password_hint">Пароль</string>
     <string name="auth_loginIn_btn">Войти</string>
     <string name="auth_errorFieldsIsEmpty_message">Поля не могут быть пустыми</string>
-    <string name="errorState_message">Не удалось загрузить ленту \nОбновите экран или попробуйте позже</string>
+    <string name="errorDownloadMemeState_message">Не удалось загрузить ленту \nОбновите экран или попробуйте позже</string>
+    <string name="errorSearchMemeState_message">Совпадений не найдено</string>
     <string name="memeFeed_search_hint">Поиск</string>
     <string name="profile_logout_btn">Выйти</string>
     <string name="profile_aboutApp_btn">О приложении</string>
@@ -20,4 +21,5 @@
     <string name="add_img_camera_text">Из камеры</string>
     <string name="meme_feed_title_toolbar_text">Популярные мемы</string>
     <string name="add_meme_error_save_meme_message">Ошибка при добавлении. Попробуйте снова</string>
+    <string name="view_search_toolbar_title_text">Популярные мемы</string>
 </resources>
