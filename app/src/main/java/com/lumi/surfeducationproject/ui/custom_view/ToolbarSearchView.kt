@@ -17,6 +17,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.view_serach_toolbar.view.*
+import java.util.concurrent.TimeUnit
 
 
 class ToolbarSearchView @JvmOverloads constructor(
@@ -38,8 +39,11 @@ class ToolbarSearchView @JvmOverloads constructor(
 
     //Создаем поток, который нам сообщает, включен ли режим поиска в тулбаре
     val observableIsSearchMode: Observable<Boolean>
+
     //Создаем поток, который уведомляет нас об изменениях в тексте
     val observableSearchText: Observable<String>
+
+    private var isSearchMode = false
 
     init {
         inflate(context, R.layout.view_serach_toolbar, this)
@@ -67,19 +71,34 @@ class ToolbarSearchView @JvmOverloads constructor(
         inputTitleMemeEt = input_title_meme_et
     }
 
-    private fun createObservableSearchMode(): Observable<Boolean> = Observable.create { subscriber ->
-        searchIBtn.setOnClickListener {
-            openSearch()
-            subscriber.onNext(true)
+    private fun createObservableSearchMode(): Observable<Boolean> =
+        Observable.create { subscriber ->
+            searchIBtn.setOnClickListener {
+                openSearch()
+                isSearchMode = true
+                subscriber.onNext(true)
+            }
+            closeSearchIbtn.setOnClickListener {
+                closeSearch()
+                isSearchMode = false
+                subscriber.onNext(false)
+            }
         }
-        closeSearchIbtn.setOnClickListener {
+
+    fun enableSearchMode() {
+        if (!isSearchMode) {
+            openSearch()
+        }
+    }
+
+    fun disableSearchMode() {
+        if (isSearchMode) {
             closeSearch()
-            subscriber.onNext(false)
         }
     }
 
     //Создаем поток, который нам сообщает об изменение текста в поля для ввода
-    private fun createObservableChangeText(): Observable<String> =  Observable.create { subscriber ->
+    private fun createObservableChangeText(): Observable<String> = Observable.create { subscriber ->
         inputTitleMemeEt.addTextChangedListener(object : TextWatcher {
 
             override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -100,13 +119,15 @@ class ToolbarSearchView @JvmOverloads constructor(
         searchContainer.visibility = View.GONE
         titleContainer.visibility = View.VISIBLE
         inputTitleMemeEt.text?.clear()
+
+        isSearchMode = false
     }
 
     //Переключаемся на режим title
     private fun openSearch() {
         title_container.visibility = View.GONE
         search_container.visibility = View.VISIBLE
-
+        isSearchMode = true
     }
 
 

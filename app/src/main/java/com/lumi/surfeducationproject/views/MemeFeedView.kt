@@ -16,6 +16,9 @@ interface MemeFeedView: MvpView {
     fun showErrorState()
 
     @AddToEndSingle
+    fun showEmptyFilterErrorState()
+
+    @AddToEndSingle
     fun showRefresh()
 
     @AddToEndSingle
@@ -32,13 +35,6 @@ interface MemeFeedView: MvpView {
 
     @OneExecution
     fun openMemeDetails(data: Meme)
-
-    @Skip
-    fun enableSearchView()
-
-    @Skip
-    fun disableSearchView()
-
 
 
 }

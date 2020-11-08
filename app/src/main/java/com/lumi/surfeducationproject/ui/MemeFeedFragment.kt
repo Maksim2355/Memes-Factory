@@ -105,8 +105,17 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
 
     override fun onResume() {
         super.onResume()
-        searchToolbar.observableIsSearchMode.subscribe({}, {})
-        searchToolbar.observableSearchText?.subscribe({}, {})
+        //TODO заменить observable с toolbarSearch на что-то человеческое
+        searchToolbar.observableIsSearchMode.subscribe({
+            if (it == true){
+                presenter.startFilter()
+            }else{
+                presenter.stopFilter()
+            }
+        }, {
+
+        })
+        presenter.observableFilter = searchToolbar.observableSearchText
     }
 
     private fun initRecyclerView() {
@@ -131,7 +140,14 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
 
     override fun showErrorState() {
         memeListRv.visibility = View.GONE
+        stateErrorView.text = getString(R.string.errorDownloadMemeState_message)
         stateErrorView.visibility = View.VISIBLE
+    }
+
+    override fun showEmptyFilterErrorState() {
+        memeListRv.visibility = View.GONE
+        stateErrorView.visibility = View.VISIBLE
+        stateErrorView.text = getString(R.string.meme_feed_empty_filter_message)
     }
 
     override fun showLoadState() {
@@ -158,13 +174,6 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
         navMemeDetailsFragment.startMemeDetailsScreen(data)
     }
 
-    override fun enableSearchView() {
-
-    }
-
-    override fun disableSearchView() {
-
-    }
 
     override fun onRefresh() {
         presenter.updateMemes()
