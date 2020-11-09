@@ -55,8 +55,5 @@ class ProfilePresenter @Inject constructor(
         viewState.openMemeDetails(meme)
     }
 
-    fun shareMeme(meme: Meme) {
-
-    }
 
 }

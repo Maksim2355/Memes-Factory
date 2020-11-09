@@ -1,6 +1,7 @@
 package com.lumi.surfeducationproject.presenters
 
 import com.lumi.surfeducationproject.common.base_view.BasePresenter
+import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.domain.repository.MemeRepository
 import com.lumi.surfeducationproject.domain.repository.UserRepository
 import com.lumi.surfeducationproject.views.MemeDetailsView
@@ -13,6 +14,7 @@ class MemeDetailsPresenter @Inject constructor(
     private val memeRepository: MemeRepository
 ) : BasePresenter<MemeDetailsView>() {
 
+    var meme: Meme? = null
 
     fun initProfile() {
         compositeDisposable.add(
@@ -27,6 +29,18 @@ class MemeDetailsPresenter @Inject constructor(
                 })
         )
 
+    }
+
+    fun initMemes() {
+        meme?.let {
+            viewState.showMemes(it)
+        }
+    }
+
+    fun share() {
+        meme?.let {
+            viewState.shareMemes(it)
+        }
     }
 
 

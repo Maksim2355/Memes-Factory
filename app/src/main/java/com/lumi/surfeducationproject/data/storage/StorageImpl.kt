@@ -16,16 +16,16 @@ class StorageImpl @Inject constructor(
 ) : Storage {
 
     override fun insertUserMeme(memeUser: Meme): Completable = Completable.fromCallable {
-            val dbMeme = mapper.reverseTransform(memeUser)
-            dbMeme.isLocalUserCreated = true
-            dao.insertMeme(dbMeme)
-        }.subscribeOn(Schedulers.io())
+        val dbMeme = mapper.reverseTransform(memeUser)
+        dbMeme.isLocalUserCreated = true
+        dao.insertMeme(dbMeme)
+    }.subscribeOn(Schedulers.io())
 
 
-    override fun insertMemes(memeList: List<Meme>): Completable = Completable.fromCallable {
+    override fun insertMemes(memeList: List<Meme>) {
         val dbMemeList = mapper.reverseTransformList(memeList)
         dao.insertMemeList(dbMemeList)
-    }.subscribeOn(Schedulers.io())
+    }
 
     override fun getAllMemes(): Single<List<Meme>> = Single.fromCallable {
         val dbMemeList = dao.getAllMemes()

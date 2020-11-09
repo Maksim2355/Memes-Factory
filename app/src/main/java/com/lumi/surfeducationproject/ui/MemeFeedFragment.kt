@@ -1,22 +1,24 @@
 package com.lumi.surfeducationproject.ui
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.FrameLayout
-import android.widget.SearchView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.common.*
+import com.lumi.surfeducationproject.common.RefresherOwner
 import com.lumi.surfeducationproject.common.base_view.BaseFragment
+import com.lumi.surfeducationproject.common.managers.InputModeManager
 import com.lumi.surfeducationproject.common.managers.SnackBarManager
 import com.lumi.surfeducationproject.common.managers.StyleManager
 import com.lumi.surfeducationproject.controllers.MemeController
@@ -26,12 +28,10 @@ import com.lumi.surfeducationproject.presenters.MemesFeedPresenter
 import com.lumi.surfeducationproject.ui.custom_view.ToolbarSearchView
 import com.lumi.surfeducationproject.views.MemeFeedView
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import kotlinx.android.synthetic.main.fragment_meme_feed.view.*
 import moxy.ktx.moxyPresenter
 import ru.surfstudio.android.easyadapter.EasyAdapter
 import ru.surfstudio.android.easyadapter.ItemList
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -54,6 +54,9 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
 
     @Inject
     lateinit var styleManager: StyleManager
+
+    @Inject
+    lateinit var inputModeManager: InputModeManager
 
     @Inject
     lateinit var snackBarManager: SnackBarManager
@@ -89,6 +92,31 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
 
     private fun initToolbar(view: View) {
         searchToolbar = view.meme_feed_Stoolbar
+        searchToolbar.onChangeSearchMode = object : ToolbarSearchView.OnChangeSearchModeListener {
+            override fun onStartSearch() {
+                presenter.startFilter()
+                openKeyboard()
+            }
+
+            override fun onStopSearch() {
+                presenter.stopFilter()
+                hideKeyboard()
+            }
+
+        }
+        presenter.observableSearchText = Observable.create { subscriber ->
+            searchToolbar.onChangeSearchText  = {
+                subscriber.onNext(it)
+            }
+        }
+
+    }
+
+    private fun openKeyboard() {
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+    }
+    private fun hideKeyboard(){
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
     }
 
     private fun initView(view: View) {
@@ -103,33 +131,26 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
         refreshContainer.setOnRefreshListener(this)
     }
 
-    override fun onResume() {
-        super.onResume()
-        //TODO заменить observable с toolbarSearch на что-то человеческое
-        searchToolbar.observableIsSearchMode.subscribe({
-            if (it == true){
-                presenter.startFilter()
-            }else{
-                presenter.stopFilter()
-            }
-        }, {
-
-        })
-        presenter.observableFilter = searchToolbar.observableSearchText
-    }
-
     private fun initRecyclerView() {
         with(memeListRv) {
             adapter = easyAdapter
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
         memeController.memeDetailsClickListener = { presenter.openDetails(it) }
-        memeController.shareClickListener = { presenter.shareMeme(it) }
+        memeController.shareClickListener = {
+            val shareMeme = Intent.createChooser(Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, it.title)
+                putExtra(Intent.EXTRA_STREAM, it.photoUrl)
+                type = "image/*"
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }, null)
+            startActivity(shareMeme)
+        }
     }
 
 
     override fun showMemes(memesList: List<Meme>) {
-        initRecyclerView()
         val itemList = ItemList.create().apply {
             addAll(memesList, memeController)
         }
@@ -174,6 +195,9 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
         navMemeDetailsFragment.startMemeDetailsScreen(data)
     }
 
+    override fun hideSearch() {
+        searchToolbar.disableSearchMode()
+    }
 
     override fun onRefresh() {
         presenter.updateMemes()
@@ -181,6 +205,17 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
 
     override fun setRefresherState(refresherState: Boolean) {
         refreshContainer.post { refreshContainer.isRefreshing = refresherState }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        inputModeManager.setAdjustPan()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        inputModeManager.setAdjustResize()
+        presenter.stopFilter()
     }
 
     override fun getActionBar() = (activity as AppCompatActivity).supportActionBar

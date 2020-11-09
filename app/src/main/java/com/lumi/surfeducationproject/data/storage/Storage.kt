@@ -8,7 +8,7 @@ interface Storage {
 
     fun insertUserMeme(memeUser: Meme): Completable
 
-    fun insertMemes(memeList: List<Meme>): Completable
+    fun insertMemes(memeList: List<Meme>)
 
     fun removeMemes(): Completable
 

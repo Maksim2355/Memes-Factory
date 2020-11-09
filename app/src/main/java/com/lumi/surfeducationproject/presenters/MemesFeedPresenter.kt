@@ -8,6 +8,7 @@ import com.lumi.surfeducationproject.common.exceptions.NETWORK_EXCEPTIONS
 import com.lumi.surfeducationproject.views.MemeFeedView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import java.util.*
 import javax.inject.Inject
 
 class MemesFeedPresenter @Inject constructor(
@@ -18,10 +19,9 @@ class MemesFeedPresenter @Inject constructor(
         loadMemes()
     }
 
-    var observableFilter: Observable<String>? = null
-    var filterText = ""
+    var observableSearchText: Observable<String>? = null
     private var memeList: List<Meme>? = null
-    private var memeSearchingList: List<Meme> = ArrayList()
+    private var memeSearchList: List<Meme>? = null
 
 
     private fun loadMemes() {
@@ -30,7 +30,8 @@ class MemesFeedPresenter @Inject constructor(
             .doOnSubscribe { viewState.showLoadState() }
             .doFinally { viewState.hideLoadState() }
             .subscribe({
-                showAndSaveMemes(it)
+                this.memeList = it
+                showMemes(it)
             }, {
                 errorProcessing(it)
             })
@@ -43,24 +44,23 @@ class MemesFeedPresenter @Inject constructor(
             .doOnSubscribe { viewState.showRefresh() }
             .doFinally { viewState.hideRefresh() }
             .subscribe({
-                showAndSaveMemes(it)
+                this.memeList = it
+                showMemes(it)
             }, {
                 errorProcessing(it)
             })
     }
 
-    private fun showAndSaveMemes(memeList: List<Meme>) {
+
+    private fun showMemes(memeList: List<Meme>) {
         if (memeList.isNotEmpty()) {
-            this.memeList = memeList
             viewState.showMemes(memeList)
         } else {
             errorProcessing(EmptyMemesDatabaseException())
         }
     }
 
-    fun shareMeme(meme: Meme) {
 
-    }
 
     fun openDetails(meme: Meme) {
         viewState.openMemeDetails(meme)
@@ -74,27 +74,37 @@ class MemesFeedPresenter @Inject constructor(
         viewState.showErrorState()
     }
 
+    /*Вполняем фильтрацию мемов.
+    Подписываемся на поток данных, который излучает нам новую информацию из EditText
+    Если список мемов не пустой, кладем данные в контейнер, фильтруем его
+    Если есть совпадения, и фильтрованный список по новому символу не равен прошлому, то обновляем
+     */
     fun startFilter() {
-        observableFilter?.subscribe({
-            //Вполняем фильтрацию мемов
-            memeList?.let { memeList ->
-                memeSearchingList =
-                    memeList.filter { meme -> meme.title.toLowerCase().contains(it.toLowerCase()) }
-                if (memeSearchingList.isNotEmpty()) {
-                    viewState.showMemes(memeSearchingList)
-                } else {
+        observableSearchText?.subscribe{
+            memeList?.let {memeList ->
+                memeSearchList = memeList.filter {meme ->
+                    meme.title.toLowerCase(Locale.ROOT).contains(it.toLowerCase(Locale.ROOT))
+                }
+                if (memeSearchList!!.isNotEmpty()){
+                    showMemes(memeSearchList!!)
+                }else{
                     viewState.showEmptyFilterErrorState()
                 }
             }
-        }, {
-
-        })
+        }
     }
 
     fun stopFilter() {
-        observableFilter = null
-
+        viewState.hideSearch()
+        memeList?.let {
+            viewState.showMemes(it)
+        }
+        memeSearchList = null
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        stopFilter()
+    }
 
 }

@@ -6,18 +6,13 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.lumi.surfeducationproject.R
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.view_serach_toolbar.view.*
-import java.util.concurrent.TimeUnit
 
 
 class ToolbarSearchView @JvmOverloads constructor(
@@ -27,21 +22,26 @@ class ToolbarSearchView @JvmOverloads constructor(
 ) : Toolbar(context, attrs, defStyle) {
 
     private lateinit var toolbarSearch: Toolbar
-
     private lateinit var titleContainer: ConstraintLayout
     private lateinit var titleTv: TextView
     private lateinit var searchIBtn: ImageButton
-
-    private lateinit var searchContainer: LinearLayout
+    private lateinit var searchContainer: ConstraintLayout
     private lateinit var closeSearchIbtn: ImageButton
     private lateinit var inputTitleMemeTil: TextInputLayout
     private lateinit var inputTitleMemeEt: TextInputEditText
+    private lateinit var clearSearchIbtn: ImageButton
 
-    //Создаем поток, который нам сообщает, включен ли режим поиска в тулбаре
-    val observableIsSearchMode: Observable<Boolean>
+    var onChangeSearchMode: OnChangeSearchModeListener? = null
 
-    //Создаем поток, который уведомляет нас об изменениях в тексте
-    val observableSearchText: Observable<String>
+    var onChangeSearchText: ((String) -> Unit)? = null
+
+    interface OnChangeSearchModeListener{
+
+        fun onStartSearch()
+
+        fun onStopSearch()
+
+    }
 
     private var isSearchMode = false
 
@@ -56,8 +56,23 @@ class ToolbarSearchView @JvmOverloads constructor(
         titleTv.text = title
         attr.recycle()
 
-        observableIsSearchMode = createObservableSearchMode()
-        observableSearchText = createObservableChangeText()
+        initLogicToolbar()
+
+        initChangeSearchTextListener()
+    }
+
+    private fun initChangeSearchTextListener() {
+        inputTitleMemeEt.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(e: Editable?) {
+                onChangeSearchText?.invoke(inputTitleMemeEt.text.toString())
+            }
+        })
     }
 
     private fun initView() {
@@ -67,50 +82,29 @@ class ToolbarSearchView @JvmOverloads constructor(
         searchIBtn = search_Ibtn
         searchContainer = search_container
         closeSearchIbtn = close_search_Ibtn
+        clearSearchIbtn = clear_text_Ibtn
         inputTitleMemeTil = input_title_meme_Til
         inputTitleMemeEt = input_title_meme_et
     }
 
-    private fun createObservableSearchMode(): Observable<Boolean> =
-        Observable.create { subscriber ->
-            searchIBtn.setOnClickListener {
-                openSearch()
-                isSearchMode = true
-                subscriber.onNext(true)
-            }
-            closeSearchIbtn.setOnClickListener {
-                closeSearch()
-                isSearchMode = false
-                subscriber.onNext(false)
-            }
-        }
-
-    fun enableSearchMode() {
-        if (!isSearchMode) {
+    private fun initLogicToolbar(){
+        searchIBtn.setOnClickListener {
             openSearch()
+            inputTitleMemeEt.requestFocus()
+            onChangeSearchMode?.onStartSearch()
         }
-    }
-
-    fun disableSearchMode() {
-        if (isSearchMode) {
+        closeSearchIbtn.setOnClickListener {
             closeSearch()
+            onChangeSearchMode?.onStopSearch()
         }
-    }
-
-    //Создаем поток, который нам сообщает об изменение текста в поля для ввода
-    private fun createObservableChangeText(): Observable<String> = Observable.create { subscriber ->
-        inputTitleMemeEt.addTextChangedListener(object : TextWatcher {
-
-            override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        clearSearchIbtn.setOnClickListener {
+            if (inputTitleMemeEt.text.toString().isEmpty()) {
+                closeSearch()
+                onChangeSearchMode?.onStopSearch()
+            } else {
+                inputTitleMemeEt.text?.clear()
             }
-
-            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun afterTextChanged(e: Editable?) {
-                subscriber.onNext(inputTitleMemeEt.text.toString())
-            }
-        })
+        }
     }
 
 
@@ -130,5 +124,16 @@ class ToolbarSearchView @JvmOverloads constructor(
         isSearchMode = true
     }
 
+    fun enableSearchMode() {
+        if (!isSearchMode) {
+            openSearch()
+        }
+    }
+
+    fun disableSearchMode() {
+        if (isSearchMode) {
+            closeSearch()
+        }
+    }
 
 }

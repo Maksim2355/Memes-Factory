@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/search_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,22 +26,27 @@
                 android:layout_gravity="center_vertical"
                 android:background="@null"
                 android:padding="@dimen/small_padding"
-                android:src="@drawable/ic_back" />
+                android:src="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_title_meme_Til"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:counterMaxLength="40"
                 app:counterOverflowTextAppearance="@style/TextLimitError"
-                app:hintEnabled="false">
+                app:hintEnabled="false"
+                app:layout_constraintEnd_toStartOf="@+id/clear_text_Ibtn"
+                app:layout_constraintStart_toEndOf="@+id/close_search_Ibtn"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_title_meme_et"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
-                    android:drawableEnd="@drawable/ic_close"
                     android:hint="@string/memeFeed_search_hint"
                     android:padding="@dimen/standard_padding"
                     android:singleLine="true"
@@ -49,12 +54,27 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-        </LinearLayout>
+            <ImageButton
+                android:id="@+id/clear_text_Ibtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:padding="@dimen/small_padding"
+                android:src="@drawable/ic_close"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/title_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="visible"
             android:orientation="horizontal">
 
             <TextView
@@ -79,7 +99,6 @@
                 android:background="@null"
                 android:padding="@dimen/small_padding"
                 android:src="@drawable/ic_search"
-                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

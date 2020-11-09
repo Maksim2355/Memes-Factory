@@ -18,6 +18,7 @@ class AddMemePresenter @Inject constructor(
     private var photoMemeUrl: String? = null
 
     init {
+        //По умолчанию делаем кнопку неактивной
         viewState.disableCreateMemeBtn()
     }
 
@@ -41,6 +42,7 @@ class AddMemePresenter @Inject constructor(
         checkFieldsAndImg()
     }
 
+    //Проверяем поля на валидность
     private fun checkFieldsAndImg() {
         if (photoMemeUrl != null &&
             checkValidTitleInput(titleMeme) &&
@@ -63,6 +65,7 @@ class AddMemePresenter @Inject constructor(
             true,
             photoMemeUrl!!
         )
+        //Добавляем мем в базу данных и очищаем поля в случае успешного добавления
         memeRepository.addMeme(meme)
             .observeOn(AndroidSchedulers.mainThread())
             .doFinally { viewState.disableCreateMemeBtn() }
@@ -87,6 +90,7 @@ class AddMemePresenter @Inject constructor(
         viewState.clearFieldsAndImg()
     }
 
+    //Получаем рандомную дату
     private fun getCreatedData(): Int {
         return Random().nextInt(100000)
     }

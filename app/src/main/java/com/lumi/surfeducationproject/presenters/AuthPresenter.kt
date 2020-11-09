@@ -18,6 +18,8 @@ class AuthPresenter @Inject constructor(
         private val LENGTH_PASSWORD = 6
     }
 
+
+    //Авторизуем юзера
     fun authUser(login: String, password: String) {
         if (checkFields(login, password)) {
             val userAuth = LoginUserRequest(login, password)
@@ -51,6 +53,7 @@ class AuthPresenter @Inject constructor(
         if (password.length >= LENGTH_PASSWORD) viewState.hidePasswordHelper()
     }
 
+    //Проверяем наши введенные данные
     private fun checkFields(login: String, password: String): Boolean {
         if (login.isEmpty() || password.isEmpty()) {
             val messageError = "Поля не должны быть пустыми"

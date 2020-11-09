@@ -16,20 +16,17 @@ class MemeRepositoryImpl @Inject constructor(
     private val storage: Storage
 ) : MemeRepository {
 
+    //Получаем список мемов с сервера, добавляем в бд данные и берем поток уже с бд
     override fun getMemes(): Single<List<Meme>> = memesApi
         .getMemes()
         .map { networkMapper.transformList(it) }
-        //TODO Подумать об ассинхронном добавлении в БД без костылей
         .doOnSuccess {
-            storage.insertMemes(it).subscribe({
-                println("Гуд жоп")
-            }, { error ->
-                println(error.javaClass)
-            })
+            storage.insertMemes(it)
         }
-        .onErrorReturn { storage.getAllMemes().blockingGet() }
+        .flatMap { storage.getAllMemes() }
         .subscribeOn(Schedulers.io())
 
+    //Получаем список мемов, созданных локально
     override fun getUserMemes(): Single<List<Meme>> = storage.getUserMemes()
 
     override fun addMeme(meme: Meme) = storage.insertUserMeme(meme)

@@ -1,10 +1,7 @@
 package com.lumi.surfeducationproject.di.modules.activity_modules
 
 import android.content.Context
-import com.lumi.surfeducationproject.common.managers.FileManager
-import com.lumi.surfeducationproject.common.managers.PermissionManager
-import com.lumi.surfeducationproject.common.managers.SnackBarManager
-import com.lumi.surfeducationproject.common.managers.StyleManager
+import com.lumi.surfeducationproject.common.managers.*
 import com.lumi.surfeducationproject.di.scopes.ActivityScope
 import dagger.Module
 import dagger.Provides
@@ -29,5 +26,8 @@ class ActivityModule(private val activity: Context) {
     @ActivityScope
     fun provideFileManager() = activity as FileManager
 
+    @Provides
+    @ActivityScope
+    fun provideInputModeManager() = activity as InputModeManager
 
 }

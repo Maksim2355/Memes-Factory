@@ -2,10 +2,7 @@ package com.lumi.surfeducationproject.views
 
 import com.lumi.surfeducationproject.domain.model.Meme
 import moxy.MvpView
-import moxy.viewstate.strategy.alias.AddToEndSingle
-import moxy.viewstate.strategy.alias.OneExecution
-import moxy.viewstate.strategy.alias.SingleState
-import moxy.viewstate.strategy.alias.Skip
+import moxy.viewstate.strategy.alias.*
 
 interface MemeFeedView: MvpView {
 
@@ -36,5 +33,7 @@ interface MemeFeedView: MvpView {
     @OneExecution
     fun openMemeDetails(data: Meme)
 
+    @AddToEnd
+    fun hideSearch()
 
 }

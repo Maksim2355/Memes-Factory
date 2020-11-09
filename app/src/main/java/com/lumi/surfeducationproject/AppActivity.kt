@@ -17,10 +17,7 @@ import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.lumi.surfeducationproject.common.REQUEST_CODE_PERMISSION_CAMERA
 import com.lumi.surfeducationproject.common.REQUEST_CODE_PERMISSION_GALLERY
-import com.lumi.surfeducationproject.common.managers.FileManager
-import com.lumi.surfeducationproject.common.managers.PermissionManager
-import com.lumi.surfeducationproject.common.managers.SnackBarManager
-import com.lumi.surfeducationproject.common.managers.StyleManager
+import com.lumi.surfeducationproject.common.managers.*
 import com.lumi.surfeducationproject.navigation.NavigationAuth
 import com.lumi.surfeducationproject.navigation.NavigationContent
 import com.lumi.surfeducationproject.navigation.NavigationStartApp
@@ -31,7 +28,7 @@ import java.io.IOException
 
 
 class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, StyleManager,
-    NavigationAuth, SnackBarManager, PermissionManager, FileManager {
+    NavigationAuth, SnackBarManager, PermissionManager, FileManager, InputModeManager {
 
     private val navController: NavController by lazy {
         findNavController(R.id.nav_host_fragment_container)
@@ -165,5 +162,13 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
     }
 
     private fun getImgFileName(): String = "Meme_${System.currentTimeMillis()}"
+
+    override fun setAdjustPan() {
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+    }
+
+    override fun setAdjustResize() {
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+    }
 
 }

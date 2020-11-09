@@ -1,6 +1,7 @@
 package com.lumi.surfeducationproject.ui
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
@@ -93,7 +94,16 @@ class ProfileFragment : BaseFragment(), ProfileView {
         loadStatePb = view.load_memes_pb
         memeListRv = view.meme_list_profile_rv
         memeController.memeDetailsClickListener = { presenter.openDetails(it) }
-        memeController.shareClickListener = { presenter.shareMeme(it) }
+        memeController.shareClickListener = {
+            val shareMeme = Intent.createChooser(Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, it.title)
+                putExtra(Intent.EXTRA_STREAM, it.photoUrl)
+                type = "image/*"
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }, null)
+            startActivity(shareMeme)
+        }
         with(memeListRv) {
             adapter = easyAdapter
             layoutManager = androidx.recyclerview.widget.StaggeredGridLayoutManager(

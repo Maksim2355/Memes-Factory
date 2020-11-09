@@ -1,6 +1,7 @@
 package com.lumi.surfeducationproject.ui
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.CheckBox
@@ -71,12 +72,14 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
         initView(view)
         initToolbar()
         showMeme()
+        presenter.initMemes()
         presenter.initProfile()
     }
 
     override fun onStart() {
         super.onStart()
         bottomBarVisible.hideBottomNavigationBar()
+
     }
 
     override fun onStop() {
@@ -107,28 +110,49 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
         inflater.inflate(R.menu.menu_toolbar_details_meme, menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_share) {
+            presenter.share()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun getActionBar() = (activity as AppCompatActivity).supportActionBar
 
     override fun showErrorStateUserInfoToolbar() {
         nicknameMiniTv.text = getString(R.string.memeDetails_errorToolbarUser_message)
     }
 
+    override fun showMemes(data: Meme) {
+        memeTitleTv.text = data.title
+        Glide.with(this).load(data.photoUrl).into(memeImgIv)
+        //Todo сделать преобразования даты
+        dateCreateTv.text = getPostCreateDate(data.createdDate)
+        if (data.isFavorite) {
+            favoriteCheckBox.isChecked = true
+        }
+        descriptionTv.text = data.description
+    }
+
+    override fun shareMemes(meme: Meme) {
+        val shareMeme = Intent.createChooser(Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, meme.title)
+            putExtra(Intent.EXTRA_STREAM, meme.photoUrl)
+            type = "image/*"
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }, null)
+        startActivity(shareMeme)
+    }
+
     private fun showMeme() {
         val meme = arguments?.getSerializable(EXTRA_DETAILS_MEME) as Meme
-        meme.let {
-            memeTitleTv.text = meme.title
-            Glide.with(this).load(meme.photoUrl).into(memeImgIv)
-            //Todo сделать преобразования даты
-            dateCreateTv.text = getPostCreateDate(meme.createdDate)
-            if (meme.isFavorite) {
-                favoriteCheckBox.isChecked = true
-            }
-            descriptionTv.text = meme.description
-        }
+        presenter.meme = meme
     }
 
     override fun showUserInfoToolbar(user: User) {
-        Glide.with(this).load("https://img.pngio.com/avatar-1-length-of-human-face-hd-png-download-6648260-free-human-face-png-840_640.png")
+        Glide.with(this)
+            .load("https://img.pngio.com/avatar-1-length-of-human-face-hd-png-download-6648260-free-human-face-png-840_640.png")
             .optionalCircleCrop()
             .into(avatarsMiniIv)
         nicknameMiniTv.text = user.firstName
