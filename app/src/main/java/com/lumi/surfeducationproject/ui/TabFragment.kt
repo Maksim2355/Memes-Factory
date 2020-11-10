@@ -1,6 +1,5 @@
 package com.lumi.surfeducationproject.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -26,8 +25,8 @@ class TabFragment : Fragment(), NavigationBackPressed, NavigationMemeDetails, Bo
     private lateinit var navControllerTab: NavController
     private lateinit var bottomNavView: BottomNavigationView
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         App.instance.getFragmentContentComponentOrCreateIfNull(this)
     }
 
@@ -82,8 +81,8 @@ class TabFragment : Fragment(), NavigationBackPressed, NavigationMemeDetails, Bo
         }
     }
 
-    override fun onDetach() {
-        super.onDetach()
+    override fun onDestroy() {
+        super.onDestroy()
         App.instance.clearFragmentContentComponent()
     }
 

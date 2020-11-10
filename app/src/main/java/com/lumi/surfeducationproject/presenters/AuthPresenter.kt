@@ -12,12 +12,11 @@ import javax.inject.Inject
 
 class AuthPresenter @Inject constructor(
     private val userRepository: UserRepository
-): BasePresenter<AuthView>() {
+) : BasePresenter<AuthView>() {
 
-    companion object{
+    companion object {
         private val LENGTH_PASSWORD = 6
     }
-
 
     //Авторизуем юзера
     fun authUser(login: String, password: String) {
@@ -30,10 +29,10 @@ class AuthPresenter @Inject constructor(
                 .doFinally { viewState.hideProgressBar() }
                 .subscribe({
                     viewState.openContentFragment()
-                },{
+                }, {
                     if (NETWORK_EXCEPTIONS.contains(it.javaClass)) {
                         viewState.showErrorSnackbar("Отсутствует подключение к интернету \nПодключитесь к сети и попробуйте снова")
-                    }else {
+                    } else {
                         viewState.showErrorSnackbar("Вы ввели неверные данные.\nПопробуйте еще раз")
                     }
                 })
@@ -77,6 +76,14 @@ class AuthPresenter @Inject constructor(
         }
 
         return true
+    }
+
+    fun enableVisiblePassword() {
+        viewState.showPassword()
+    }
+
+    fun disableVisiblePassword() {
+        viewState.hidePassword()
     }
 
 }

@@ -56,6 +56,7 @@ class AuthFragment : BaseFragment(), AuthView, View.OnFocusChangeListener {
         App.instance.getFragmentAuthComponentOrCreateIfNull().inject(this)
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -90,11 +91,9 @@ class AuthFragment : BaseFragment(), AuthView, View.OnFocusChangeListener {
         passwordInputTfb.endIconImageButton.setOnClickListener {
             isPasswordVisible = !isPasswordVisible
             if (isPasswordVisible) {
-                passwordInputTfb.setEndIcon(R.drawable.ic_eye_on)
-                showPassword()
+                presenter.enableVisiblePassword()
             } else {
-                passwordInputTfb.setEndIcon(R.drawable.ic_eye_off)
-                hidePassword()
+                presenter.disableVisiblePassword()
             }
         }
     }
@@ -109,11 +108,13 @@ class AuthFragment : BaseFragment(), AuthView, View.OnFocusChangeListener {
     }
 
     override fun showPassword() {
-        passwordEt.transformationMethod = HideReturnsTransformationMethod.getInstance();
+        passwordInputTfb.setEndIcon(R.drawable.ic_eye_on)
+        passwordEt.transformationMethod = HideReturnsTransformationMethod.getInstance()
     }
 
     override fun hidePassword() {
-        passwordEt.transformationMethod = PasswordTransformationMethod.getInstance();
+        passwordInputTfb.setEndIcon(R.drawable.ic_eye_off)
+        passwordEt.transformationMethod = PasswordTransformationMethod.getInstance()
     }
 
     override fun showErrorSnackbar(messageError: String) {

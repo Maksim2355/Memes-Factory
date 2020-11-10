@@ -55,5 +55,9 @@ class ProfilePresenter @Inject constructor(
         viewState.openMemeDetails(meme)
     }
 
+    fun startLogoutDialog() {
+        viewState.showDialog()
+    }
+
 
 }

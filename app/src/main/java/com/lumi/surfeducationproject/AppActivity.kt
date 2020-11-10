@@ -35,9 +35,14 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        App.instance.startActivityComponent(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        App.instance.startActivityComponent(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        App.instance.clearActivityComponent()
     }
 
     override fun startApp(isAuthUser: Boolean) {
@@ -76,10 +81,7 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
         snackbar.show()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        App.instance.clearActivityComponent()
-    }
+
 
     override fun requestPermissionGallery(): Boolean {
         val permissionReadExternalStorage =
@@ -160,6 +162,8 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
             null
         }
     }
+
+
 
     private fun getImgFileName(): String = "Meme_${System.currentTimeMillis()}"
 

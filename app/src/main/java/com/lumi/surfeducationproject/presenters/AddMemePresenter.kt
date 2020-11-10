@@ -92,7 +92,7 @@ class AddMemePresenter @Inject constructor(
 
     //Получаем рандомную дату
     private fun getCreatedData(): Int {
-        return Random().nextInt(100000)
+        return Random().nextInt(10000)
     }
 
     private fun checkValidTitleInput(title: String?): Boolean =

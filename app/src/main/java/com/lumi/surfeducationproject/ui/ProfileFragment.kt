@@ -132,7 +132,7 @@ class ProfileFragment : BaseFragment(), ProfileView {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_logout -> {
-                showDialog()
+                presenter.startLogoutDialog()
                 true
             }
             else -> super.onOptionsItemSelected(item)
