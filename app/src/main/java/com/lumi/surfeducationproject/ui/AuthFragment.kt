@@ -25,7 +25,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 
-class AuthFragment : BaseFragment(), AuthView, View.OnFocusChangeListener {
+class AuthFragment : BaseFragment(), AuthView {
 
     @Inject
     lateinit var presenterProvider: Provider<AuthPresenter>
@@ -33,20 +33,15 @@ class AuthFragment : BaseFragment(), AuthView, View.OnFocusChangeListener {
         presenterProvider.get()
     }
 
-    @Inject
-    lateinit var snackBarManager: SnackBarManager
-
     private lateinit var loginInputTfb: TextFieldBoxes
     private lateinit var loginEditEt: ExtendedEditText
-
     private lateinit var passwordInputTfb: TextFieldBoxes
     private lateinit var passwordEt: ExtendedEditText
-
     private lateinit var authUserBtn: TextView;
     private lateinit var authPb: ProgressBar;
 
-    private var isPasswordVisible: Boolean = false
-    private var isEnablePasswordBtnVisible: Boolean = false
+    @Inject
+    lateinit var snackBarManager: SnackBarManager
 
     @Inject
     lateinit var navigation: NavigationContent
@@ -55,7 +50,6 @@ class AuthFragment : BaseFragment(), AuthView, View.OnFocusChangeListener {
         super.onAttach(context)
         App.instance.getFragmentAuthComponentOrCreateIfNull().inject(this)
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,37 +63,44 @@ class AuthFragment : BaseFragment(), AuthView, View.OnFocusChangeListener {
         super.onViewCreated(view, savedInstanceState)
         loginInputTfb = view.findViewById(R.id.input_login_fb)
         loginEditEt = view.findViewById(R.id.login_input_et)
+        loginInputTfb.setSimpleTextChangeWatcher { theNewText, isError ->
+            presenter.updateLogin(theNewText)
+        }
+
         passwordInputTfb = view.findViewById(R.id.input_password_fb)
+        passwordInputTfb.setSimpleTextChangeWatcher { theNewText, isError ->
+            presenter.updatePassword(theNewText)
+        }
         passwordEt = view.findViewById(R.id.password_et)
-        passwordEt.onFocusChangeListener = this
+        passwordEt.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus){
+                presenter.enableCheckPasswordField()
+            }else{
+                presenter.disableCheckPasswordField()
+            }
+        }
+
         authUserBtn = view.findViewById(R.id.auth_user_btn)
         authUserBtn.setOnClickListener { authUser() }
         authPb = view.findViewById(R.id.auth_pb)
+        passwordInputTfb.endIconImageButton.setOnClickListener {
+            presenter.changeVisiblePassword()
+        }
     }
 
     private fun authUser() {
-        presenter.authUser(getInputLogin(), getInputPassword())
+        presenter.authUser()
     }
 
-    override fun enableIconEye() {
-        isEnablePasswordBtnVisible = true
+    override fun enablePasswordField(isPasswordVisible: Boolean) {
         if (isPasswordVisible) {
             passwordInputTfb.setEndIcon(R.drawable.ic_eye_on)
         } else {
             passwordInputTfb.setEndIcon(R.drawable.ic_eye_off)
         }
-        passwordInputTfb.endIconImageButton.setOnClickListener {
-            isPasswordVisible = !isPasswordVisible
-            if (isPasswordVisible) {
-                presenter.enableVisiblePassword()
-            } else {
-                presenter.disableVisiblePassword()
-            }
-        }
     }
 
-    override fun disableIconEye() {
-        isEnablePasswordBtnVisible = false
+    override fun disablePasswordField() {
         passwordInputTfb.removeEndIcon()
     }
 
@@ -117,7 +118,7 @@ class AuthFragment : BaseFragment(), AuthView, View.OnFocusChangeListener {
         passwordEt.transformationMethod = PasswordTransformationMethod.getInstance()
     }
 
-    override fun showErrorSnackbar(messageError: String) {
+    override fun showErrorSnackBar(messageError: String) {
         snackBarManager.showErrorMessage(messageError)
     }
 
@@ -136,6 +137,21 @@ class AuthFragment : BaseFragment(), AuthView, View.OnFocusChangeListener {
         }
     }
 
+    override fun hideMessageErrorInputField(emptyFields: EmptyFields) {
+        when (emptyFields) {
+            EmptyFields.LOGIN -> {
+                loginInputTfb.removeError()
+            }
+            EmptyFields.PASSWORD -> {
+                passwordInputTfb.removeError()
+            }
+            EmptyFields.ALL -> {
+                loginInputTfb.removeError()
+                passwordInputTfb.removeError()
+            }
+        }
+    }
+
     override fun showPasswordHelper(lengthPassword: Int) {
         passwordInputTfb.helperText = "Длина пароля должна состоять из $lengthPassword символов"
     }
@@ -144,38 +160,20 @@ class AuthFragment : BaseFragment(), AuthView, View.OnFocusChangeListener {
         passwordInputTfb.helperText = null
     }
 
-    override fun showProgressBar() {
+    override fun showAuthProgressBar() {
         authUserBtn.visibility = View.GONE
         authPb.visibility = View.VISIBLE
     }
 
-    override fun hideProgressBar() {
+    override fun hideAuthProgressBar() {
         authUserBtn.visibility = View.VISIBLE
         authPb.visibility = View.GONE
-    }
-
-    override fun onFocusChange(v: View?, hasFocus: Boolean) {
-        v?.let {
-            when (v.id) {
-                R.id.password_et -> {
-                    if (hasFocus) {
-                        presenter.enableCheckPasswordField()
-                    } else {
-                        presenter.disableCheckPasswordField(getInputPassword())
-                    }
-                }
-            }
-        }
     }
 
     override fun onDetach() {
         super.onDetach()
         App.instance.clearFragmentAuthComponent()
     }
-
-    private fun getInputPassword() = passwordEt.text.toString()
-
-    private fun getInputLogin() = loginEditEt.text.toString()
 
     override fun getActionBar(): ActionBar? = null
 

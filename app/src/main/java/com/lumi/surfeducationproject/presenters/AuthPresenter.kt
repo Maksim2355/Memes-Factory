@@ -7,7 +7,6 @@ import com.lumi.surfeducationproject.domain.repository.UserRepository
 import com.lumi.surfeducationproject.common.exceptions.NETWORK_EXCEPTIONS
 import com.lumi.surfeducationproject.views.AuthView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 class AuthPresenter @Inject constructor(
@@ -18,72 +17,123 @@ class AuthPresenter @Inject constructor(
         private val LENGTH_PASSWORD = 6
     }
 
+    private var login: String = ""
+    private var password: String = ""
+
+    private var isStateErrorInputFieldLogin: Boolean = false
+    private var isStateErrorInputFieldPassword: Boolean = false
+
+    private var isPasswordVisible: Boolean = false
+
+    fun updateLogin(loginUser: String) {
+        login = loginUser
+        if (isStateErrorInputFieldLogin) {
+            viewState.hideMessageErrorInputField(EmptyFields.LOGIN)
+        }
+    }
+
+    fun updatePassword(passwordUser: String) {
+        password = passwordUser
+        if (isStateErrorInputFieldPassword) {
+            viewState.hideMessageErrorInputField(EmptyFields.PASSWORD)
+        }
+        if (password.length <= 6) {
+            viewState.showPasswordHelper(LENGTH_PASSWORD)
+        } else {
+            viewState.hidePasswordHelper()
+        }
+    }
+
+
+    fun enableCheckPasswordField() {
+        viewState.enablePasswordField(isPasswordVisible)
+        viewState.showPasswordHelper(LENGTH_PASSWORD)
+    }
+
+    fun disableCheckPasswordField() {
+        if (password.isEmpty()) {
+            viewState.disablePasswordField()
+        }
+        if (password.length >= LENGTH_PASSWORD) viewState.hidePasswordHelper()
+    }
+
+
+    fun changeVisiblePassword() {
+        isPasswordVisible = !isPasswordVisible
+        if (isPasswordVisible) {
+            viewState.showPassword()
+        } else {
+            viewState.hidePassword()
+        }
+    }
+
+
     //Авторизуем юзера
-    fun authUser(login: String, password: String) {
-        if (checkFields(login, password)) {
+    fun authUser() {
+        if (checkFields()) {
             val userAuth = LoginUserRequest(login, password)
-            compositeDisposable.add(userRepository.getUser(userAuth)
-                .subscribeOn(Schedulers.io())
+            userRepository.getUser(userAuth)
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { viewState.showProgressBar() }
-                .doFinally { viewState.hideProgressBar() }
+                .doOnSubscribe { viewState.showAuthProgressBar() }
+                .doFinally { viewState.hideAuthProgressBar() }
                 .subscribe({
                     viewState.openContentFragment()
                 }, {
                     if (NETWORK_EXCEPTIONS.contains(it.javaClass)) {
-                        viewState.showErrorSnackbar("Отсутствует подключение к интернету \nПодключитесь к сети и попробуйте снова")
+                        viewState.showErrorSnackBar(
+                            "Отсутствует подключение к интернету " +
+                                    "\nПодключитесь к сети и попробуйте снова"
+                        )
                     } else {
-                        viewState.showErrorSnackbar("Вы ввели неверные данные.\nПопробуйте еще раз")
+                        viewState.showErrorSnackBar(
+                            "Вы ввели неверные данные." +
+                                    "\nПопробуйте еще раз"
+                        )
                     }
                 })
-            )
 
         }
     }
 
-    fun enableCheckPasswordField() {
-        viewState.showPasswordHelper(LENGTH_PASSWORD)
-        viewState.enableIconEye()
-    }
-
-
-    fun disableCheckPasswordField(password: String) {
-        if (password.isEmpty()) viewState.disableIconEye()
-        if (password.length >= LENGTH_PASSWORD) viewState.hidePasswordHelper()
-    }
-
     //Проверяем наши введенные данные
-    private fun checkFields(login: String, password: String): Boolean {
+    //Весьма сложная логика, да? Да
+    private fun checkFields(): Boolean {
         if (login.isEmpty() || password.isEmpty()) {
             val messageError = "Поля не должны быть пустыми"
             if (login.isEmpty() && password.isEmpty()) {
+                isStateErrorInputFieldLogin = true
+                isStateErrorInputFieldPassword = true
                 viewState.showMessageErrorInputField(EmptyFields.ALL, messageError)
             } else {
                 if (login.isEmpty()) {
+                    isStateErrorInputFieldLogin = true
                     viewState.showMessageErrorInputField(EmptyFields.LOGIN, messageError)
-                } else {
+                }else if (login.isEmpty() && password.length < LENGTH_PASSWORD){
+                    isStateErrorInputFieldPassword = true
+                    isStateErrorInputFieldLogin = true
+                    viewState.showMessageErrorInputField(
+                        EmptyFields.PASSWORD,
+                        "Пароль должен быть более чем из $LENGTH_PASSWORD символов"
+                    )
+                    viewState.showMessageErrorInputField(EmptyFields.PASSWORD, messageError)
+                }else {
+                    isStateErrorInputFieldPassword = true
                     viewState.showMessageErrorInputField(EmptyFields.PASSWORD, messageError)
                 }
             }
             return false
         }
         if (password.length < LENGTH_PASSWORD) {
+            isStateErrorInputFieldPassword = true
             viewState.showMessageErrorInputField(
                 EmptyFields.PASSWORD,
                 "Пароль должен быть более чем из $LENGTH_PASSWORD символов"
             )
             return false
         }
-
+        isStateErrorInputFieldLogin = false
+        isStateErrorInputFieldPassword = false
         return true
-    }
-
-    fun enableVisiblePassword() {
-        viewState.showPassword()
-    }
-
-    fun disableVisiblePassword() {
-        viewState.hidePassword()
     }
 
 }

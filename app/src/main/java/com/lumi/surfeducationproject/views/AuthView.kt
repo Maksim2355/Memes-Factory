@@ -3,40 +3,37 @@ package com.lumi.surfeducationproject.views
 import com.lumi.surfeducationproject.common.EmptyFields
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
+import moxy.viewstate.strategy.AddToEndStrategy
 import moxy.viewstate.strategy.StateStrategyType
 import moxy.viewstate.strategy.alias.AddToEnd
 import moxy.viewstate.strategy.alias.OneExecution
 import moxy.viewstate.strategy.alias.Skip
 
-@StateStrategyType(value = AddToEndSingleStrategy::class)
+@StateStrategyType(value = AddToEndStrategy::class)
 interface AuthView: MvpView {
 
-    @AddToEnd
     fun showPassword()
 
-    @AddToEnd
     fun hidePassword()
 
-    @AddToEnd
-    fun showProgressBar()
+    fun showAuthProgressBar()
 
-    @AddToEnd
-    fun showMessageErrorInputField(emptyFields: EmptyFields, messageError: String)
+    fun hideAuthProgressBar()
 
-    @AddToEnd
     fun showPasswordHelper(lengthPassword: Int)
 
-    @OneExecution
-    fun showErrorSnackbar(messageError: String)
-
-    @AddToEnd
     fun hidePasswordHelper()
 
-    fun hideProgressBar()
+    fun showMessageErrorInputField(emptyFields: EmptyFields, messageError: String)
 
-    fun enableIconEye()
+    fun hideMessageErrorInputField(emptyFields: EmptyFields)
 
-    fun disableIconEye()
+    fun enablePasswordField(isPasswordVisible: Boolean)
+
+    fun disablePasswordField()
+
+    @Skip
+    fun showErrorSnackBar(messageError: String)
 
     @Skip
     fun openContentFragment()
