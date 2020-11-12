@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.lumi.surfeducationproject.R
+import com.lumi.surfeducationproject.utils.KeyboardUtil
 import kotlinx.android.synthetic.main.view_serach_toolbar.view.*
 
 
@@ -106,16 +107,17 @@ class ToolbarSearchView @JvmOverloads constructor(
         closeSearch()
     }
 
-    //Переключаемся на режим title
     private fun openSearch() {
         title_container.visibility = View.GONE
         search_container.visibility = View.VISIBLE
+        inputTitleMemeEt.requestFocus()
+        KeyboardUtil.showKeyboard(inputTitleMemeEt)
     }
 
-    //Переключаемся на режим title в нашей view, очищаем поле для ввода и отписываем всех
     private fun closeSearch() {
         searchContainer.visibility = View.GONE
         titleContainer.visibility = View.VISIBLE
+        KeyboardUtil.hideSoftKeyboard(this)
     }
 
     fun clearSearchText(){

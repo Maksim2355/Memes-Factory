@@ -25,6 +25,7 @@ import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
 import com.lumi.surfeducationproject.presenters.MemesFeedPresenter
 import com.lumi.surfeducationproject.ui.custom_view.ToolbarSearchView
+import com.lumi.surfeducationproject.utils.KeyboardUtil
 import com.lumi.surfeducationproject.views.MemeFeedView
 import kotlinx.android.synthetic.main.fragment_meme_feed.view.*
 import moxy.ktx.moxyPresenter
@@ -88,6 +89,7 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
         initRecyclerView()
     }
 
+
     private fun initToolbar(view: View) {
         searchToolbar = view.meme_feed_Stoolbar
         searchToolbar.onChangeSearchMode = object : ToolbarSearchView.OnChangeSearchModeListener {
@@ -133,6 +135,7 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
                 type = "image/*"
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }, null)
+
             startActivity(shareMeme)
         }
     }
