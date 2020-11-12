@@ -22,10 +22,6 @@ class AddMemePresenter @Inject constructor(
         viewState.disableCreateMemeBtn()
     }
 
-    /*
-    Observable отслеживает изменение заголовка и описания и дергает методы в презентере
-    Мы устанавливаем значения в презентере, проверяем все поля и активируем кнопку
-    */
     fun updateTitle(title: String) {
         titleMeme = title
         checkFieldsAndImg()

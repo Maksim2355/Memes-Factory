@@ -141,56 +141,46 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        //Создаем потоки, содержащие измененей полей
-        //TODO основная проблема в бизнес логики этого компонента. Решить
-        Observable.create(ObservableOnSubscribe<String> { subscriber ->
-            inputTitleMemeEt.addTextChangedListener(
-                object : TextWatcher {
-                    override fun beforeTextChanged(
-                        s: CharSequence?, start: Int,
-                        count: Int, after: Int
-                    ) {
-                    }
-
-                    override fun afterTextChanged(s: Editable?) {}
-
-                    override fun onTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        before: Int,
-                        count: Int
-                    ) {
-                        subscriber.onNext(inputTitleMemeEt.text.toString())
-                    }
+        inputTitleMemeEt.addTextChangedListener(
+            object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?, start: Int,
+                    count: Int, after: Int
+                ) {
                 }
-            )
-        }).subscribe {
-            presenter.updateTitle(it)
-        }
-        Observable.create(ObservableOnSubscribe<String> { subscriber ->
-            inputDescriptionMemeEt.addTextChangedListener(
-                object : TextWatcher {
-                    override fun beforeTextChanged(
-                        s: CharSequence?, start: Int,
-                        count: Int, after: Int
-                    ) {
-                    }
 
-                    override fun afterTextChanged(s: Editable?) {}
+                override fun afterTextChanged(s: Editable?) {}
 
-                    override fun onTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        before: Int,
-                        count: Int
-                    ) {
-                        subscriber.onNext(inputDescriptionMemeEt.text.toString())
-                    }
+                override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int
+                ) {
+                    presenter.updateTitle(inputTitleMemeEt.text.toString())
                 }
-            )
-        }).subscribe {
-            presenter.updateDescription(it)
-        }
+            }
+        )
+        inputDescriptionMemeEt.addTextChangedListener(
+            object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?, start: Int,
+                    count: Int, after: Int
+                ) {
+                }
+
+                override fun afterTextChanged(s: Editable?) {}
+
+                override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int
+                ) {
+                    presenter.updateDescription(inputDescriptionMemeEt.text.toString())
+                }
+            }
+        )
     }
 
     override fun onStop() {

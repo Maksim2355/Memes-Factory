@@ -37,9 +37,7 @@ class App : Application() {
     }
 
     fun startActivityComponent(activity: Context): ActivityComponent {
-        println("вызов метода startActivity")
         if (activityComponent == null) {
-            println("AcitivtyNull создаем компонент активности")
             activityComponent = appComponent.addActivityComponent(
                 NavigationMainModule(activity),
                 ActivityModule(activity)
@@ -49,15 +47,12 @@ class App : Application() {
     }
 
     fun clearActivityComponent() {
-        println("очищаем комопнент активности")
         activityComponent = null
     }
 
 
     fun getFragmentAuthComponentOrCreateIfNull(): FragmentAuthComponent {
-        println("вызов метода комонента авторизации")
         if (fragmentAuthComponent == null) {
-            println("Создание компонента авторизации")
             fragmentAuthComponent = activityComponent?.addFragmentAuthComponent(
                 PresenterAuthModule()
             )
@@ -66,7 +61,6 @@ class App : Application() {
     }
 
     fun clearFragmentAuthComponent(){
-        println("Очистка компонента авторизации")
         fragmentAuthComponent = null
     }
 

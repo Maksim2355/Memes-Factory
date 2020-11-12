@@ -1,6 +1,6 @@
 package com.lumi.surfeducationproject.di.modules.content_modules
 
-import com.lumi.surfeducationproject.controllers.MemeController
+import com.lumi.surfeducationproject.ui.controllers.MemeController
 import dagger.Module
 import dagger.Provides
 import ru.surfstudio.android.easyadapter.EasyAdapter

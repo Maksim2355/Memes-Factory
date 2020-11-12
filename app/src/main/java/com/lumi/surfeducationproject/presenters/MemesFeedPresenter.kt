@@ -19,10 +19,11 @@ class MemesFeedPresenter @Inject constructor(
         loadMemes()
     }
 
-    var observableSearchText: Observable<String>? = null
     private var memeList: List<Meme>? = null
     private var memeSearchList: List<Meme>? = null
 
+    private var searchText: String = ""
+    private var isSearchMode: Boolean = false
 
     private fun loadMemes() {
         memeRepository.getMemes()
@@ -30,12 +31,11 @@ class MemesFeedPresenter @Inject constructor(
             .doOnSubscribe { viewState.showLoadState() }
             .doFinally { viewState.hideLoadState() }
             .subscribe({
-                this.memeList = it
+                memeList = it
                 showMemes(it)
             }, {
                 errorProcessing(it)
             })
-
     }
 
     fun updateMemes() {
@@ -45,10 +45,15 @@ class MemesFeedPresenter @Inject constructor(
             .doFinally { viewState.hideRefresh() }
             .subscribe({
                 this.memeList = it
-                showMemes(it)
+                if (isSearchMode) {
+                    filter()
+                }else {
+                    showMemes(it)
+                }
             }, {
                 errorProcessing(it)
             })
+
     }
 
 
@@ -61,50 +66,48 @@ class MemesFeedPresenter @Inject constructor(
     }
 
 
-
     fun openDetails(meme: Meme) {
         viewState.openMemeDetails(meme)
     }
 
     private fun errorProcessing(throwable: Throwable) {
-        println(throwable.javaClass)
+        memeList = null
         if (NETWORK_EXCEPTIONS.contains(throwable.javaClass)) {
             viewState.showErrorSnackbar("Отсутствует подключение к интернету \nПодключитесь к сети и попробуйте снова")
         }
         viewState.showErrorState()
     }
 
-    /*Вполняем фильтрацию мемов.
-    Подписываемся на поток данных, который излучает нам новую информацию из EditText
-    Если список мемов не пустой, кладем данные в контейнер, фильтруем его
-    Если есть совпадения, и фильтрованный список по новому символу не равен прошлому, то обновляем
-     */
+    fun updateSearchText(searchText: String) {
+        this.searchText = searchText
+        filter()
+    }
+
     fun startFilter() {
-        observableSearchText?.subscribe{
-            memeList?.let {memeList ->
-                memeSearchList = memeList.filter {meme ->
-                    meme.title.toLowerCase(Locale.ROOT).contains(it.toLowerCase(Locale.ROOT))
-                }
-                if (memeSearchList!!.isNotEmpty()){
-                    showMemes(memeSearchList!!)
-                }else{
-                    viewState.showEmptyFilterErrorState()
-                }
-            }
-        }
+        isSearchMode = true
+        viewState.enableSearchView()
+        filter()
     }
 
     fun stopFilter() {
-        viewState.hideSearch()
-        memeList?.let {
-            viewState.showMemes(it)
-        }
+        isSearchMode = false
+        searchText = ""
+        viewState.disableSearchView()
+        memeList?.let { viewState.showMemes(it) }
         memeSearchList = null
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        stopFilter()
+    private fun filter() {
+        memeList?.let { memeList ->
+            memeSearchList = memeList.filter { meme ->
+                meme.title.toLowerCase(Locale.ROOT).contains(searchText.toLowerCase(Locale.ROOT))
+            }
+            if (memeSearchList!!.isNotEmpty()) {
+                showMemes(memeSearchList!!)
+            } else {
+                viewState.showEmptyFilterErrorState()
+            }
+        }
     }
 
 }

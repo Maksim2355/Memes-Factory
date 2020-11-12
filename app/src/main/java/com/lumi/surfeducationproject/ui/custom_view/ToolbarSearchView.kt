@@ -35,15 +35,12 @@ class ToolbarSearchView @JvmOverloads constructor(
 
     var onChangeSearchText: ((String) -> Unit)? = null
 
-    interface OnChangeSearchModeListener{
+    interface OnChangeSearchModeListener {
 
         fun onStartSearch()
 
         fun onStopSearch()
-
     }
-
-    private var isSearchMode = false
 
     init {
         inflate(context, R.layout.view_serach_toolbar, this)
@@ -51,28 +48,11 @@ class ToolbarSearchView @JvmOverloads constructor(
         val attr = context.theme.obtainStyledAttributes(
             attrs, R.styleable.ToolbarSearchView, 0, 0
         )
-        //Берем из атрибутов title
         title = attr.getString(R.styleable.ToolbarSearchView_titleToolbar)
         titleTv.text = title
         attr.recycle()
-
         initLogicToolbar()
-
         initChangeSearchTextListener()
-    }
-
-    private fun initChangeSearchTextListener() {
-        inputTitleMemeEt.addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun afterTextChanged(e: Editable?) {
-                onChangeSearchText?.invoke(inputTitleMemeEt.text.toString())
-            }
-        })
     }
 
     private fun initView() {
@@ -87,19 +67,15 @@ class ToolbarSearchView @JvmOverloads constructor(
         inputTitleMemeEt = input_title_meme_et
     }
 
-    private fun initLogicToolbar(){
+    private fun initLogicToolbar() {
         searchIBtn.setOnClickListener {
-            openSearch()
-            inputTitleMemeEt.requestFocus()
             onChangeSearchMode?.onStartSearch()
         }
         closeSearchIbtn.setOnClickListener {
-            closeSearch()
             onChangeSearchMode?.onStopSearch()
         }
         clearSearchIbtn.setOnClickListener {
             if (inputTitleMemeEt.text.toString().isEmpty()) {
-                closeSearch()
                 onChangeSearchMode?.onStopSearch()
             } else {
                 inputTitleMemeEt.text?.clear()
@@ -107,33 +83,43 @@ class ToolbarSearchView @JvmOverloads constructor(
         }
     }
 
+    private fun initChangeSearchTextListener() {
+        inputTitleMemeEt.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
 
-    //Переключаемся на режим title в нашей view, очищаем поле для ввода и отписываем всех
-    private fun closeSearch() {
-        searchContainer.visibility = View.GONE
-        titleContainer.visibility = View.VISIBLE
-        inputTitleMemeEt.text?.clear()
+            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
 
-        isSearchMode = false
+            override fun afterTextChanged(e: Editable?) {
+                onChangeSearchText?.invoke(inputTitleMemeEt.text.toString())
+            }
+        })
+    }
+
+
+    fun enableSearchMode() {
+        openSearch()
+    }
+
+    fun disableSearchMode() {
+        closeSearch()
     }
 
     //Переключаемся на режим title
     private fun openSearch() {
         title_container.visibility = View.GONE
         search_container.visibility = View.VISIBLE
-        isSearchMode = true
     }
 
-    fun enableSearchMode() {
-        if (!isSearchMode) {
-            openSearch()
-        }
+    //Переключаемся на режим title в нашей view, очищаем поле для ввода и отписываем всех
+    private fun closeSearch() {
+        searchContainer.visibility = View.GONE
+        titleContainer.visibility = View.VISIBLE
     }
 
-    fun disableSearchMode() {
-        if (isSearchMode) {
-            closeSearch()
-        }
+    fun clearSearchText(){
+        inputTitleMemeEt.text?.clear()
     }
 
 }

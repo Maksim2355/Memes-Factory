@@ -1,4 +1,4 @@
-package com.lumi.surfeducationproject.controllers
+package com.lumi.surfeducationproject.ui.controllers
 
 import android.view.ViewGroup
 import android.widget.Button

@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -21,13 +20,12 @@ import com.lumi.surfeducationproject.common.base_view.BaseFragment
 import com.lumi.surfeducationproject.common.managers.InputModeManager
 import com.lumi.surfeducationproject.common.managers.SnackBarManager
 import com.lumi.surfeducationproject.common.managers.StyleManager
-import com.lumi.surfeducationproject.controllers.MemeController
+import com.lumi.surfeducationproject.ui.controllers.MemeController
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
 import com.lumi.surfeducationproject.presenters.MemesFeedPresenter
 import com.lumi.surfeducationproject.ui.custom_view.ToolbarSearchView
 import com.lumi.surfeducationproject.views.MemeFeedView
-import io.reactivex.rxjava3.core.Observable
 import kotlinx.android.synthetic.main.fragment_meme_feed.view.*
 import moxy.ktx.moxyPresenter
 import ru.surfstudio.android.easyadapter.EasyAdapter
@@ -95,28 +93,17 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
         searchToolbar.onChangeSearchMode = object : ToolbarSearchView.OnChangeSearchModeListener {
             override fun onStartSearch() {
                 presenter.startFilter()
-                openKeyboard()
             }
 
             override fun onStopSearch() {
                 presenter.stopFilter()
-                hideKeyboard()
-            }
-
-        }
-        presenter.observableSearchText = Observable.create { subscriber ->
-            searchToolbar.onChangeSearchText  = {
-                subscriber.onNext(it)
+                searchToolbar.clearSearchText()
             }
         }
+        searchToolbar.onChangeSearchText = {
+            presenter.updateSearchText(it)
+        }
 
-    }
-
-    private fun openKeyboard() {
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-    }
-    private fun hideKeyboard(){
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
     }
 
     private fun initView(view: View) {
@@ -137,6 +124,7 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
         memeController.memeDetailsClickListener = { presenter.openDetails(it) }
+
         memeController.shareClickListener = {
             val shareMeme = Intent.createChooser(Intent().apply {
                 action = Intent.ACTION_SEND
@@ -148,7 +136,6 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
             startActivity(shareMeme)
         }
     }
-
 
     override fun showMemes(memesList: List<Meme>) {
         val itemList = ItemList.create().apply {
@@ -187,6 +174,14 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
         setRefresherState(false)
     }
 
+    override fun enableSearchView() {
+        searchToolbar.enableSearchMode()
+    }
+
+    override fun disableSearchView() {
+        searchToolbar.disableSearchMode()
+    }
+
     override fun showErrorSnackbar(message: String) {
         snackBarManager.showErrorMessage(message)
     }
@@ -195,9 +190,6 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
         navMemeDetailsFragment.startMemeDetailsScreen(data)
     }
 
-    override fun hideSearch() {
-        searchToolbar.disableSearchMode()
-    }
 
     override fun onRefresh() {
         presenter.updateMemes()
@@ -215,7 +207,6 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
     override fun onStop() {
         super.onStop()
         inputModeManager.setAdjustResize()
-        presenter.stopFilter()
     }
 
     override fun getActionBar() = (activity as AppCompatActivity).supportActionBar

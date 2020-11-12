@@ -18,7 +18,7 @@ import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.base_view.BaseFragment
 import com.lumi.surfeducationproject.common.managers.SnackBarManager
 import com.lumi.surfeducationproject.common.managers.StyleManager
-import com.lumi.surfeducationproject.controllers.MemeController
+import com.lumi.surfeducationproject.ui.controllers.MemeController
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.domain.model.User
 import com.lumi.surfeducationproject.navigation.NavigationAuth

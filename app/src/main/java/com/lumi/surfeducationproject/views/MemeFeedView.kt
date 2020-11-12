@@ -2,38 +2,39 @@ package com.lumi.surfeducationproject.views
 
 import com.lumi.surfeducationproject.domain.model.Meme
 import moxy.MvpView
+import moxy.viewstate.strategy.AddToEndStrategy
+import moxy.viewstate.strategy.StateStrategyType
 import moxy.viewstate.strategy.alias.*
 
+@StateStrategyType(value = AddToEndStrategy::class)
 interface MemeFeedView: MvpView {
 
-    @SingleState
     fun showMemes(memesList: List<Meme>)
 
-    @AddToEndSingle
     fun showErrorState()
 
-    @AddToEndSingle
     fun showEmptyFilterErrorState()
 
-    @AddToEndSingle
+    @Skip
     fun showRefresh()
 
-    @AddToEndSingle
+    @Skip
     fun hideRefresh()
 
-    @AddToEndSingle
+    fun enableSearchView()
+
+    fun disableSearchView()
+
+    @Skip
     fun showLoadState()
 
-    @AddToEndSingle
+    @Skip
     fun hideLoadState()
 
     @Skip
     fun showErrorSnackbar(message: String)
 
-    @OneExecution
+    @Skip
     fun openMemeDetails(data: Meme)
-
-    @AddToEnd
-    fun hideSearch()
 
 }
