@@ -66,6 +66,8 @@ class ProfileFragment : BaseFragment(), ProfileView {
     @Inject
     lateinit var memeController: MemeController
 
+    private var dialogLogout: AlertDialog? = null
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         App.instance.getFragmentContentComponentOrCreateIfNull().inject(this)
@@ -163,7 +165,7 @@ class ProfileFragment : BaseFragment(), ProfileView {
     override fun showDialog() {
         context?.let {
             val builder: AlertDialog.Builder = AlertDialog.Builder(it)
-            builder.setTitle(R.string.dialogLogout_exit_btn)
+            dialogLogout = builder.setTitle(R.string.dialogLogout_exit_btn)
                 .setCancelable(false)
                 .setMessage("")
                 .setPositiveButton(
@@ -177,7 +179,8 @@ class ProfileFragment : BaseFragment(), ProfileView {
                 ) { dialog, _ ->
                     dialog.dismiss()
                 }
-                .create().show()
+                .create()
+            dialogLogout?.show()
         }
     }
 
@@ -200,4 +203,8 @@ class ProfileFragment : BaseFragment(), ProfileView {
         navMemeDetailsFragment.startMemeDetailsScreen(data)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        dialogLogout?.dismiss()
+    }
 }

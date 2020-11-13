@@ -23,6 +23,7 @@ interface MemeFeedView: MvpView {
 
     fun enableSearchView()
 
+    @SingleState
     fun disableSearchView()
 
     @Skip
