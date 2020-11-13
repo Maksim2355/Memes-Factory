@@ -17,8 +17,8 @@ import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
 class TabFragment : Fragment(), NavigationBackPressed, NavigationMemeDetails, BottomBarVisible {
 
     companion object {
-        private val LABEL_MEME_FEED = "fragment_meme_feed"
-        private val LABEL_PROFILE = "fragment_profile"
+        private const val LABEL_MEME_FEED = "fragment_meme_feed"
+        private const val LABEL_PROFILE = "fragment_profile"
     }
 
     private lateinit var navControllerTab: NavController
@@ -80,5 +80,5 @@ class TabFragment : Fragment(), NavigationBackPressed, NavigationMemeDetails, Bo
         super.onDestroy()
         App.instance.clearFragmentContentComponent()
     }
-    
+
 }
