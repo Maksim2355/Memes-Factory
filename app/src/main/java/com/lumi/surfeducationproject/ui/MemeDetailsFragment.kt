@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
@@ -53,6 +54,8 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
 
     @Inject
     lateinit var bottomBarVisible: BottomBarVisible
+
+    private val args: MemeDetailsFragmentArgs by navArgs()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -146,7 +149,7 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
     }
 
     private fun showMeme() {
-        val meme = arguments?.getSerializable(EXTRA_DETAILS_MEME) as Meme
+        val meme = args.meme
         presenter.meme = meme
     }
 

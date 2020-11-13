@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_meme_feed" >
         <action
             android:id="@+id/action_memeFeedFragment_to_memeDetailsFragment"
-            app:destination="@id/memeDetailsFragment" />
+            app:destination="@id/memeDetailsFragment"
+            app:enterAnim="@anim/fragment_open_enter" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -21,7 +22,8 @@
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_profileFragment_to_memeDetailsFragment"
-            app:destination="@id/memeDetailsFragment" />
+            app:destination="@id/memeDetailsFragment"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/addMemeFragment"
@@ -32,5 +34,9 @@
         android:id="@+id/memeDetailsFragment"
         android:name="com.lumi.surfeducationproject.ui.MemeDetailsFragment"
         android:label="fragment_meme_details"
-        tools:layout="@layout/fragment_meme_details" />
+        tools:layout="@layout/fragment_meme_details" >
+        <argument
+            android:name="meme"
+            app:argType="com.lumi.surfeducationproject.domain.model.Meme" />
+    </fragment>
 </navigation>

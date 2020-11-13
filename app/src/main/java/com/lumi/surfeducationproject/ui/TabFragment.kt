@@ -63,20 +63,16 @@ class TabFragment : Fragment(), NavigationBackPressed, NavigationMemeDetails, Bo
     }
 
     override fun startMemeDetailsScreen(meme: Meme) {
-        val bundle = Bundle()
-        bundle.putSerializable(EXTRA_DETAILS_MEME, meme)
         when (navControllerTab.currentDestination?.label) {
             LABEL_MEME_FEED -> {
-                navControllerTab.navigate(
-                    R.id.action_memeFeedFragment_to_memeDetailsFragment,
-                    bundle
-                )
+                val action =
+                    MemeFeedFragmentDirections.actionMemeFeedFragmentToMemeDetailsFragment(meme)
+                navControllerTab.navigate(action)
             }
             LABEL_PROFILE -> {
-                navControllerTab.navigate(
-                    R.id.action_profileFragment_to_memeDetailsFragment,
-                    bundle
-                )
+                val action =
+                    ProfileFragmentDirections.actionProfileFragmentToMemeDetailsFragment(meme)
+                navControllerTab.navigate(action)
             }
         }
     }
