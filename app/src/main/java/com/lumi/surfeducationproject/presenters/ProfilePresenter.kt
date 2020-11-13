@@ -13,8 +13,7 @@ class ProfilePresenter @Inject constructor(
     private val memeRepository: MemeRepository
 ) : BasePresenter<ProfileView>() {
 
-
-    fun loadProfile() {
+    fun bindProfile() {
         userRepository.getUser()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -40,6 +39,10 @@ class ProfilePresenter @Inject constructor(
             })
     }
 
+    fun startLogoutDialog() {
+        viewState.showDialog()
+    }
+
     fun logout() {
         userRepository
             .deleteUser()
@@ -55,8 +58,8 @@ class ProfilePresenter @Inject constructor(
         viewState.openMemeDetails(meme)
     }
 
-    fun startLogoutDialog() {
-        viewState.showDialog()
+    fun shareMemeInSocialNetwork(meme: Meme) {
+        viewState.shareMeme(meme)
     }
 
 

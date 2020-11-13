@@ -20,11 +20,13 @@ import javax.inject.Provider
 
 class SplashFragment : MvpAppCompatFragment(), SplashView {
 
-    private lateinit var icLogoIv: ImageView
-
     @Inject
     lateinit var presenterProvider: Provider<SplashPresenter>
-    private val presenter by moxyPresenter { presenterProvider.get() }
+    private val presenter by moxyPresenter {
+        presenterProvider.get()
+    }
+
+    private lateinit var icLogoIv: ImageView
 
     @Inject
     lateinit var navigationStartApp: NavigationStartApp

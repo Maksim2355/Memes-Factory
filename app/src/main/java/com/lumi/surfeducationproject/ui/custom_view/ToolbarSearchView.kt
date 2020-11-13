@@ -37,7 +37,6 @@ class ToolbarSearchView @JvmOverloads constructor(
     var onChangeSearchText: ((String) -> Unit)? = null
 
     interface OnChangeSearchModeListener {
-
         fun onStartSearch()
 
         fun onStopSearch()
@@ -84,18 +83,8 @@ class ToolbarSearchView @JvmOverloads constructor(
         }
     }
 
-    private fun initChangeSearchTextListener() {
-        inputTitleMemeEt.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun afterTextChanged(e: Editable?) {
-                onChangeSearchText?.invoke(inputTitleMemeEt.text.toString())
-            }
-        })
+    fun clearSearchText(){
+        inputTitleMemeEt.text?.clear()
     }
 
 
@@ -120,8 +109,16 @@ class ToolbarSearchView @JvmOverloads constructor(
         KeyboardUtil.hideSoftKeyboard(this)
     }
 
-    fun clearSearchText(){
-        inputTitleMemeEt.text?.clear()
+    private fun initChangeSearchTextListener() {
+        inputTitleMemeEt.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(e: Editable?) {
+                onChangeSearchText?.invoke(inputTitleMemeEt.text.toString())
+            }
+        })
     }
 
 }

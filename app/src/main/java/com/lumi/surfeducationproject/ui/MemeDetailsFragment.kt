@@ -16,7 +16,6 @@ import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.base_view.BaseFragment
 import com.lumi.surfeducationproject.common.managers.BottomBarVisible
-import com.lumi.surfeducationproject.common.params.EXTRA_DETAILS_MEME
 import com.lumi.surfeducationproject.common.managers.StyleManager
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 import com.lumi.surfeducationproject.domain.model.Meme
@@ -36,13 +35,11 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
     private val presenter by moxyPresenter { presenterProvider.get() }
 
     private lateinit var toolbar: Toolbar
-
     private lateinit var memeTitleTv: TextView
     private lateinit var memeImgIv: ImageView
     private lateinit var dateCreateTv: TextView
     private lateinit var favoriteCheckBox: CheckBox
     private lateinit var descriptionTv: TextView
-
     private lateinit var avatarsMiniIv: ImageView
     private lateinit var nicknameMiniTv: TextView
 
@@ -74,20 +71,18 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
         super.onViewCreated(view, savedInstanceState)
         initView(view)
         initToolbar()
-        showMeme()
-        presenter.initMemes()
-        presenter.initProfile()
+        val meme = args.meme
+        presenter.meme = meme
+
+        presenter.bindMeme()
+        presenter.bindUserInfoToolbar()
     }
 
-    override fun onStart() {
-        super.onStart()
-        bottomBarVisible.hideBottomNavigationBar()
-
-    }
-
-    override fun onStop() {
-        super.onStop()
-        bottomBarVisible.showBottomNavigationBar()
+    private fun initToolbar() {
+        toolbar.navigationIcon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_close) }
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        getActionBar()?.title = null
+        toolbar.setNavigationOnClickListener { navBack.back() }
     }
 
     private fun initView(view: View) {
@@ -101,11 +96,15 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
         nicknameMiniTv = view.findViewById(R.id.nickname_mini_tv)
     }
 
-    private fun initToolbar() {
-        toolbar.navigationIcon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_close) }
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        getActionBar()?.title = null
-        toolbar.setNavigationOnClickListener { navBack.back() }
+    override fun onStart() {
+        super.onStart()
+        bottomBarVisible.hideBottomNavigationBar()
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        bottomBarVisible.showBottomNavigationBar()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -115,21 +114,18 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_share) {
-            presenter.share()
+            presenter.shareMeme()
         }
         return super.onOptionsItemSelected(item)
     }
-
-    override fun getActionBar() = (activity as AppCompatActivity).supportActionBar
 
     override fun showErrorStateUserInfoToolbar() {
         nicknameMiniTv.text = getString(R.string.memeDetails_errorToolbarUser_message)
     }
 
-    override fun showMemes(data: Meme) {
+    override fun showMeme(data: Meme) {
         memeTitleTv.text = data.title
         Glide.with(this).load(data.photoUrl).into(memeImgIv)
-        //Todo сделать преобразования даты
         dateCreateTv.text = getPostCreateDate(data.createdDate)
         if (data.isFavorite) {
             favoriteCheckBox.isChecked = true
@@ -137,7 +133,9 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
         descriptionTv.text = data.description
     }
 
-    override fun shareMemes(meme: Meme) {
+    override fun getActionBar() = (activity as AppCompatActivity).supportActionBar
+
+    override fun shareMeme(meme: Meme) {
         val shareMeme = Intent.createChooser(Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, meme.title)
@@ -146,11 +144,6 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }, null)
         startActivity(shareMeme)
-    }
-
-    private fun showMeme() {
-        val meme = args.meme
-        presenter.meme = meme
     }
 
     override fun showUserInfoToolbar(user: User) {

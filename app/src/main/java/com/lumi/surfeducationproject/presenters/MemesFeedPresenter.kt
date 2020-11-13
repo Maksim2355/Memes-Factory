@@ -7,7 +7,6 @@ import com.lumi.surfeducationproject.domain.repository.MemeRepository
 import com.lumi.surfeducationproject.common.exceptions.NETWORK_EXCEPTIONS
 import com.lumi.surfeducationproject.views.MemeFeedView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
 import java.util.*
 import javax.inject.Inject
 
@@ -44,9 +43,9 @@ class MemesFeedPresenter @Inject constructor(
             .doOnSubscribe { viewState.showRefresh() }
             .doFinally { viewState.hideRefresh() }
             .subscribe({
-                this.memeList = it
+                memeList = it
                 if (isSearchMode) {
-                    filter()
+                    filterMemes()
                 }else {
                     showMemes(it)
                 }
@@ -65,7 +64,6 @@ class MemesFeedPresenter @Inject constructor(
         }
     }
 
-
     fun openDetails(meme: Meme) {
         viewState.openMemeDetails(meme)
     }
@@ -78,17 +76,18 @@ class MemesFeedPresenter @Inject constructor(
         viewState.showErrorState()
     }
 
-    fun updateSearchText(searchText: String) {
-        this.searchText = searchText
-        filter()
-    }
-
     fun startFilter() {
         isSearchMode = true
         viewState.enableSearchView()
-        filter()
+        filterMemes()
     }
 
+    fun updateSearchText(searchText: String) {
+        this.searchText = searchText
+        filterMemes()
+    }
+
+    //Завершаем фильтрацию и показываем начальный список мемов
     fun stopFilter() {
         isSearchMode = false
         searchText = ""
@@ -97,7 +96,7 @@ class MemesFeedPresenter @Inject constructor(
         memeSearchList = null
     }
 
-    private fun filter() {
+    private fun filterMemes() {
         memeList?.let { memeList ->
             memeSearchList = memeList.filter { meme ->
                 meme.title.toLowerCase(Locale.ROOT).contains(searchText.toLowerCase(Locale.ROOT))
@@ -108,6 +107,10 @@ class MemesFeedPresenter @Inject constructor(
                 viewState.showEmptyFilterErrorState()
             }
         }
+    }
+
+    fun shareMemeInSocialNetworks(meme: Meme) {
+        viewState.shareMeme(meme)
     }
 
 }

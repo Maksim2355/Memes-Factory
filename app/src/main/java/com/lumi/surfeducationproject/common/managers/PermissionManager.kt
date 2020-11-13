@@ -4,6 +4,4 @@ interface PermissionManager {
 
     fun requestPermissionGallery(): Boolean
 
-    fun requestPermissionCamera(): Boolean
-
 }

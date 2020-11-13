@@ -81,8 +81,6 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
         snackbar.show()
     }
 
-
-
     override fun requestPermissionGallery(): Boolean {
         val permissionReadExternalStorage =
             ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -100,50 +98,6 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
         }
     }
 
-    override fun requestPermissionCamera(): Boolean {
-        val permissionWriteExternalStorage =
-            ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        val permissionReadExternalStorage =
-            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-        return if (permissionWriteExternalStorage != PackageManager.PERMISSION_GRANTED ||
-            permissionReadExternalStorage != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (permissionWriteExternalStorage != PackageManager.PERMISSION_GRANTED &&
-                permissionReadExternalStorage != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ),
-                    REQUEST_CODE_PERMISSION_CAMERA
-                )
-
-            } else if (permissionWriteExternalStorage != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ),
-                    REQUEST_CODE_PERMISSION_CAMERA
-                )
-
-            } else {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    ),
-                    REQUEST_CODE_PERMISSION_CAMERA
-                )
-
-            }
-            false
-        } else true
-    }
-
-    //TODO уменьшить размытие картинки
     override fun saveImg(imgBtmp: Bitmap): String? {
         val saveDir = File(cacheDir, "meme")
         return try {
@@ -162,8 +116,6 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
             null
         }
     }
-
-
 
     private fun getImgFileName(): String = "Meme_${System.currentTimeMillis()}"
 

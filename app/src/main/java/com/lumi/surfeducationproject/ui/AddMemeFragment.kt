@@ -51,6 +51,12 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
         private const val REQUEST_CODE_GALLERY = 102
     }
 
+    @Inject
+    lateinit var presenterProvider: Provider<AddMemePresenter>
+    private val presenter by moxyPresenter {
+        presenterProvider.get()
+    }
+
     private lateinit var toolbar: Toolbar
     private lateinit var createMemeBtn: Button
     private lateinit var inputTitleMemeEt: TextInputEditText
@@ -59,12 +65,6 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
     private lateinit var closeBtnIbtn: ImageButton
     private lateinit var imgMemeIv: ImageView
     private lateinit var addImgIbtn: ImageButton
-
-    @Inject
-    lateinit var presenterProvider: Provider<AddMemePresenter>
-    private val presenter by moxyPresenter {
-        presenterProvider.get()
-    }
 
     @Inject
     lateinit var styleManager: StyleManager
@@ -111,17 +111,41 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
     }
 
     private fun initView(view: View) {
-        inputTitleMemeEt = view.input_title_meme_et
-        inputDescriptionMemeEt = view.input_description_meme_et
         imgContainer = view.img_meme_container
         imgMemeIv = view.img_add_meme_iv
-
         createMemeBtn = view.create_meme_btn
         createMemeBtn.setOnClickListener(this)
         closeBtnIbtn = view.img_close_ibtn
         closeBtnIbtn.setOnClickListener(this)
         addImgIbtn = view.add_img_ibtn
         addImgIbtn.setOnClickListener(this)
+
+        inputTitleMemeEt = view.input_title_meme_et
+        inputTitleMemeEt.addTextChangedListener(
+            object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int)
+                {}
+
+                override fun afterTextChanged(s: Editable?) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    presenter.updateTitle(inputTitleMemeEt.text.toString())
+                }
+            }
+        )
+        inputDescriptionMemeEt = view.input_description_meme_et
+        inputDescriptionMemeEt.addTextChangedListener(
+            object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int)
+                {}
+
+                override fun afterTextChanged(s: Editable?) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    presenter.updateDescription(inputDescriptionMemeEt.text.toString())
+                }
+            }
+        )
     }
 
     override fun onClick(v: View?) {
@@ -139,84 +163,10 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
         bottomBarVisible.hideBottomNavigationBar()
     }
 
-    override fun onResume() {
-        super.onResume()
-        inputTitleMemeEt.addTextChangedListener(
-            object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?, start: Int,
-                    count: Int, after: Int
-                ) {
-                }
-
-                override fun afterTextChanged(s: Editable?) {}
-
-                override fun onTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    before: Int,
-                    count: Int
-                ) {
-                    presenter.updateTitle(inputTitleMemeEt.text.toString())
-                }
-            }
-        )
-        inputDescriptionMemeEt.addTextChangedListener(
-            object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?, start: Int,
-                    count: Int, after: Int
-                ) {
-                }
-
-                override fun afterTextChanged(s: Editable?) {}
-
-                override fun onTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    before: Int,
-                    count: Int
-                ) {
-                    presenter.updateDescription(inputDescriptionMemeEt.text.toString())
-                }
-            }
-        )
-    }
-
     override fun onStop() {
         super.onStop()
         bottomBarVisible.showBottomNavigationBar()
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                REQUEST_DIALOG_WAY_GET_IMG -> {
-                    //Получаем выбор нашего пользователя из диалога
-                    val action = data?.getIntExtra(EXTRA_WAY_GET_IMG, 3)
-                    if (action == AddImgDialog.CAMERA_MESSAGE) {
-                        getImgFromCamera()
-                    } else {
-                        gemImgFromGallery()
-                    }
-                }
-                REQUEST_CODE_CAMERA -> {
-                    val imgBtmp = data?.extras?.get("data") as Bitmap
-                    imgBtmp.let {
-                        val url = fileManager.saveImg(it)
-                        if (url != null) presenter.updateImg(url)
-                    }
-                }
-                REQUEST_CODE_GALLERY -> {
-                    data?.let {
-                        presenter.updateImg(it.data.toString())
-                    }
-                }
-            }
-        }
-    }
-
 
     private fun gemImgFromGallery() {
         if (permissionManager.requestPermissionGallery()) {
@@ -229,10 +179,8 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
     }
 
     private fun getImgFromCamera() {
-        if (permissionManager.requestPermissionCamera()) {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            val photoFile = startActivityForResult(intent, REQUEST_CODE_CAMERA)
-        }
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, REQUEST_CODE_CAMERA)
     }
 
     override fun showImg(url: String) {
@@ -271,13 +219,41 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
         snackBarManager.showErrorMessage(messageError)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_DIALOG_WAY_GET_IMG -> {
+                    //Получаем выбор нашего пользователя из диалога
+                    val action = data?.getIntExtra(EXTRA_WAY_GET_IMG, 3)
+                    if (action == AddImgDialog.CAMERA_MESSAGE) {
+                        getImgFromCamera()
+                    } else {
+                        gemImgFromGallery()
+                    }
+                }
+                REQUEST_CODE_CAMERA -> {
+                    val imgBtmp = data?.extras?.get("data") as Bitmap
+                    imgBtmp.let {
+                        val url = fileManager.saveImg(it)
+                        if (url != null) presenter.updateImg(url)
+                    }
+                }
+                REQUEST_CODE_GALLERY -> {
+                    data?.let {
+                        presenter.updateImg(it.data.toString())
+                    }
+                }
+            }
+        }
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
         when (requestCode) {
             REQUEST_CODE_PERMISSION_CAMERA -> {
                 if (grantResults.size > 2

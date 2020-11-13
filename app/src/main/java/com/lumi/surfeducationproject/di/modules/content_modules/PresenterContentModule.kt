@@ -31,8 +31,7 @@ class PresenterContentModule {
     @Provides
     @FragmentContentScope
     fun provideMemeDetailsPresenter(
-        userRepository: UserRepository,
-        memeRepository: MemeRepository
-    ) = MemeDetailsPresenter(userRepository, memeRepository)
+        userRepository: UserRepository
+    ) = MemeDetailsPresenter(userRepository)
 
 }

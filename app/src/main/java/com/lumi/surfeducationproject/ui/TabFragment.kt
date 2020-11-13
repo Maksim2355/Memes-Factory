@@ -10,7 +10,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.managers.BottomBarVisible
-import com.lumi.surfeducationproject.common.params.EXTRA_DETAILS_MEME
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
@@ -81,6 +80,5 @@ class TabFragment : Fragment(), NavigationBackPressed, NavigationMemeDetails, Bo
         super.onDestroy()
         App.instance.clearFragmentContentComponent()
     }
-
-
+    
 }

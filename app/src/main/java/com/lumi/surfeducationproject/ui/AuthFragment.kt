@@ -61,21 +61,26 @@ class AuthFragment : BaseFragment(), AuthView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView(view)
+    }
+
+    private fun initView(view: View) {
         loginInputTfb = view.findViewById(R.id.input_login_fb)
         loginEditEt = view.findViewById(R.id.login_input_et)
-        loginInputTfb.setSimpleTextChangeWatcher { theNewText, isError ->
+        loginInputTfb.setSimpleTextChangeWatcher { theNewText, _ ->
             presenter.updateLogin(theNewText)
         }
 
         passwordInputTfb = view.findViewById(R.id.input_password_fb)
-        passwordInputTfb.setSimpleTextChangeWatcher { theNewText, isError ->
+        passwordInputTfb.setSimpleTextChangeWatcher { theNewText, _ ->
             presenter.updatePassword(theNewText)
         }
+
         passwordEt = view.findViewById(R.id.password_et)
-        passwordEt.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus){
+        passwordEt.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
                 presenter.enableCheckPasswordField()
-            }else{
+            } else {
                 presenter.disableCheckPasswordField()
             }
         }
@@ -174,7 +179,6 @@ class AuthFragment : BaseFragment(), AuthView {
         super.onDetach()
         App.instance.clearFragmentAuthComponent()
     }
-
     override fun getActionBar(): ActionBar? = null
 
 }

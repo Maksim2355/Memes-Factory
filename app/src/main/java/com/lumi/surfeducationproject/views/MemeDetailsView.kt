@@ -15,9 +15,9 @@ interface MemeDetailsView: MvpView {
     fun showErrorStateUserInfoToolbar()
 
     @AddToEnd
-    fun showMemes(data: Meme)
+    fun showMeme(data: Meme)
 
     @AddToEnd
-    fun shareMemes(meme: Meme)
+    fun shareMeme(meme: Meme)
 
 }

@@ -35,18 +35,18 @@ import javax.inject.Provider
 
 class ProfileFragment : BaseFragment(), ProfileView {
 
+    @Inject
+    lateinit var presenterProvider: Provider<ProfilePresenter>
+    private val presenter by moxyPresenter {
+        presenterProvider.get()
+    }
+
     private lateinit var toolbar: Toolbar
     private lateinit var avatarIv: ImageView
     private lateinit var nicknameTv: TextView
     private lateinit var descriptionTv: TextView
     private lateinit var memeListRv: RecyclerView
     private lateinit var loadStatePb: ProgressBar
-
-    @Inject
-    lateinit var presenterProvider: Provider<ProfilePresenter>
-    private val presenter by moxyPresenter {
-        presenterProvider.get()
-    }
 
     @Inject
     lateinit var styleManager: StyleManager
@@ -83,10 +83,14 @@ class ProfileFragment : BaseFragment(), ProfileView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initToolbar(view)
+        initView(view)
+    }
+
+    private fun initToolbar(view: View) {
         toolbar = view.profile_toolbar
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         getActionBar()?.title = ""
-        initView(view)
     }
 
     private fun initView(view: View) {
@@ -94,18 +98,11 @@ class ProfileFragment : BaseFragment(), ProfileView {
         nicknameTv = view.nickname_tv
         descriptionTv = view.description_profile_tv
         loadStatePb = view.load_memes_pb
-        memeListRv = view.meme_list_profile_rv
         memeController.memeDetailsClickListener = { presenter.openDetails(it) }
         memeController.shareClickListener = {
-            val shareMeme = Intent.createChooser(Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, it.title)
-                putExtra(Intent.EXTRA_STREAM, it.photoUrl)
-                type = "image/*"
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            }, null)
-            startActivity(shareMeme)
+            presenter.shareMemeInSocialNetwork(it)
         }
+        memeListRv = view.meme_list_profile_rv
         with(memeListRv) {
             adapter = easyAdapter
             layoutManager = androidx.recyclerview.widget.StaggeredGridLayoutManager(
@@ -117,19 +114,20 @@ class ProfileFragment : BaseFragment(), ProfileView {
 
     override fun onStart() {
         super.onStart()
-        presenter.loadProfile()
+        presenter.bindProfile()
         presenter.loadMemes()
     }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dialogLogout?.dismiss()
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_toolbar_profile, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
-
-    override fun getActionBar(): ActionBar? =
-        (activity as AppCompatActivity).supportActionBar
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
@@ -153,7 +151,6 @@ class ProfileFragment : BaseFragment(), ProfileView {
     }
 
     override fun showProfile(user: User) {
-        //Todo добавить картинку-заглушку в ассеты или кэшировать
         Glide.with(this)
             .load("https://img.pngio.com/avatar-1-length-of-human-face-hd-png-download-6648260-free-human-face-png-840_640.png")
             .circleCrop()
@@ -203,8 +200,17 @@ class ProfileFragment : BaseFragment(), ProfileView {
         navMemeDetailsFragment.startMemeDetailsScreen(data)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        dialogLogout?.dismiss()
+    override fun shareMeme(meme: Meme) {
+        val shareMeme = Intent.createChooser(Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, meme.title)
+            putExtra(Intent.EXTRA_STREAM, meme.photoUrl)
+            type = "image/*"
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }, null)
+        startActivity(shareMeme)
     }
+
+    override fun getActionBar(): ActionBar? =
+        (activity as AppCompatActivity).supportActionBar
 }

@@ -38,18 +38,17 @@ import javax.inject.Provider
 class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, MemeFeedView,
     RefresherOwner {
 
-    private lateinit var searchToolbar: ToolbarSearchView
-    private lateinit var refreshContainer: SwipeRefreshLayout
-    private lateinit var memeListRv: RecyclerView
-    private lateinit var stateErrorView: TextView
-    private lateinit var stateLoadView: FrameLayout
-
-
     @Inject
     lateinit var presenterProvider: Provider<MemesFeedPresenter>
     private val presenter by moxyPresenter {
         presenterProvider.get()
     }
+
+    private lateinit var searchToolbar: ToolbarSearchView
+    private lateinit var refreshContainer: SwipeRefreshLayout
+    private lateinit var memeListRv: RecyclerView
+    private lateinit var stateErrorView: TextView
+    private lateinit var stateLoadView: FrameLayout
 
     @Inject
     lateinit var styleManager: StyleManager
@@ -89,7 +88,6 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
         initRecyclerView()
     }
 
-
     private fun initToolbar(view: View) {
         searchToolbar = view.meme_feed_Stoolbar
         searchToolbar.onChangeSearchMode = object : ToolbarSearchView.OnChangeSearchModeListener {
@@ -128,16 +126,18 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
         memeController.memeDetailsClickListener = { presenter.openDetails(it) }
 
         memeController.shareClickListener = {
-            val shareMeme = Intent.createChooser(Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, it.title)
-                putExtra(Intent.EXTRA_STREAM, it.photoUrl)
-                type = "image/*"
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            }, null)
-
-            startActivity(shareMeme)
+            presenter.shareMemeInSocialNetworks(it)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        inputModeManager.setAdjustPan()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        inputModeManager.setAdjustResize()
     }
 
     override fun showMemes(memesList: List<Meme>) {
@@ -193,6 +193,16 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
         navMemeDetailsFragment.startMemeDetailsScreen(data)
     }
 
+    override fun shareMeme(meme: Meme) {
+        val shareMeme = Intent.createChooser(Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, meme.title)
+            putExtra(Intent.EXTRA_STREAM, meme.photoUrl)
+            type = "image/*"
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }, null)
+        startActivity(shareMeme)
+    }
 
     override fun onRefresh() {
         presenter.updateMemes()
@@ -201,17 +211,6 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
     override fun setRefresherState(refresherState: Boolean) {
         refreshContainer.post { refreshContainer.isRefreshing = refresherState }
     }
-
-    override fun onStart() {
-        super.onStart()
-        inputModeManager.setAdjustPan()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        inputModeManager.setAdjustResize()
-    }
-
     override fun getActionBar() = (activity as AppCompatActivity).supportActionBar
 
 
