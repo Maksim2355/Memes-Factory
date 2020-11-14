@@ -58,7 +58,6 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
     }
 
     override fun setColorStatusBar(color: Int) {
-        val window: Window = window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = resources.getColor(color)
     }
@@ -72,10 +71,9 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent, 
             root_layout, message,
             Snackbar.LENGTH_LONG
         )
-        val snackbarView = snackbar.view
-        snackbarView.setBackgroundColor(resources.getColor(R.color.colorError))
+        snackbar.view.setBackgroundColor(resources.getColor(R.color.colorError))
         val textView =
-            snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+            snackbar.view.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
         textView.setTextColor(Color.WHITE)
         textView.textSize = 16f
         snackbar.show()

@@ -18,6 +18,7 @@ import com.lumi.surfeducationproject.common.managers.SnackBarManager
 import com.lumi.surfeducationproject.navigation.NavigationContent
 import com.lumi.surfeducationproject.presenters.AuthPresenter
 import com.lumi.surfeducationproject.views.AuthView
+import kotlinx.android.synthetic.main.fragment_auth.*
 import moxy.ktx.moxyPresenter
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes
@@ -32,13 +33,6 @@ class AuthFragment : BaseFragment(), AuthView {
     private val presenter by moxyPresenter {
         presenterProvider.get()
     }
-
-    private lateinit var loginInputTfb: TextFieldBoxes
-    private lateinit var loginEditEt: ExtendedEditText
-    private lateinit var passwordInputTfb: TextFieldBoxes
-    private lateinit var passwordEt: ExtendedEditText
-    private lateinit var authUserBtn: TextView;
-    private lateinit var authPb: ProgressBar;
 
     @Inject
     lateinit var snackBarManager: SnackBarManager
@@ -61,23 +55,19 @@ class AuthFragment : BaseFragment(), AuthView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView(view)
+        initView()
     }
 
-    private fun initView(view: View) {
-        loginInputTfb = view.findViewById(R.id.input_login_fb)
-        loginEditEt = view.findViewById(R.id.login_input_et)
-        loginInputTfb.setSimpleTextChangeWatcher { theNewText, _ ->
+    private fun initView() {
+        input_login_fb.setSimpleTextChangeWatcher { theNewText, _ ->
             presenter.updateLogin(theNewText)
         }
 
-        passwordInputTfb = view.findViewById(R.id.input_password_fb)
-        passwordInputTfb.setSimpleTextChangeWatcher { theNewText, _ ->
+        input_password_fb.setSimpleTextChangeWatcher { theNewText, _ ->
             presenter.updatePassword(theNewText)
         }
 
-        passwordEt = view.findViewById(R.id.password_et)
-        passwordEt.setOnFocusChangeListener { _, hasFocus ->
+        password_et.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 presenter.enableCheckPasswordField()
             } else {
@@ -85,10 +75,8 @@ class AuthFragment : BaseFragment(), AuthView {
             }
         }
 
-        authUserBtn = view.findViewById(R.id.auth_user_btn)
-        authUserBtn.setOnClickListener { authUser() }
-        authPb = view.findViewById(R.id.auth_pb)
-        passwordInputTfb.endIconImageButton.setOnClickListener {
+        auth_user_btn.setOnClickListener { authUser() }
+        input_password_fb.endIconImageButton.setOnClickListener {
             presenter.changeVisiblePassword()
         }
     }
@@ -99,14 +87,14 @@ class AuthFragment : BaseFragment(), AuthView {
 
     override fun enablePasswordField(isPasswordVisible: Boolean) {
         if (isPasswordVisible) {
-            passwordInputTfb.setEndIcon(R.drawable.ic_eye_on)
+            input_password_fb.setEndIcon(R.drawable.ic_eye_on)
         } else {
-            passwordInputTfb.setEndIcon(R.drawable.ic_eye_off)
+            input_password_fb.setEndIcon(R.drawable.ic_eye_off)
         }
     }
 
     override fun disablePasswordField() {
-        passwordInputTfb.removeEndIcon()
+        input_password_fb.removeEndIcon()
     }
 
     override fun openContentFragment() {
@@ -114,13 +102,13 @@ class AuthFragment : BaseFragment(), AuthView {
     }
 
     override fun showPassword() {
-        passwordInputTfb.setEndIcon(R.drawable.ic_eye_on)
-        passwordEt.transformationMethod = HideReturnsTransformationMethod.getInstance()
+        input_password_fb.setEndIcon(R.drawable.ic_eye_on)
+        password_et.transformationMethod = HideReturnsTransformationMethod.getInstance()
     }
 
     override fun hidePassword() {
-        passwordInputTfb.setEndIcon(R.drawable.ic_eye_off)
-        passwordEt.transformationMethod = PasswordTransformationMethod.getInstance()
+        input_password_fb.setEndIcon(R.drawable.ic_eye_off)
+        password_et.transformationMethod = PasswordTransformationMethod.getInstance()
     }
 
     override fun showErrorSnackBar(messageError: String) {
@@ -130,14 +118,14 @@ class AuthFragment : BaseFragment(), AuthView {
     override fun showMessageErrorInputField(emptyFields: EmptyFields, messageError: String) {
         when (emptyFields) {
             EmptyFields.LOGIN -> {
-                loginInputTfb.setError(messageError, false)
+                input_login_fb.setError(messageError, false)
             }
             EmptyFields.PASSWORD -> {
-                passwordInputTfb.setError(messageError, false)
+                input_password_fb.setError(messageError, false)
             }
             EmptyFields.ALL -> {
-                loginInputTfb.setError(messageError, false)
-                passwordInputTfb.setError(messageError, false)
+                input_login_fb.setError(messageError, false)
+                input_password_fb.setError(messageError, false)
             }
         }
     }
@@ -145,34 +133,34 @@ class AuthFragment : BaseFragment(), AuthView {
     override fun hideMessageErrorInputField(emptyFields: EmptyFields) {
         when (emptyFields) {
             EmptyFields.LOGIN -> {
-                loginInputTfb.removeError()
+                input_login_fb.removeError()
             }
             EmptyFields.PASSWORD -> {
-                passwordInputTfb.removeError()
+                input_password_fb.removeError()
             }
             EmptyFields.ALL -> {
-                loginInputTfb.removeError()
-                passwordInputTfb.removeError()
+                input_login_fb.removeError()
+                input_password_fb.removeError()
             }
         }
     }
 
     override fun showPasswordHelper(lengthPassword: Int) {
-        passwordInputTfb.helperText = "Длина пароля должна состоять из $lengthPassword символов"
+        input_password_fb.helperText = "Длина пароля должна состоять из $lengthPassword символов"
     }
 
     override fun hidePasswordHelper() {
-        passwordInputTfb.helperText = null
+        input_password_fb.helperText = null
     }
 
     override fun showAuthProgressBar() {
-        authUserBtn.visibility = View.GONE
-        authPb.visibility = View.VISIBLE
+        auth_user_btn.visibility = View.GONE
+        auth_pb.visibility = View.VISIBLE
     }
 
     override fun hideAuthProgressBar() {
-        authUserBtn.visibility = View.VISIBLE
-        authPb.visibility = View.GONE
+        auth_user_btn.visibility = View.VISIBLE
+        auth_pb.visibility = View.GONE
     }
 
     override fun onDetach() {

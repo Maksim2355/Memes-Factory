@@ -13,6 +13,7 @@ import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.navigation.NavigationStartApp
 import com.lumi.surfeducationproject.presenters.SplashPresenter
 import com.lumi.surfeducationproject.views.SplashView
+import kotlinx.android.synthetic.main.fragment_splash.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
@@ -25,8 +26,6 @@ class SplashFragment : MvpAppCompatFragment(), SplashView {
     private val presenter by moxyPresenter {
         presenterProvider.get()
     }
-
-    private lateinit var icLogoIv: ImageView
 
     @Inject
     lateinit var navigationStartApp: NavigationStartApp
@@ -47,7 +46,6 @@ class SplashFragment : MvpAppCompatFragment(), SplashView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        icLogoIv = view.findViewById(R.id.logo_iv)
     }
 
     override fun onStart() {
@@ -58,7 +56,7 @@ class SplashFragment : MvpAppCompatFragment(), SplashView {
     @SuppressLint("ResourceType")
     override fun startAnimation() {
         val anim = AnimationUtils.loadAnimation(context, R.animator.pulse_logo_app)
-        icLogoIv.startAnimation(anim)
+        logo_iv.startAnimation(anim)
     }
 
     override fun startApp(isAuthUser: Boolean) {

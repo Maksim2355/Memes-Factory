@@ -11,6 +11,7 @@ import androidx.fragment.app.DialogFragment
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.ActionsIntentImg
 import com.lumi.surfeducationproject.common.params.EXTRA_WAY_GET_IMG
+import kotlinx.android.synthetic.main.dialog_add_img.*
 import kotlinx.android.synthetic.main.dialog_add_img.view.*
 
 
@@ -20,9 +21,6 @@ class AddImgDialog: DialogFragment() {
         val CAMERA_MESSAGE = 0
         val GALLERY_MESSAGE = 1
     }
-
-    private lateinit var addImgForGalleryBtn: Button
-    private lateinit var addImgForCameraBtn: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,12 +32,10 @@ class AddImgDialog: DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addImgForCameraBtn = view.add_img_for_camera_btn
-        addImgForCameraBtn.setOnClickListener {
+        add_img_for_camera_btn.setOnClickListener {
             sendMessageParentFragmentAndCloseDialog(ActionsIntentImg.CAMERA)
         }
-        addImgForGalleryBtn = view.add_img_for_gallery_btn
-        addImgForGalleryBtn.setOnClickListener {
+        add_img_for_gallery_btn.setOnClickListener {
             sendMessageParentFragmentAndCloseDialog(ActionsIntentImg.GALLERY)
         }
     }

@@ -31,5 +31,5 @@
     <dimen name="padding_auth_input_fields_top">60dp</dimen>
     <dimen name="margin_prop_meme">12dp</dimen>
     <dimen name="radius_card_meme_item">6dp</dimen>
-    <dimen name="margin_bottom_item_meme">12dp</dimen>
+    <dimen name="margin_bottom_item_meme">20dp</dimen>
 </resources>

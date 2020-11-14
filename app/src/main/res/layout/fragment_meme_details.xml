@@ -42,12 +42,12 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/meme_details_toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/meme_details_toolbar"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_bottom_item_meme"
             android:orientation="vertical">
 
             <TextView
@@ -66,7 +66,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/standard_margin"
                 android:layout_marginTop="@dimen/margin_prop_meme"
                 android:layout_marginEnd="@dimen/standard_margin"
@@ -97,6 +97,7 @@
                 android:layout_weight="1"
                 tools:text="Описание тестового мема и прочее" />
         </LinearLayout>
+
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

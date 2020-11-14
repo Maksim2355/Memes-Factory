@@ -23,6 +23,7 @@ import com.lumi.surfeducationproject.domain.model.User
 import com.lumi.surfeducationproject.presenters.MemeDetailsPresenter
 import com.lumi.surfeducationproject.utils.getPostCreateDate
 import com.lumi.surfeducationproject.views.MemeDetailsView
+import kotlinx.android.synthetic.main.fragment_meme_details.*
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 import javax.inject.Provider
@@ -33,15 +34,6 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
     @Inject
     lateinit var presenterProvider: Provider<MemeDetailsPresenter>
     private val presenter by moxyPresenter { presenterProvider.get() }
-
-    private lateinit var toolbar: Toolbar
-    private lateinit var memeTitleTv: TextView
-    private lateinit var memeImgIv: ImageView
-    private lateinit var dateCreateTv: TextView
-    private lateinit var favoriteCheckBox: CheckBox
-    private lateinit var descriptionTv: TextView
-    private lateinit var avatarsMiniIv: ImageView
-    private lateinit var nicknameMiniTv: TextView
 
     @Inject
     lateinit var styleManager: StyleManager
@@ -69,7 +61,6 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView(view)
         initToolbar()
         val meme = args.meme
         presenter.meme = meme
@@ -79,22 +70,12 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
     }
 
     private fun initToolbar() {
-        toolbar.navigationIcon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_close) }
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        meme_details_toolbar.navigationIcon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_close) }
+        (activity as AppCompatActivity).setSupportActionBar(meme_details_toolbar)
         getActionBar()?.title = null
-        toolbar.setNavigationOnClickListener { navBack.back() }
+        meme_details_toolbar.setNavigationOnClickListener { navBack.back() }
     }
 
-    private fun initView(view: View) {
-        toolbar = view.findViewById(R.id.meme_details_toolbar)
-        memeTitleTv = view.findViewById(R.id.title_meme_tv)
-        memeImgIv = view.findViewById(R.id.img_meme_iv)
-        dateCreateTv = view.findViewById(R.id.created_date_tv)
-        favoriteCheckBox = view.findViewById(R.id.favorite_details_chb)
-        descriptionTv = view.findViewById(R.id.text_meme_tv)
-        avatarsMiniIv = view.findViewById(R.id.avatars_mini_iv)
-        nicknameMiniTv = view.findViewById(R.id.nickname_mini_tv)
-    }
 
     override fun onStart() {
         super.onStart()
@@ -120,17 +101,17 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
     }
 
     override fun showErrorStateUserInfoToolbar() {
-        nicknameMiniTv.text = getString(R.string.memeDetails_errorToolbarUser_message)
+        nickname_mini_tv.text = getString(R.string.memeDetails_errorToolbarUser_message)
     }
 
     override fun showMeme(data: Meme) {
-        memeTitleTv.text = data.title
-        Glide.with(this).load(data.photoUrl).into(memeImgIv)
-        dateCreateTv.text = getPostCreateDate(data.createdDate)
+        title_meme_tv.text = data.title
+        Glide.with(this).load(data.photoUrl).into(img_meme_iv)
+        created_date_tv.text = getPostCreateDate(data.createdDate)
         if (data.isFavorite) {
-            favoriteCheckBox.isChecked = true
+            favorite_details_chb.isChecked = true
         }
-        descriptionTv.text = data.description
+        text_meme_tv.text = data.description
     }
 
     override fun getActionBar() = (activity as AppCompatActivity).supportActionBar
@@ -150,7 +131,7 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
         Glide.with(this)
             .load("https://img.pngio.com/avatar-1-length-of-human-face-hd-png-download-6648260-free-human-face-png-840_640.png")
             .optionalCircleCrop()
-            .into(avatarsMiniIv)
-        nicknameMiniTv.text = user.firstName
+            .into(avatars_mini_iv)
+        nickname_mini_tv.text = user.firstName
     }
 }

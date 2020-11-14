@@ -7,10 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lumi.surfeducationproject.App
@@ -25,9 +22,8 @@ import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
 import com.lumi.surfeducationproject.presenters.MemesFeedPresenter
 import com.lumi.surfeducationproject.ui.custom_view.ToolbarSearchView
-import com.lumi.surfeducationproject.utils.KeyboardUtil
 import com.lumi.surfeducationproject.views.MemeFeedView
-import kotlinx.android.synthetic.main.fragment_meme_feed.view.*
+import kotlinx.android.synthetic.main.fragment_meme_feed.*
 import moxy.ktx.moxyPresenter
 import ru.surfstudio.android.easyadapter.EasyAdapter
 import ru.surfstudio.android.easyadapter.ItemList
@@ -44,11 +40,6 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
         presenterProvider.get()
     }
 
-    private lateinit var searchToolbar: ToolbarSearchView
-    private lateinit var refreshContainer: SwipeRefreshLayout
-    private lateinit var memeListRv: RecyclerView
-    private lateinit var stateErrorView: TextView
-    private lateinit var stateLoadView: FrameLayout
 
     @Inject
     lateinit var styleManager: StyleManager
@@ -83,43 +74,38 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initToolbar(view)
-        initView(view)
+        initToolbar()
+        initView()
         initRecyclerView()
     }
 
-    private fun initToolbar(view: View) {
-        searchToolbar = view.meme_feed_Stoolbar
-        searchToolbar.onChangeSearchMode = object : ToolbarSearchView.OnChangeSearchModeListener {
+    private fun initToolbar() {
+        meme_feed_Stoolbar.onChangeSearchMode = object : ToolbarSearchView.OnChangeSearchModeListener {
             override fun onStartSearch() {
                 presenter.startFilter()
             }
 
             override fun onStopSearch() {
                 presenter.stopFilter()
-                searchToolbar.clearSearchText()
+                meme_feed_Stoolbar.clearSearchText()
             }
         }
-        searchToolbar.onChangeSearchText = {
+        meme_feed_Stoolbar.onChangeSearchText = {
             presenter.updateSearchText(it)
         }
 
     }
 
-    private fun initView(view: View) {
-        memeListRv = view.meme_list_rv
-        stateErrorView = view.state_error_tv
-        stateLoadView = view.state_progress_container
-        refreshContainer = view.refresh_container
-        with(refreshContainer) {
+    private fun initView() {
+        with(refresh_container) {
             setColorSchemeColors(Color.BLACK)
             setProgressBackgroundColorSchemeColor(resources.getColor(R.color.colorAccent))
         }
-        refreshContainer.setOnRefreshListener(this)
+        refresh_container.setOnRefreshListener(this)
     }
 
     private fun initRecyclerView() {
-        with(memeListRv) {
+        with(meme_list_rv) {
             adapter = easyAdapter
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
@@ -140,33 +126,33 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
         inputModeManager.setAdjustResize()
     }
 
-    override fun showMemes(memesList: List<Meme>) {
+    override fun showMemes(memeList: List<Meme>) {
         val itemList = ItemList.create().apply {
-            addAll(memesList, memeController)
+            addAll(memeList, memeController)
         }
         easyAdapter.setItems(itemList)
-        memeListRv.visibility = View.VISIBLE
-        stateErrorView.visibility = View.GONE
+        meme_list_rv.visibility = View.VISIBLE
+        state_error_tv.visibility = View.GONE
     }
 
     override fun showErrorState() {
-        memeListRv.visibility = View.GONE
-        stateErrorView.text = getString(R.string.errorDownloadMemeState_message)
-        stateErrorView.visibility = View.VISIBLE
+        meme_list_rv.visibility = View.GONE
+        state_error_tv.text = getString(R.string.errorDownloadMemeState_message)
+        state_error_tv.visibility = View.VISIBLE
     }
 
     override fun showEmptyFilterErrorState() {
-        memeListRv.visibility = View.GONE
-        stateErrorView.visibility = View.VISIBLE
-        stateErrorView.text = getString(R.string.meme_feed_empty_filter_message)
+        meme_list_rv.visibility = View.GONE
+        state_error_tv.visibility = View.VISIBLE
+        state_error_tv.text = getString(R.string.meme_feed_empty_filter_message)
     }
 
     override fun showLoadState() {
-        stateLoadView.visibility = View.VISIBLE
+        state_progress_container.visibility = View.VISIBLE
     }
 
     override fun hideLoadState() {
-        stateLoadView.visibility = View.GONE
+        state_progress_container.visibility = View.GONE
     }
 
     override fun showRefresh() {
@@ -178,11 +164,11 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
     }
 
     override fun enableSearchView() {
-        searchToolbar.enableSearchMode()
+        meme_feed_Stoolbar.enableSearchMode()
     }
 
     override fun disableSearchView() {
-        searchToolbar.disableSearchMode()
+        meme_feed_Stoolbar.disableSearchMode()
     }
 
     override fun showErrorSnackbar(message: String) {
@@ -209,7 +195,7 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
     }
 
     override fun setRefresherState(refresherState: Boolean) {
-        refreshContainer.post { refreshContainer.isRefreshing = refresherState }
+        refresh_container.post { refresh_container.isRefreshing = refresherState }
     }
     override fun getActionBar() = (activity as AppCompatActivity).supportActionBar
 

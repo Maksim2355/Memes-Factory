@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
@@ -34,11 +33,9 @@ import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 import com.lumi.surfeducationproject.presenters.AddMemePresenter
 import com.lumi.surfeducationproject.ui.dialogs.AddImgDialog
 import com.lumi.surfeducationproject.views.AddMemeView
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.ObservableOnSubscribe
+import kotlinx.android.synthetic.main.fragment_add_meme.*
 import kotlinx.android.synthetic.main.fragment_add_meme.view.*
 import moxy.ktx.moxyPresenter
-import java.io.File
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -56,15 +53,6 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
     private val presenter by moxyPresenter {
         presenterProvider.get()
     }
-
-    private lateinit var toolbar: Toolbar
-    private lateinit var createMemeBtn: Button
-    private lateinit var inputTitleMemeEt: TextInputEditText
-    private lateinit var inputDescriptionMemeEt: TextInputEditText
-    private lateinit var imgContainer: FrameLayout
-    private lateinit var closeBtnIbtn: ImageButton
-    private lateinit var imgMemeIv: ImageView
-    private lateinit var addImgIbtn: ImageButton
 
     @Inject
     lateinit var styleManager: StyleManager
@@ -104,24 +92,17 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
     }
 
     private fun initToolbar(view: View) {
-        toolbar = view.add_meme_toolbar
-        toolbar.navigationIcon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_close) }
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        toolbar.setNavigationOnClickListener { navBack.back() }
+        add_meme_toolbar.navigationIcon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_close) }
+        (activity as AppCompatActivity).setSupportActionBar(add_meme_toolbar)
+        add_meme_toolbar.setNavigationOnClickListener { navBack.back() }
     }
 
     private fun initView(view: View) {
-        imgContainer = view.img_meme_container
-        imgMemeIv = view.img_add_meme_iv
-        createMemeBtn = view.create_meme_btn
-        createMemeBtn.setOnClickListener(this)
-        closeBtnIbtn = view.img_close_ibtn
-        closeBtnIbtn.setOnClickListener(this)
-        addImgIbtn = view.add_img_ibtn
-        addImgIbtn.setOnClickListener(this)
+        create_meme_btn.setOnClickListener(this)
+        img_close_ibtn.setOnClickListener(this)
+        add_img_ibtn.setOnClickListener(this)
 
-        inputTitleMemeEt = view.input_title_meme_et
-        inputTitleMemeEt.addTextChangedListener(
+        input_title_meme_et.addTextChangedListener(
             object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int)
                 {}
@@ -129,12 +110,11 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
                 override fun afterTextChanged(s: Editable?) {}
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    presenter.updateTitle(inputTitleMemeEt.text.toString())
+                    presenter.updateTitle(input_title_meme_et.text.toString())
                 }
             }
         )
-        inputDescriptionMemeEt = view.input_description_meme_et
-        inputDescriptionMemeEt.addTextChangedListener(
+        input_description_meme_et.addTextChangedListener(
             object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int)
                 {}
@@ -142,7 +122,7 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
                 override fun afterTextChanged(s: Editable?) {}
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    presenter.updateDescription(inputDescriptionMemeEt.text.toString())
+                    presenter.updateDescription(input_description_meme_et.text.toString())
                 }
             }
         )
@@ -184,22 +164,22 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
     }
 
     override fun showImg(url: String) {
-        imgContainer.visibility = View.VISIBLE
-        Glide.with(this).load(url).into(imgMemeIv)
+        img_meme_container.visibility = View.VISIBLE
+        Glide.with(this).load(url).into(img_add_meme_iv)
     }
 
     override fun hideImg() {
-        imgContainer.visibility = View.GONE
+        img_meme_container.visibility = View.GONE
     }
 
     override fun disableCreateMemeBtn() {
-        createMemeBtn.setTextColor(resources.getColor(R.color.colorAccentTransparent))
-        createMemeBtn.isClickable = false
+        create_meme_btn.setTextColor(resources.getColor(R.color.colorAccentTransparent))
+        create_meme_btn.isClickable = false
     }
 
     override fun enableCreateMemeBtn() {
-        createMemeBtn.setTextColor(resources.getColor(R.color.colorAccent))
-        createMemeBtn.isClickable = true
+        create_meme_btn.setTextColor(resources.getColor(R.color.colorAccent))
+        create_meme_btn.isClickable = true
     }
 
     override fun showAddImgDialog() {
@@ -211,8 +191,8 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
     }
 
     override fun clearFieldsAndImg() {
-        inputTitleMemeEt.text = null
-        inputDescriptionMemeEt.text = null
+        input_title_meme_et.text = null
+        input_description_meme_et.text = null
     }
 
     override fun showErrorSnackBar(messageError: String) {

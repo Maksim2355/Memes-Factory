@@ -25,6 +25,7 @@ import com.lumi.surfeducationproject.navigation.NavigationAuth
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
 import com.lumi.surfeducationproject.presenters.ProfilePresenter
 import com.lumi.surfeducationproject.views.ProfileView
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import moxy.ktx.moxyPresenter
 import ru.surfstudio.android.easyadapter.EasyAdapter
@@ -40,13 +41,6 @@ class ProfileFragment : BaseFragment(), ProfileView {
     private val presenter by moxyPresenter {
         presenterProvider.get()
     }
-
-    private lateinit var toolbar: Toolbar
-    private lateinit var avatarIv: ImageView
-    private lateinit var nicknameTv: TextView
-    private lateinit var descriptionTv: TextView
-    private lateinit var memeListRv: RecyclerView
-    private lateinit var loadStatePb: ProgressBar
 
     @Inject
     lateinit var styleManager: StyleManager
@@ -83,27 +77,21 @@ class ProfileFragment : BaseFragment(), ProfileView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initToolbar(view)
-        initView(view)
+        initToolbar()
+        initView()
     }
 
-    private fun initToolbar(view: View) {
-        toolbar = view.profile_toolbar
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+    private fun initToolbar() {
+        (activity as AppCompatActivity).setSupportActionBar(profile_toolbar)
         getActionBar()?.title = ""
     }
 
-    private fun initView(view: View) {
-        avatarIv = view.avatars_iv
-        nicknameTv = view.nickname_tv
-        descriptionTv = view.description_profile_tv
-        loadStatePb = view.load_memes_pb
+    private fun initView() {
         memeController.memeDetailsClickListener = { presenter.openDetails(it) }
         memeController.shareClickListener = {
             presenter.shareMemeInSocialNetwork(it)
         }
-        memeListRv = view.meme_list_profile_rv
-        with(memeListRv) {
+        with(meme_list_profile_rv) {
             adapter = easyAdapter
             layoutManager = androidx.recyclerview.widget.StaggeredGridLayoutManager(
                 2,
@@ -154,9 +142,9 @@ class ProfileFragment : BaseFragment(), ProfileView {
         Glide.with(this)
             .load("https://img.pngio.com/avatar-1-length-of-human-face-hd-png-download-6648260-free-human-face-png-840_640.png")
             .circleCrop()
-            .into(avatarIv)
-        nicknameTv.text = user.firstName
-        descriptionTv.text = user.descriptionProfile
+            .into(avatars_iv)
+        nickname_tv.text = user.firstName
+        description_profile_tv.text = user.descriptionProfile
     }
 
     override fun showDialog() {
@@ -186,14 +174,14 @@ class ProfileFragment : BaseFragment(), ProfileView {
     }
 
     override fun showLoadState() {
-        loadStatePb.visibility = View.VISIBLE
-        memeListRv.visibility = View.GONE
+        load_memes_pb.visibility = View.VISIBLE
+        meme_list_profile_rv.visibility = View.GONE
     }
 
 
     override fun hideLoadState() {
-        memeListRv.visibility = View.VISIBLE
-        loadStatePb.visibility = View.GONE
+        meme_list_profile_rv.visibility = View.VISIBLE
+        load_memes_pb.visibility = View.GONE
     }
 
     override fun openMemeDetails(data: Meme) {

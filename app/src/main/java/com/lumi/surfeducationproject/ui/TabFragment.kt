@@ -13,6 +13,7 @@ import com.lumi.surfeducationproject.common.managers.BottomBarVisible
 import com.lumi.surfeducationproject.domain.model.Meme
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
+import kotlinx.android.synthetic.main.fragment_tab.*
 
 class TabFragment : Fragment(), NavigationBackPressed, NavigationMemeDetails, BottomBarVisible {
 
@@ -22,7 +23,6 @@ class TabFragment : Fragment(), NavigationBackPressed, NavigationMemeDetails, Bo
     }
 
     private lateinit var navControllerTab: NavController
-    private lateinit var bottomNavView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,10 +38,9 @@ class TabFragment : Fragment(), NavigationBackPressed, NavigationMemeDetails, Bo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bottomNavView = view.findViewById(R.id.bottom_navigation_view)
         navControllerTab =
             Navigation.findNavController(view.findViewById(R.id.nav_host_fragment_content))
-        NavigationUI.setupWithNavController(bottomNavView, navControllerTab);
+        NavigationUI.setupWithNavController(bottom_navigation_view, navControllerTab);
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -50,11 +49,11 @@ class TabFragment : Fragment(), NavigationBackPressed, NavigationMemeDetails, Bo
     }
 
     override fun showBottomNavigationBar() {
-        bottomNavView.visibility = View.VISIBLE
+        bottom_navigation_view.visibility = View.VISIBLE
     }
 
     override fun hideBottomNavigationBar() {
-        bottomNavView.visibility = View.GONE
+        bottom_navigation_view.visibility = View.GONE
     }
 
     override fun back() {
