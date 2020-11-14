@@ -33,6 +33,7 @@
 * [TextFieldBoxes](https://github.com/HITGIF/TextFieldBoxes)
 * [Glide](https://github.com/bumptech/glide)
 * [Easy Adapter](https://github.com/surfstudio/EasyAdapter)
+* __kotlin android extensions__
 
 
 ## Обзор работы приложения и его пакетов
