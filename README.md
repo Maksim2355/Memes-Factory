@@ -79,20 +79,21 @@ P.s в данном слое нету итеракторов
 
   * Само древо зависимостей имеет 4 компонента, которые образуют следующую иерархию 
 
-                     AppComponent
-                      (Singleton)
-                          |
-                          |
-                          |
-                   ActivityComponent
-                    (AcitivytScope)
-                   /                \
-                  /                  \
-                 /                    \
-                /                      \
-               /                        \
-           FragmentAuthComponent    FragmentContentComponent
-           (FragmentAuthScope)       (FragmentContentScope)
+                         AppComponent
+                          (Singleton)
+                              |
+                              |
+                              |
+                       ActivityComponent
+                        (AcitivytScope)
+                       /                \
+                      /                  \
+                     /                    \
+                    /                      \
+                   /                        \
+                  /                          \
+          FragmentAuthComponent    FragmentContentComponent
+          (FragmentAuthScope)       (FragmentContentScope)
 
 
 
