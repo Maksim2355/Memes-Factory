@@ -5,6 +5,7 @@ import com.lumi.surfeducationproject.domain.model.User
 import moxy.MvpView
 import moxy.viewstate.strategy.alias.AddToEnd
 import moxy.viewstate.strategy.alias.AddToEndSingle
+import moxy.viewstate.strategy.alias.Skip
 
 interface MemeDetailsView: MvpView {
 
@@ -17,7 +18,7 @@ interface MemeDetailsView: MvpView {
     @AddToEnd
     fun showMeme(data: Meme)
 
-    @AddToEnd
+    @Skip
     fun shareMeme(meme: Meme)
 
 }
