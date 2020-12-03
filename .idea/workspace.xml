@@ -19,30 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2056540a-b033-4c50-8167-356d655c1328" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Memes-Factory.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/SurfEducationProject.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/app/SurfEducationProject.app.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/data/Memes-Factory.data.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/domain/Memes-Factory.domain.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/presentation/Memes-Factory.presentation.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/jarAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__MemesFactory_domain_domain.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__Memes_Factory_domain_domain.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/MemesFactory.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/data/MemesFactory.data.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/domain/MemesFactory.domain.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/presentation/MemesFactory.presentation.iml" beforeDir="false" />
+    <list default="true" id="2056540a-b033-4c50-8167-356d655c1328" name="Default Changelist" comment="Исправил ошибки при разбиении">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/build.gradle" afterDir="false" />
     </list>
@@ -233,7 +210,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606991324498</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Исправил ошибки при разбиении">
+      <created>1606994451525</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1606994451536</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -251,7 +235,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Версия с MVP" />
     <MESSAGE value="Разбил проект на модули" />
-    <option name="LAST_COMMIT_MESSAGE" value="Разбил проект на модули" />
+    <MESSAGE value="Исправил ошибки при разбиении" />
+    <option name="LAST_COMMIT_MESSAGE" value="Исправил ошибки при разбиении" />
   </component>
   <component name="WindowStateProjectService">
     <state x="509" y="223" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog" timestamp="1606990738984">
@@ -266,14 +251,14 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1606993561988" />
-    <state width="498" height="537" key="SwitcherDM" timestamp="1606993171297">
+    <state width="498" height="537" key="SwitcherDM" timestamp="1606994653708">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="498" height="537" key="SwitcherDM/0.0.1536.864@0.0.1536.864" timestamp="1606993171297" />
-    <state x="361" y="151" key="Vcs.Push.Dialog.v2" timestamp="1606991327501">
+    <state width="498" height="537" key="SwitcherDM/0.0.1536.864@0.0.1536.864" timestamp="1606994653708" />
+    <state x="361" y="151" key="Vcs.Push.Dialog.v2" timestamp="1606994456107">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="361" y="151" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1606991327501" />
+    <state x="361" y="151" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1606994456107" />
     <state x="515" y="63" key="git4idea.branch.GitSmartOperationDialog" timestamp="1606992484275">
       <screen x="0" y="0" width="1536" height="864" />
     </state>

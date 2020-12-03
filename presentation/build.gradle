@@ -43,7 +43,6 @@ dependencies {
 
     implementation project(':domain')
     implementation project(':data')
-
     def presentationDependencies = rootProject.ext.presentationDeps
     def appDependencies  = rootProject.ext.appDeps
     def dataDependencies  = rootProject.ext.dataDeps
