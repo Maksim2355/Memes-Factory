@@ -1,0 +1,79 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs'
+}
+android {
+
+    compileSdkVersion rootProject.ext.androidCompileSdkVersions
+    buildToolsVersion rootProject.ext.androidBuildToolsVersions
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.androidMinSdkVersions
+        targetSdkVersion rootProject.ext.androidTargetSdkVersions
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation project(':domain')
+    implementation project(':data')
+
+    def presentationDependencies = rootProject.ext.presentationDeps
+    def appDependencies  = rootProject.ext.appDeps
+
+    implementation appDependencies.kotlin
+    implementation appDependencies.ktx
+    implementation presentationDependencies.appcompat
+
+    implementation presentationDependencies.dagger
+    implementation presentationDependencies.daggerAndroid
+    kapt presentationDependencies.daggerCompiler
+    kapt presentationDependencies.daggerAndroidProcessor
+
+    implementation presentationDependencies.rxJavaAndroid
+
+    implementation presentationDependencies.moxy
+    implementation presentationDependencies.moxyAndroid
+    implementation presentationDependencies.moxyKtx
+    kapt presentationDependencies.moxyCompiler
+
+    implementation presentationDependencies.fieldBoxes
+    implementation presentationDependencies.glide
+    kapt presentationDependencies.glideCompiler
+    implementation presentationDependencies.easyAdapter
+    implementation presentationDependencies.constraintLayout
+    implementation presentationDependencies.legacySupport
+    implementation presentationDependencies.navigationFragment
+    implementation presentationDependencies.navigationUi
+
+    testImplementation appDependencies.junit
+    androidTestImplementation presentationDependencies.junitAndroid
+    androidTestImplementation presentationDependencies.espresso
+
+}

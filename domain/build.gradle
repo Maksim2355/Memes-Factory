@@ -1,0 +1,19 @@
+plugins {
+    id 'kotlin'
+    id 'kotlin-kapt'
+}
+
+dependencies {
+    def domainDependencies = rootProject.ext.domainDeps
+    def appDependencies  = rootProject.ext.appDeps
+
+    implementation appDependencies.kotlin
+    implementation appDependencies.ktx
+
+    kapt domainDependencies.javaxAnnotation
+
+    implementation domainDependencies.javaxInject
+    implementation domainDependencies.rxJava
+
+    testImplementation appDependencies.junit
+}

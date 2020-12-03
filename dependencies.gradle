@@ -1,0 +1,103 @@
+ext {
+    kotlinVersions = "1.4.10"
+
+    androidMinSdkVersions = 23
+    androidCompileSdkVersions = 30
+    androidTargetSdkVersions = 30
+    androidBuildToolsVersions = "29.0.3"
+
+    ktxVersions = "1.3.2"
+    appCompatVersions = "1.2.0"
+    constatintLayoutVersions = "2.0.3"
+    navigationFragmentKtxVersions = "2.3.1"
+    navigationUiKtxVersions = "2.3.1"
+    legacySupportVersions = "1.0.0"
+
+    daggerVersions = "2.29.1"
+
+    moxyVersions = "2.2.0"
+
+    retrofitVersions = "2.9.0"
+    converterGsonVersions = "2.9.0"
+    okHttpVersions = "4.2.2"
+    okHttpLoginInterceptorVersions = "4.2.2"
+
+    roomVersions = "2.2.5"
+    easyAdapterVersions = "2.0.0"
+    glideVersions = "4.11.0"
+    textFieldBoxesVersions = "1.4.5"
+
+    junitVersions = "4.13.1"
+    junitAndroidVersions = "1.1.2"
+    espressoVersions = "3.3.0"
+
+    rxJavaVersions = "3.0.0"
+
+    javaxAnnotationVersions = "1.0"
+    javaxInjectVersions = '1'
+
+    junitAndroidVersions = '1.1.2'
+
+    appDeps = [
+            kotlin: "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersions",
+            ktx   : "androidx.core:core-ktx:$ktxVersions",
+            junit : "junit:junit:$junitVersions",
+    ]
+
+    presentationDeps = [
+            dagger                : "com.google.dagger:dagger:$daggerVersions",
+            daggerCompiler        : "com.google.dagger:dagger-compiler:$daggerVersions",
+            daggerAndroid         : "com.google.dagger:dagger-android:$daggerVersions",
+            daggerAndroidProcessor: "com.google.dagger:dagger-android-processor:$daggerVersions",
+            rxJavaAndroid         : "io.reactivex.rxjava3:rxandroid:$rxJavaVersions",
+
+            fieldBoxes            : "com.github.HITGIF:TextFieldBoxes:$textFieldBoxesVersions",
+            moxy                  : "com.github.moxy-community:moxy:$moxyVersions",
+            moxyAndroid           : "com.github.moxy-community:moxy-androidx:$moxyVersions",
+            moxyKtx               : "com.github.moxy-community:moxy-ktx:$moxyVersions",
+            moxyCompiler          : "com.github.moxy-community:moxy-compiler:$moxyVersions",
+            glide                 : "com.github.bumptech.glide:glide:$glideVersions",
+            glideCompiler         : "com.github.bumptech.glide:compiler:$glideVersions",
+            easyAdapter           : "ru.surfstudio.android:easyadapter:$easyAdapterVersions",
+            appcompat             : "androidx.appcompat:appcompat:$appCompatVersions",
+            constraintLayout      : "androidx.constraintlayout:constraintlayout:$constatintLayoutVersions",
+            legacySupport         : "androidx.legacy:legacy-support-v4:$legacySupportVersions",
+            navigationFragment    : "androidx.navigation:navigation-fragment-ktx:$navigationFragmentKtxVersions",
+            navigationUi          : "androidx.navigation:navigation-ui-ktx:$navigationUiKtxVersions",
+
+            junitAndroid          : 'androidx.test.ext:junit:$junitAndroidVersions',
+            espresso              : "androidx.test.espresso:espresso-core:$espressoVersions",
+
+            okhttp                : "com.squareup.okhttp3:okhttp:$okHttpVersions",
+            okhttpLoginInterceptor: "com.squareup.okhttp3:okhttp:$okHttpVersions",
+            roomRuntime           : "androidx.room:room-runtime:$roomVersions",
+            roomCompiler          : "androidx.room:room-compiler:$roomVersions",
+    ]
+
+
+    dataDeps = [
+            roomRuntime           : "androidx.room:room-runtime:$roomVersions",
+            roomCompiler          : "androidx.room:room-compiler:$roomVersions",
+
+            dagger                : "com.google.dagger:dagger:$daggerVersions",
+            daggerAndroid         : "com.google.dagger:dagger-android:$daggerVersions",
+            daggerCompiler        : "com.google.dagger:dagger-compiler:$daggerVersions",
+            daggerAndroidProcessor: "com.google.dagger:dagger-android-processor:$daggerVersions",
+
+            rxJavaAndroid         : "io.reactivex.rxjava3:rxandroid:$rxJavaVersions",
+            espresso              : "androidx.test.espresso:espresso-core:$espressoVersions",
+            rxJavaRetrofitAdapter : "com.github.akarnokd:rxjava3-retrofit-adapter:$rxJavaVersions",
+            retrofit              : "com.squareup.retrofit2:retrofit:$retrofitVersions",
+            retrofitConverterGson : "com.squareup.retrofit2:converter-gson:$converterGsonVersions",
+            okhttp                : "com.squareup.okhttp3:okhttp:$okHttpVersions",
+            okhttpLoginInterceptor: "com.squareup.okhttp3:okhttp:$okHttpVersions",
+
+            junitAndroid          : 'androidx.test.ext:junit:$junitAndroidVersions',
+    ]
+    domainDeps = [
+            javaxAnnotation: "javax.annotation:jsr250-api:${javaxAnnotationVersions}",
+            javaxInject    : "javax.inject:javax.inject:${javaxInjectVersions}",
+            rxJava         : "io.reactivex.rxjava3:rxjava:$rxJavaVersions",
+    ]
+
+}
