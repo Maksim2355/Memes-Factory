@@ -1,2 +1,3 @@
-include ':app'
-rootProject.name = "SurfEducationProject"
+include ':presentation'
+include ':domain'
+include ':data'

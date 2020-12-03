@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: ru.surfstudio.android:easyadapter:2.0.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fce5b78f72f3b801e6bba41e0b67c466/jetified-easyadapter-2.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fce5b78f72f3b801e6bba41e0b67c466/jetified-easyadapter-2.0.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fce5b78f72f3b801e6bba41e0b67c466/jetified-easyadapter-2.0.0/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ru.surfstudio.android/easyadapter/2.0.0/42793d9345c1626315786275f5aa6796ed6c66c4/easyadapter-2.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
