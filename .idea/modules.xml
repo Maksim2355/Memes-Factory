@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MemesFactory.iml" filepath="$PROJECT_DIR$/.idea/modules/MemesFactory.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/MemesFactory.data.iml" filepath="$PROJECT_DIR$/.idea/modules/data/MemesFactory.data.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/MemesFactory.domain.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/MemesFactory.domain.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/presentation/MemesFactory.presentation.iml" filepath="$PROJECT_DIR$/.idea/modules/presentation/MemesFactory.presentation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Memes-Factory.iml" filepath="$PROJECT_DIR$/.idea/modules/Memes-Factory.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/Memes-Factory.data.iml" filepath="$PROJECT_DIR$/.idea/modules/data/Memes-Factory.data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/Memes-Factory.domain.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/Memes-Factory.domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/presentation/Memes-Factory.presentation.iml" filepath="$PROJECT_DIR$/.idea/modules/presentation/Memes-Factory.presentation.iml" />
     </modules>
   </component>
 </project>

@@ -46,6 +46,7 @@ dependencies {
 
     def presentationDependencies = rootProject.ext.presentationDeps
     def appDependencies  = rootProject.ext.appDeps
+    def dataDependencies  = rootProject.ext.dataDeps
 
     implementation appDependencies.kotlin
     implementation appDependencies.ktx
@@ -71,6 +72,16 @@ dependencies {
     implementation presentationDependencies.legacySupport
     implementation presentationDependencies.navigationFragment
     implementation presentationDependencies.navigationUi
+
+    implementation dataDependencies.retrofit
+    implementation dataDependencies.retrofitConverterGson
+    implementation(dataDependencies.okhttp)
+    implementation dataDependencies.okhttpLoginInterceptor
+    implementation dataDependencies.rxJavaRetrofitAdapter
+
+    implementation dataDependencies.roomRuntime
+    kapt dataDependencies.roomCompiler
+
 
     testImplementation appDependencies.junit
     androidTestImplementation presentationDependencies.junitAndroid

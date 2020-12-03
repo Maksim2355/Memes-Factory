@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="Gradle: MemesFactory.domain.domain">
+  <library name="Gradle: Memes-Factory.domain.domain">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/domain/build/libs/domain.jar!/" />
     </CLASSES>
