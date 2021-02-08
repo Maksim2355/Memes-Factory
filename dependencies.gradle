@@ -1,5 +1,5 @@
 ext {
-    kotlinVersions = "1.4.10"
+    kotlinVersions = "1.4.21"
 
     androidMinSdkVersions = 23
     androidCompileSdkVersions = 30
@@ -52,10 +52,6 @@ ext {
             rxJavaAndroid         : "io.reactivex.rxjava3:rxandroid:$rxJavaVersions",
 
             fieldBoxes            : "com.github.HITGIF:TextFieldBoxes:$textFieldBoxesVersions",
-            moxy                  : "com.github.moxy-community:moxy:$moxyVersions",
-            moxyAndroid           : "com.github.moxy-community:moxy-androidx:$moxyVersions",
-            moxyKtx               : "com.github.moxy-community:moxy-ktx:$moxyVersions",
-            moxyCompiler          : "com.github.moxy-community:moxy-compiler:$moxyVersions",
             glide                 : "com.github.bumptech.glide:glide:$glideVersions",
             glideCompiler         : "com.github.bumptech.glide:compiler:$glideVersions",
             easyAdapter           : "ru.surfstudio.android:easyadapter:$easyAdapterVersions",
@@ -65,7 +61,7 @@ ext {
             navigationFragment    : "androidx.navigation:navigation-fragment-ktx:$navigationFragmentKtxVersions",
             navigationUi          : "androidx.navigation:navigation-ui-ktx:$navigationUiKtxVersions",
 
-            junitAndroid          : 'androidx.test.ext:junit:$junitAndroidVersions',
+            junitAndroid          : "androidx.test.ext:junit:$junitAndroidVersions",
             espresso              : "androidx.test.espresso:espresso-core:$espressoVersions",
 
             okhttp                : "com.squareup.okhttp3:okhttp:$okHttpVersions",
@@ -92,7 +88,7 @@ ext {
             okhttp                : "com.squareup.okhttp3:okhttp:$okHttpVersions",
             okhttpLoginInterceptor: "com.squareup.okhttp3:okhttp:$okHttpVersions",
 
-            junitAndroid          : 'androidx.test.ext:junit:$junitAndroidVersions',
+            junitAndroid          : "androidx.test.ext:junit:$junitAndroidVersions",
     ]
     domainDeps = [
             javaxAnnotation: "javax.annotation:jsr250-api:${javaxAnnotationVersions}",

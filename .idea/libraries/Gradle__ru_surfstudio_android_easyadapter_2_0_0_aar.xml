@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: ru.surfstudio.android:easyadapter:2.0.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fce5b78f72f3b801e6bba41e0b67c466/jetified-easyadapter-2.0.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fce5b78f72f3b801e6bba41e0b67c466/jetified-easyadapter-2.0.0/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fce5b78f72f3b801e6bba41e0b67c466/jetified-easyadapter-2.0.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2f4a0b4802e884d2a5d2e09c5998bb4e/transformed/jetified-easyadapter-2.0.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/2f4a0b4802e884d2a5d2e09c5998bb4e/transformed/jetified-easyadapter-2.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2f4a0b4802e884d2a5d2e09c5998bb4e/transformed/jetified-easyadapter-2.0.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

@@ -4,8 +4,8 @@
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
         <option name="GRADLE_PROJECT_PATH" value=":data" />
-        <option name="LAST_SUCCESSFUL_SYNC_AGP_VERSION" value="4.1.1" />
-        <option name="LAST_KNOWN_AGP_VERSION" value="4.1.1" />
+        <option name="LAST_SUCCESSFUL_SYNC_AGP_VERSION" value="4.1.2" />
+        <option name="LAST_KNOWN_AGP_VERSION" value="4.1.2" />
       </configuration>
     </facet>
     <facet type="android" name="Android">
@@ -32,7 +32,7 @@
         </compilerSettings>
         <compilerArguments>
           <option name="destination" value="$MODULE_DIR$/../../../data/build/tmp/kotlin-classes/debug" />
-          <option name="classpath" value="$MODULE_DIR$/../../../data/build/intermediates/compile_r_class_jar/debug/R.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/4d8ae10916d2122144e9815a51ab49ec/jetified-core-ktx-1.3.2-api.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/395acaa3434e1307e02e8f8721c95adc/jetified-converter-gson-2.9.0.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/4dc0e14dfc09e4979c40099cf1a431e2/jetified-retrofit-2.9.0.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/ab3da81b250ce4a59018e940f4ec869e/jetified-okhttp-4.2.2.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/fcaf73d7b8eb51e39a91bcdbc7b81b18/jetified-kotlin-stdlib-1.4.10.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/dabdae1e9c973dbcac548c9de5f4e9b5/jetified-kotlin-stdlib-common-1.4.10.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/5b2106a4638fa93708ab5f168c1d301c/jetified-annotations-13.0.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/1f39be5e835fa115eccfd0d47b77d703/jetified-dagger-android-2.29.1-api.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/75439bb7ed380a960bd26c9b8583659e/core-1.3.2-api.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/279c8b9b9eee07f561e52f98c027f28a/room-runtime-2.2.5-api.jar;C:/Users/provo/.gradle/caches/modules-2/files-2.1/androidx.room/room-common/2.2.5/f5e3b73a0c2ab5e276e26868e4ce3542baede207/room-common-2.2.5.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/b7b4b6648c40c79de6beb8b7afd3fd31/sqlite-framework-2.0.1-api.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/b92596063f264e7cc3e32495406b7d6c/sqlite-2.0.1-api.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/a5953765b7efdd68305a7d96611c0f3a/core-runtime-2.0.1-api.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/0bda18b77751cbb84b39e71596c4ec1b/lifecycle-runtime-2.0.0-api.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/0cd414a6ea1c4a7d5799c7dae4239b4a/versionedparcelable-1.1.0-api.jar;C:/Users/provo/.gradle/caches/modules-2/files-2.1/androidx.arch.core/core-common/2.0.1/3e8d84e4fe526be0ca1832a518bf323e729a79fd/core-common-2.0.1.jar;C:/Users/provo/.gradle/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-common/2.0.0/e070ffae07452331bc5684734fce6831d531785c/lifecycle-common-2.0.0.jar;C:/Users/provo/.gradle/caches/modules-2/files-2.1/androidx.collection/collection/1.0.0/42858b26cafdaa69b6149f45dfc2894007bc2c7a/collection-1.0.0.jar;C:/Users/provo/.gradle/caches/modules-2/files-2.1/androidx.annotation/annotation/1.1.0/e3a6fb2f40e3a3842e6b7472628ba4ce416ea4c8/annotation-1.1.0.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/fa5bee3b03899aea6d3e1ec03b3fabdd/jetified-dagger-2.29.1.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/6996c80b24c1824ae26b38148f1950d0/jetified-javax.inject-1.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/2bb47b6e96c238eed5afea819f320dd8/jetified-rxandroid-3.0.0-api.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/cf92d5cc45b9329e9dd760a150263a1a/jetified-rxjava-3.0.0.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/108524c82909855a25e30fd43767cbce/jetified-reactive-streams-1.0.3.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/4a82a3107346c57b6378d6e129e0f442/jetified-dagger-lint-aar-2.29.1-api.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/892cfa98e67f4c0c66c19522a8377bcd/jetified-rxjava3-retrofit-adapter-3.0.0.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/066f9516806b8e2f9b85f956c6597805/jetified-okio-2.2.2.jar;C:/Users/provo/.gradle/caches/transforms-2/files-2.1/effe08a8dafdf10f0c9776cca1748e28/jetified-gson-2.8.5.jar;C:/Users/provo/AndroidStudioProjects/Memes-Factory/domain/build/.transforms/9ab3e21ed45bd4c37f5ee4224346fa3e/jetified-domain.jar;C:/Users/provo/AppData/Local/Android/Sdk/platforms/android-30/android.jar;C:/Users/provo/AppData/Local/Android/Sdk/build-tools/29.0.3/core-lambda-stubs.jar" />
+          <option name="classpath" value="$USER_HOME$/.gradle/caches/transforms-3/86b0fd1369e6c7b9d9685299bdfcbf14/transformed/jetified-core-ktx-1.3.2-api.jar;C:/Users/provo/.gradle/caches/transforms-3/ea60b93cf79782872afe5f4175a94447/transformed/jetified-converter-gson-2.9.0.jar;C:/Users/provo/.gradle/caches/transforms-3/298718e4322408bdebc2afa7823474bc/transformed/jetified-retrofit-2.9.0.jar;C:/Users/provo/.gradle/caches/transforms-3/0a034756e2e4390944761f07cf90c68c/transformed/jetified-okhttp-4.2.2.jar;C:/Users/provo/.gradle/caches/transforms-3/736244230093850c2aecbda1f3cd5233/transformed/jetified-kotlin-stdlib-1.4.21.jar;C:/Users/provo/.gradle/caches/transforms-3/1cfa7338a5f068bc99af577cec9de79a/transformed/jetified-kotlin-stdlib-common-1.4.21.jar;C:/Users/provo/.gradle/caches/transforms-3/c0b85ecf7ed6ae1ae0dc3e02d325022d/transformed/jetified-annotations-13.0.jar;C:/Users/provo/.gradle/caches/transforms-3/43d2f792a55cf6f182d1a0b3fdd4b919/transformed/jetified-dagger-android-2.29.1-api.jar;C:/Users/provo/.gradle/caches/transforms-3/75167170f2d9bb71fb53dd65c4bfdd39/transformed/core-1.3.2-api.jar;C:/Users/provo/.gradle/caches/transforms-3/ff066ac191c622e0595892edd26bd743/transformed/room-runtime-2.2.5-api.jar;C:/Users/provo/.gradle/caches/modules-2/files-2.1/androidx.room/room-common/2.2.5/f5e3b73a0c2ab5e276e26868e4ce3542baede207/room-common-2.2.5.jar;C:/Users/provo/.gradle/caches/transforms-3/8a07dfe79854b327eb182182c9274e57/transformed/sqlite-framework-2.0.1-api.jar;C:/Users/provo/.gradle/caches/transforms-3/fbd4dcf7e7ad90480c3a9f5242d7b870/transformed/sqlite-2.0.1-api.jar;C:/Users/provo/.gradle/caches/transforms-3/69e41475fca0b9ad42c8bf06de4f7cbf/transformed/core-runtime-2.0.1-api.jar;C:/Users/provo/.gradle/caches/transforms-3/6a7e91483ea90ba9f4a3377294567037/transformed/lifecycle-runtime-2.0.0-api.jar;C:/Users/provo/.gradle/caches/transforms-3/3fca3d66ddd4c3610acf1b89fc1efe48/transformed/versionedparcelable-1.1.0-api.jar;C:/Users/provo/.gradle/caches/modules-2/files-2.1/androidx.arch.core/core-common/2.0.1/3e8d84e4fe526be0ca1832a518bf323e729a79fd/core-common-2.0.1.jar;C:/Users/provo/.gradle/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-common/2.0.0/e070ffae07452331bc5684734fce6831d531785c/lifecycle-common-2.0.0.jar;C:/Users/provo/.gradle/caches/modules-2/files-2.1/androidx.collection/collection/1.0.0/42858b26cafdaa69b6149f45dfc2894007bc2c7a/collection-1.0.0.jar;C:/Users/provo/.gradle/caches/modules-2/files-2.1/androidx.annotation/annotation/1.1.0/e3a6fb2f40e3a3842e6b7472628ba4ce416ea4c8/annotation-1.1.0.jar;C:/Users/provo/.gradle/caches/transforms-3/6a8b3d477bde5fec85f4a7f69e4beb92/transformed/jetified-dagger-2.29.1.jar;C:/Users/provo/.gradle/caches/transforms-3/80bb3b8a935f7515cbb03cd47ae8ae30/transformed/jetified-javax.inject-1.jar;C:/Users/provo/.gradle/caches/transforms-3/34d4457c29de9989b5f1efbcd4bcf190/transformed/jetified-rxandroid-3.0.0-api.jar;C:/Users/provo/.gradle/caches/transforms-3/8c2d4861d78d0ef223ee26f7e140462b/transformed/jetified-rxjava-3.0.0.jar;C:/Users/provo/.gradle/caches/transforms-3/5f561d9bf3e309c52a1057341178301e/transformed/jetified-reactive-streams-1.0.3.jar;C:/Users/provo/.gradle/caches/transforms-3/dd600b64f3e5f315e66cd235dadb8bb4/transformed/jetified-dagger-lint-aar-2.29.1-api.jar;C:/Users/provo/.gradle/caches/transforms-3/14b75dd5ab05a97f1a4aa796fa239f99/transformed/jetified-rxjava3-retrofit-adapter-3.0.0.jar;C:/Users/provo/.gradle/caches/transforms-3/78704992900635ac297fc1e585eb7d31/transformed/jetified-okio-2.2.2.jar;C:/Users/provo/.gradle/caches/transforms-3/ef981828ddab58a4f843212f944ffcb2/transformed/jetified-gson-2.8.5.jar;C:/Users/provo/AppData/Local/Android/Sdk/platforms/android-30/android.jar;C:/Users/provo/AppData/Local/Android/Sdk/build-tools/29.0.3/core-lambda-stubs.jar" />
           <option name="noStdlib" value="true" />
           <option name="noReflect" value="true" />
           <option name="moduleName" value="data_debug" />
@@ -45,12 +45,12 @@
           <option name="pluginClasspaths">
             <array>
               <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.intellij.deps/trove4j/1.0.20181211/216c2e14b070f334479d800987affe4054cd563f/trove4j-1.0.20181211.jar" />
-              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.4.20/fc1d26586910b32d676480c75acd3e922e5e81fa/kotlin-compiler-embeddable-1.4.20.jar" />
-              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-embeddable/1.4.20/a051291fb01bf2397759625626fec670cd57b3f0/kotlin-daemon-embeddable-1.4.20.jar" />
-              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.4.20/411fc46e908bfa9c034f52b0d31b2e1f61f06127/kotlin-reflect-1.4.20.jar" />
-              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.4.20/9793d2f6b262847a2d8127951c5786cf907cc7b1/kotlin-script-runtime-1.4.20.jar" />
-              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.4.20/c6761d7805b5312302f2bbd78cda68c976ce0c70/kotlin-stdlib-common-1.4.20.jar" />
-              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.4.20/9be77b243a362b745e365f286627b8724337009c/kotlin-stdlib-1.4.20.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.4.21/87db94500aaf883536ae8c8efdee76bdc839d582/kotlin-compiler-embeddable-1.4.21.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-embeddable/1.4.21/bc95bcebdc871d45d9852b0c01abe9bec373bb52/kotlin-daemon-embeddable-1.4.21.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.4.21/748f681f4e3edbe9285ff46710c79049c70f4dfa/kotlin-reflect-1.4.21.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.4.21/1247decba314790165b4fe94d09c45b09db6b07f/kotlin-script-runtime-1.4.21.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.4.21/7f48a062aa4b53215998780f7c245a4276828e1d/kotlin-stdlib-common-1.4.21.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.4.21/4a668382d7c38688d3490afde93b6a113ed46698/kotlin-stdlib-1.4.21.jar" />
               <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar" />
             </array>
           </option>
@@ -79,9 +79,21 @@
       <excludeFolder url="file://$MODULE_DIR$/../../../data/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../../data/build" />
     </content>
-    <orderEntry type="jdk" jdkName="Android API 30 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Gradle: com.squareup.retrofit2:converter-gson:2.9.0" level="project" />
+    <orderEntry type="jdk" jdkName="Android API 30 Platform" jdkType="Android SDK" />
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: junit:junit:4.13.1">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.13.1/cdd00374f1fee76b11e2a9d127405aa3f6be5b6a/junit-4.13.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.13.1/9d466b5eabb0cb144c8c9ef8b4ee6db15d46d6e6/junit-4.13.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.13.1/523bdce923a13622132b263550d06519fc591ec4/junit-4.13.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
     <orderEntry type="module-library">
       <library name="Gradle: kaptGeneratedClasses">
         <CLASSES>
@@ -95,31 +107,56 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: org.hamcrest:hamcrest-core:1.3">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/42a25dc3219429f0e5d060061f71acb49bf010a0/hamcrest-core-1.3.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/ad09811315f1d4f5756986575b0ea16b99cd686f/hamcrest-core-1.3-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/1dc37250fbc78e23a65a67fbbaf71d2e9cbc3c0b/hamcrest-core-1.3-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.12" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-integration:1.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-library:1.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.squareup:javawriter:2.1.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.code.findbugs:jsr305:2.0.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: androidx.test.ext:junit:1.1.2@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: androidx.test.espresso:espresso-core:3.3.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: androidx.test:runner:1.3.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: androidx.test:core:1.3.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: androidx.test:monitor:1.3.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: androidx.test.espresso:espresso-idling-resource:3.3.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.retrofit2:converter-gson:2.9.0" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.retrofit2:retrofit:2.9.0" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:4.2.2" level="project" />
     <orderEntry type="module-library">
-      <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.4.10">
+      <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.4.21">
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.4.10/ea29e063d2bbe695be13e9d044dcfb0c7add398e/kotlin-stdlib-1.4.10.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.4.21/4a668382d7c38688d3490afde93b6a113ed46698/kotlin-stdlib-1.4.21.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.4.10/5b8f86fea035328fc9e8c660773037a3401ce25f/kotlin-stdlib-1.4.10-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.4.21/5b8f86fea035328fc9e8c660773037a3401ce25f/kotlin-stdlib-1.4.21-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.4.10/4a5e4f984e6c3e380f100857f04aba4f3e5fbda8/kotlin-stdlib-1.4.10-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.4.21/243af1040cd400e4267d0b6909977d34d9d5770a/kotlin-stdlib-1.4.21-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10">
+      <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.4.21">
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.4.10/6229be3465805c99db1142ad75e6c6ddeac0b04c/kotlin-stdlib-common-1.4.10.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.4.21/7f48a062aa4b53215998780f7c245a4276828e1d/kotlin-stdlib-common-1.4.21.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.4.10/5b8f86fea035328fc9e8c660773037a3401ce25f/kotlin-stdlib-common-1.4.10-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.4.21/5b8f86fea035328fc9e8c660773037a3401ce25f/kotlin-stdlib-common-1.4.21-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.4.10/d971e5bb07a7f610eda65e5efc8decbd0548a270/kotlin-stdlib-common-1.4.10-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.4.21/190d6665fb0dd88bfeb42cca86e568a1c9bfa4e3/kotlin-stdlib-common-1.4.21-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -227,41 +264,6 @@
     <orderEntry type="library" name="Gradle: androidx.versionedparcelable:versionedparcelable:1.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: io.reactivex.rxjava3:rxandroid:3.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.dagger:dagger-lint-aar:2.29.1@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.12" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-integration:1.3" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-library:1.3" level="project" />
-    <orderEntry type="module-library" scope="TEST">
-      <library name="Gradle: org.hamcrest:hamcrest-core:1.3">
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/42a25dc3219429f0e5d060061f71acb49bf010a0/hamcrest-core-1.3.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/ad09811315f1d4f5756986575b0ea16b99cd686f/hamcrest-core-1.3-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/1dc37250fbc78e23a65a67fbbaf71d2e9cbc3c0b/hamcrest-core-1.3-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="library" scope="TEST" name="Gradle: com.squareup:javawriter:2.1.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.code.findbugs:jsr305:2.0.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: androidx.test.espresso:espresso-core:3.3.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: androidx.test:runner:1.3.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: androidx.test:monitor:1.3.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: androidx.test.espresso:espresso-idling-resource:3.3.0@aar" level="project" />
-    <orderEntry type="module-library" scope="TEST">
-      <library name="Gradle: junit:junit:4.13.1">
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.13.1/cdd00374f1fee76b11e2a9d127405aa3f6be5b6a/junit-4.13.1.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.13.1/9d466b5eabb0cb144c8c9ef8b4ee6db15d46d6e6/junit-4.13.1-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.13.1/523bdce923a13622132b263550d06519fc591ec4/junit-4.13.1-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
     <orderEntry type="module" module-name="Memes-Factory.domain" />
   </component>
 </module>

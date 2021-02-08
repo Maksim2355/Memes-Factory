@@ -1,10 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
-    id 'androidx.navigation.safeargs'
 }
+
 android {
 
     compileSdkVersion rootProject.ext.androidCompileSdkVersions
@@ -34,6 +33,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+
 }
 
 
@@ -51,17 +56,13 @@ dependencies {
     implementation appDependencies.ktx
     implementation presentationDependencies.appcompat
 
+
     implementation presentationDependencies.dagger
     implementation presentationDependencies.daggerAndroid
     kapt presentationDependencies.daggerCompiler
     kapt presentationDependencies.daggerAndroidProcessor
 
     implementation presentationDependencies.rxJavaAndroid
-
-    implementation presentationDependencies.moxy
-    implementation presentationDependencies.moxyAndroid
-    implementation presentationDependencies.moxyKtx
-    kapt presentationDependencies.moxyCompiler
 
     implementation presentationDependencies.fieldBoxes
     implementation presentationDependencies.glide
