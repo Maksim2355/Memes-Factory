@@ -2,22 +2,16 @@ package com.lumi.surfeducationproject.ui
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.domain.model.Meme
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.common.RefresherOwner
 import com.lumi.surfeducationproject.common.base_view.BaseFragment
-import com.lumi.surfeducationproject.common.managers.InputModeManager
-import com.lumi.surfeducationproject.common.managers.SnackBarManager
-import com.lumi.surfeducationproject.common.managers.StyleManager
 import com.lumi.surfeducationproject.ui.controllers.MemeController
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
 import com.lumi.surfeducationproject.presenters.MemesFeedPresenter

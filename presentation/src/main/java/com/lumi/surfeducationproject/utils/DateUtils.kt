@@ -48,3 +48,8 @@ fun getPostCreateDate(differenceDateMs: Int): String {
         }
     }
 }
+
+
+fun getCreatedData(): Int {
+    return Random().nextInt(10000)
+}

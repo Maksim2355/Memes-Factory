@@ -7,21 +7,15 @@ import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.base_view.BaseFragment
-import com.lumi.surfeducationproject.common.EmptyFields
-import com.lumi.surfeducationproject.common.managers.SnackBarManager
+import com.lumi.surfeducationproject.common.StateFields
 import com.lumi.surfeducationproject.navigation.NavigationContent
 import com.lumi.surfeducationproject.presenters.AuthPresenter
-import com.lumi.surfeducationproject.views.AuthView
 import kotlinx.android.synthetic.main.fragment_auth.*
 import moxy.ktx.moxyPresenter
-import studio.carbonylgroup.textfieldboxes.ExtendedEditText
-import studio.carbonylgroup.textfieldboxes.TextFieldBoxes
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -115,30 +109,30 @@ class AuthFragment : BaseFragment(), AuthView {
         snackBarManager.showErrorMessage(messageError)
     }
 
-    override fun showMessageErrorInputField(emptyFields: EmptyFields, messageError: String) {
-        when (emptyFields) {
-            EmptyFields.LOGIN -> {
+    override fun showMessageErrorInputField(stateFields: StateFields, messageError: String) {
+        when (stateFields) {
+            StateFields.LOGIN -> {
                 input_login_fb.setError(messageError, false)
             }
-            EmptyFields.PASSWORD -> {
+            StateFields.PASSWORD -> {
                 input_password_fb.setError(messageError, false)
             }
-            EmptyFields.ALL -> {
+            StateFields.ALL -> {
                 input_login_fb.setError(messageError, false)
                 input_password_fb.setError(messageError, false)
             }
         }
     }
 
-    override fun hideMessageErrorInputField(emptyFields: EmptyFields) {
-        when (emptyFields) {
-            EmptyFields.LOGIN -> {
+    override fun hideMessageErrorInputField(stateFields: StateFields) {
+        when (stateFields) {
+            StateFields.LOGIN -> {
                 input_login_fb.removeError()
             }
-            EmptyFields.PASSWORD -> {
+            StateFields.PASSWORD -> {
                 input_password_fb.removeError()
             }
-            EmptyFields.ALL -> {
+            StateFields.ALL -> {
                 input_login_fb.removeError()
                 input_password_fb.removeError()
             }

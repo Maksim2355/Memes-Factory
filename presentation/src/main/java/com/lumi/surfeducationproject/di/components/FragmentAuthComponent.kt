@@ -1,6 +1,5 @@
 package com.lumi.surfeducationproject.di.components
 
-import com.lumi.surfeducationproject.di.modules.auth_modules.PresenterAuthModule
 import com.lumi.surfeducationproject.di.scopes.FragmentAuthScope
 import com.lumi.surfeducationproject.ui.AuthFragment
 import com.lumi.surfeducationproject.ui.SplashFragment

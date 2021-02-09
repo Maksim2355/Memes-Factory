@@ -1,7 +1,6 @@
 package com.lumi.surfeducationproject.di.components
 
 import com.lumi.surfeducationproject.di.modules.content_modules.AdapterUtilsModule
-import com.lumi.surfeducationproject.di.modules.content_modules.PresenterContentModule
 import com.lumi.surfeducationproject.di.modules.content_modules.RepositoryContentModule
 import com.lumi.surfeducationproject.di.modules.content_modules.TabModule
 import com.lumi.surfeducationproject.di.scopes.FragmentContentScope

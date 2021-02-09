@@ -2,9 +2,7 @@ package com.lumi.surfeducationproject.di.components
 
 import com.lumi.surfeducationproject.di.modules.content_modules.AdapterUtilsModule
 import com.lumi.surfeducationproject.di.modules.activity_modules.NavigationMainModule
-import com.lumi.surfeducationproject.di.modules.content_modules.PresenterContentModule
 import com.lumi.surfeducationproject.di.modules.activity_modules.ActivityModule
-import com.lumi.surfeducationproject.di.modules.auth_modules.PresenterAuthModule
 import com.lumi.surfeducationproject.di.modules.content_modules.RepositoryContentModule
 import com.lumi.surfeducationproject.di.modules.content_modules.TabModule
 import com.lumi.surfeducationproject.di.scopes.ActivityScope

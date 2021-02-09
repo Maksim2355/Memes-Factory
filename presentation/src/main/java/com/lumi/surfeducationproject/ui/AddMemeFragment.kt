@@ -12,35 +12,25 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.ImageButton
-import android.widget.ImageView
-import androidx.appcompat.app.ActionBar
+
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.google.android.material.textfield.TextInputEditText
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.REQUEST_CODE_PERMISSION_CAMERA
 import com.lumi.surfeducationproject.common.REQUEST_CODE_PERMISSION_GALLERY
-import com.lumi.surfeducationproject.common.base_view.BaseFragment
 import com.lumi.surfeducationproject.common.managers.*
 import com.lumi.surfeducationproject.common.params.EXTRA_WAY_GET_IMG
+import com.lumi.surfeducationproject.databinding.FragmentAddMemeBinding
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
-import com.lumi.surfeducationproject.presenters.AddMemePresenter
 import com.lumi.surfeducationproject.ui.dialogs.AddImgDialog
-import com.lumi.surfeducationproject.views.AddMemeView
-import kotlinx.android.synthetic.main.fragment_add_meme.*
-import kotlinx.android.synthetic.main.fragment_add_meme.view.*
-import moxy.ktx.moxyPresenter
+import com.lumi.surfeducationproject.ui.extension.activity_extension.setColorStatusBar
 import javax.inject.Inject
-import javax.inject.Provider
 
 
-class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
+class AddMemeFragment : Fragment(), View.OnClickListener {
 
     companion object {
         private const val REQUEST_DIALOG_WAY_GET_IMG = 100
@@ -48,23 +38,7 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
         private const val REQUEST_CODE_GALLERY = 102
     }
 
-    @Inject
-    lateinit var presenterProvider: Provider<AddMemePresenter>
-    private val presenter by moxyPresenter {
-        presenterProvider.get()
-    }
-
-    @Inject
-    lateinit var styleManager: StyleManager
-
-    @Inject
-    lateinit var snackBarManager: SnackBarManager
-
-    @Inject
-    lateinit var permissionManager: PermissionManager
-
-    @Inject
-    lateinit var fileManager: FileManager
+    private lateinit var binding: FragmentAddMemeBinding
 
     @Inject
     lateinit var bottomBarVisible: BottomBarVisible
@@ -80,9 +54,10 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        styleManager.setColorStatusBar(R.color.colorPrimaryContent)
-        return inflater.inflate(R.layout.fragment_add_meme, container, false)
+    ): View {
+        requireActivity().setColorStatusBar(R.color.colorPrimaryContent)
+        binding = FragmentAddMemeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -92,9 +67,10 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
     }
 
     private fun initToolbar(view: View) {
-        add_meme_toolbar.navigationIcon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_close) }
-        (activity as AppCompatActivity).setSupportActionBar(add_meme_toolbar)
-        add_meme_toolbar.setNavigationOnClickListener { navBack.back() }
+        binding.addMemeToolbar.navigationIcon =
+            context?.let { ContextCompat.getDrawable(it, R.drawable.ic_close) }
+        (activity as AppCompatActivity).setSupportActionBar(binding.addMemeToolbar)
+        binding.addMemeToolbar.setNavigationOnClickListener { navBack.back() }
     }
 
     private fun initView(view: View) {
@@ -104,8 +80,13 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
 
         input_title_meme_et.addTextChangedListener(
             object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int)
-                {}
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
 
                 override fun afterTextChanged(s: Editable?) {}
 
@@ -116,8 +97,13 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
         )
         input_description_meme_et.addTextChangedListener(
             object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int)
-                {}
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
 
                 override fun afterTextChanged(s: Editable?) {}
 
@@ -253,5 +239,4 @@ class AddMemeFragment : BaseFragment(), AddMemeView, View.OnClickListener {
         }
     }
 
-    override fun getActionBar(): ActionBar? = (activity as AppCompatActivity).supportActionBar
 }

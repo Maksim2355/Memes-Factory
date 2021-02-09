@@ -4,13 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.domain.model.Meme
 import com.example.domain.model.User
@@ -18,7 +13,6 @@ import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.base_view.BaseFragment
 import com.lumi.surfeducationproject.common.managers.BottomBarVisible
-import com.lumi.surfeducationproject.common.managers.StyleManager
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 
 import com.lumi.surfeducationproject.presenters.MemeDetailsPresenter
