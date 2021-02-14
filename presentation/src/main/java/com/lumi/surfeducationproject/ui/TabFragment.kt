@@ -7,15 +7,14 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.example.domain.model.Meme
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.managers.BottomBarVisible
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
-import kotlinx.android.synthetic.main.fragment_tab.*
+import dagger.android.support.DaggerFragment
 
-class TabFragment : Fragment(), NavigationBackPressed, NavigationMemeDetails, BottomBarVisible {
+class TabFragment : DaggerFragment(), NavigationBackPressed, NavigationMemeDetails, BottomBarVisible {
 
     companion object {
         private const val LABEL_MEME_FEED = "fragment_meme_feed"
@@ -24,10 +23,6 @@ class TabFragment : Fragment(), NavigationBackPressed, NavigationMemeDetails, Bo
 
     private lateinit var navControllerTab: NavController
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        App.instance.getFragmentContentComponentOrCreateIfNull(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,11 +68,6 @@ class TabFragment : Fragment(), NavigationBackPressed, NavigationMemeDetails, Bo
                 navControllerTab.navigate(action)
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        App.instance.clearFragmentContentComponent()
     }
 
 }

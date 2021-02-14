@@ -8,9 +8,10 @@ import androidx.navigation.findNavController
 import com.lumi.surfeducationproject.navigation.NavigationAuth
 import com.lumi.surfeducationproject.navigation.NavigationContent
 import com.lumi.surfeducationproject.navigation.NavigationStartApp
+import dagger.android.DaggerActivity
 
 
-class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent,
+class AppActivity : DaggerActivity(), NavigationStartApp, NavigationContent,
     NavigationAuth {
 
     private val navController: NavController by lazy {
@@ -18,14 +19,8 @@ class AppActivity : AppCompatActivity(), NavigationStartApp, NavigationContent,
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        App.instance.startActivityComponent(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        App.instance.clearActivityComponent()
     }
 
     override fun startApp(isAuthUser: Boolean) {

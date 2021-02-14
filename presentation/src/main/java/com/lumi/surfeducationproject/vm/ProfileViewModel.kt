@@ -2,6 +2,7 @@ package com.lumi.surfeducationproject.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.domain.model.Meme
 import com.example.domain.model.User
 import com.example.domain.repository.MemeRepository
@@ -13,7 +14,7 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val memeRepository: MemeRepository
-) {
+): ViewModel() {
 
     private val _listUserMeme: MutableLiveData<List<Meme>> = MutableLiveData(emptyList())
     val listUserMeme: LiveData<List<Meme>>

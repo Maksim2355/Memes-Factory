@@ -8,27 +8,24 @@ import com.example.data.repository.UserRepositoryImpl
 import com.example.data.services.local.SharedPreferenceService
 import com.example.data.services.network.AuthService
 import com.example.domain.repository.UserRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class RepositoryModule {
+interface RepositoryModule {
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideUserMapper(): UserDtoDataMapper = UserDtoDataMapper()
+    fun bindsUserMapper(mapper: UserDtoDataMapper): UserDtoDataMapper
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideNetworkMemeMapper(): MemeDataMapper<NetworkMeme> = MemeNetworkDataMapper()
+    fun bindsNetworkMemeMapper(mapper: MemeNetworkDataMapper): MemeDataMapper<NetworkMeme>
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideUserRepository(
-        sharedPreferences: SharedPreferenceService,
-        authService: AuthService,
-        mapper: UserDtoDataMapper
-    ): UserRepository = UserRepositoryImpl(sharedPreferences, authService, mapper)
+    fun bindsUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository
 
 }

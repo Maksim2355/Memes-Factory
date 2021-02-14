@@ -13,29 +13,20 @@ import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.navigation.NavigationStartApp
 import com.lumi.surfeducationproject.presenters.SplashPresenter
 import com.lumi.surfeducationproject.views.SplashView
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_splash.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 import javax.inject.Provider
 
-class SplashFragment : MvpAppCompatFragment(), SplashView {
+class SplashFragment : DaggerFragment() {
 
-    @Inject
-    lateinit var presenterProvider: Provider<SplashPresenter>
-    private val presenter by moxyPresenter {
-        presenterProvider.get()
-    }
 
     @Inject
     lateinit var navigationStartApp: NavigationStartApp
 
     private var isAuthUser: Boolean = false
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        App.instance.getFragmentAuthComponentOrCreateIfNull().inject(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,32 +35,13 @@ class SplashFragment : MvpAppCompatFragment(), SplashView {
         return inflater.inflate(R.layout.fragment_splash, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        presenter.startApp()
-    }
-
     @SuppressLint("ResourceType")
     override fun startAnimation() {
         val anim = AnimationUtils.loadAnimation(context, R.animator.pulse_logo_app)
-        logo_iv.startAnimation(anim)
     }
 
     override fun startApp(isAuthUser: Boolean) {
         this.isAuthUser = isAuthUser
         navigationStartApp.startApp(isAuthUser)
     }
-
-
-    override fun onDetach() {
-        super.onDetach()
-        if (isAuthUser){
-            App.instance.clearFragmentAuthComponent()
-        }
-    }
-
 }

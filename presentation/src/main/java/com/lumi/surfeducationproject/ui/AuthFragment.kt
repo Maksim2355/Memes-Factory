@@ -14,30 +14,17 @@ import com.lumi.surfeducationproject.common.base_view.BaseFragment
 import com.lumi.surfeducationproject.common.StateFields
 import com.lumi.surfeducationproject.navigation.NavigationContent
 import com.lumi.surfeducationproject.presenters.AuthPresenter
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_auth.*
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 import javax.inject.Provider
 
 
-class AuthFragment : BaseFragment(), AuthView {
-
-    @Inject
-    lateinit var presenterProvider: Provider<AuthPresenter>
-    private val presenter by moxyPresenter {
-        presenterProvider.get()
-    }
-
-    @Inject
-    lateinit var snackBarManager: SnackBarManager
+class AuthFragment : DaggerFragment(), AuthView {
 
     @Inject
     lateinit var navigation: NavigationContent
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        App.instance.getFragmentAuthComponentOrCreateIfNull().inject(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -157,10 +144,6 @@ class AuthFragment : BaseFragment(), AuthView {
         auth_pb.visibility = View.GONE
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        App.instance.clearFragmentAuthComponent()
-    }
     override fun getActionBar(): ActionBar? = null
 
 }

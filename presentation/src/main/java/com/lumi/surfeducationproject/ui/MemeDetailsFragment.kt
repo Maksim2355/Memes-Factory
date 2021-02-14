@@ -16,22 +16,17 @@ import com.lumi.surfeducationproject.common.managers.BottomBarVisible
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 
 import com.lumi.surfeducationproject.presenters.MemeDetailsPresenter
+import com.lumi.surfeducationproject.ui.extension.activity_extension.setColorStatusBar
 import com.lumi.surfeducationproject.utils.getPostCreateDate
 import com.lumi.surfeducationproject.views.MemeDetailsView
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_meme_details.*
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 import javax.inject.Provider
 
 
-class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
-
-    @Inject
-    lateinit var presenterProvider: Provider<MemeDetailsPresenter>
-    private val presenter by moxyPresenter { presenterProvider.get() }
-
-    @Inject
-    lateinit var styleManager: StyleManager
+class MemeDetailsFragment : DaggerFragment() {
 
     @Inject
     lateinit var navBack: NavigationBackPressed
@@ -39,12 +34,9 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
     @Inject
     lateinit var bottomBarVisible: BottomBarVisible
 
-    private val args: MemeDetailsFragmentArgs by navArgs()
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        App.instance.getFragmentContentComponentOrCreateIfNull().inject(this)
-        styleManager.setColorStatusBar(R.color.colorPrimaryContent)
+        requireActivity().setColorStatusBar(R.color.colorPrimaryContent)
     }
 
     override fun onCreateView(

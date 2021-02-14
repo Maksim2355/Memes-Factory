@@ -27,10 +27,13 @@ import com.lumi.surfeducationproject.databinding.FragmentAddMemeBinding
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 import com.lumi.surfeducationproject.ui.dialogs.AddImgDialog
 import com.lumi.surfeducationproject.ui.extension.activity_extension.setColorStatusBar
+import dagger.android.AndroidInjection
+import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 
-class AddMemeFragment : Fragment(), View.OnClickListener {
+class AddMemeFragment : DaggerFragment(), View.OnClickListener {
 
     companion object {
         private const val REQUEST_DIALOG_WAY_GET_IMG = 100
@@ -46,10 +49,6 @@ class AddMemeFragment : Fragment(), View.OnClickListener {
     @Inject
     lateinit var navBack: NavigationBackPressed
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        App.instance.getFragmentContentComponentOrCreateIfNull().inject(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,10 +73,9 @@ class AddMemeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun initView(view: View) {
-        create_meme_btn.setOnClickListener(this)
-        img_close_ibtn.setOnClickListener(this)
-        add_img_ibtn.setOnClickListener(this)
-
+        binding.createMemeBtn.setOnClickListener(this)
+        binding.imgCloseIbtn.setOnClickListener(this)
+        binding.addImgIbtn.setOnClickListener(this)
         input_title_meme_et.addTextChangedListener(
             object : TextWatcher {
                 override fun beforeTextChanged(

@@ -1,45 +1,24 @@
 package com.lumi.surfeducationproject.ui
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.domain.model.Meme
 import com.example.domain.model.User
-import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.common.base_view.BaseFragment
-import com.lumi.surfeducationproject.ui.controllers.MemeController
-
 import com.lumi.surfeducationproject.navigation.NavigationAuth
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
-import com.lumi.surfeducationproject.presenters.ProfilePresenter
-import com.lumi.surfeducationproject.views.ProfileView
-import kotlinx.android.synthetic.main.fragment_profile.*
-import moxy.ktx.moxyPresenter
+import com.lumi.surfeducationproject.ui.controllers.MemeController
+import dagger.android.support.DaggerFragment
 import ru.surfstudio.android.easyadapter.EasyAdapter
 import ru.surfstudio.android.easyadapter.ItemList
 import javax.inject.Inject
-import javax.inject.Provider
 
 
-class ProfileFragment : BaseFragment(), ProfileView {
-
-    @Inject
-    lateinit var presenterProvider: Provider<ProfilePresenter>
-    private val presenter by moxyPresenter {
-        presenterProvider.get()
-    }
-
-    @Inject
-    lateinit var styleManager: StyleManager
-
-    @Inject
-    lateinit var snackBarManager: SnackBarManager
+class ProfileFragment : DaggerFragment() {
 
     @Inject
     lateinit var navLogout: NavigationAuth
@@ -55,16 +34,11 @@ class ProfileFragment : BaseFragment(), ProfileView {
 
     private var dialogLogout: AlertDialog? = null
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        App.instance.getFragmentContentComponentOrCreateIfNull().inject(this)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        styleManager.setColorStatusBar(R.color.colorPrimary)
+        requireActivity().setColorStatusBar(R.color.colorPrimary)
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
@@ -162,21 +136,6 @@ class ProfileFragment : BaseFragment(), ProfileView {
         }
     }
 
-    override fun showErrorSnackBarDownloadProfile(message: String) {
-        snackBarManager.showErrorMessage(message)
-    }
-
-    override fun showLoadState() {
-        load_memes_pb.visibility = View.VISIBLE
-        meme_list_profile_rv.visibility = View.GONE
-    }
-
-
-    override fun hideLoadState() {
-        meme_list_profile_rv.visibility = View.VISIBLE
-        load_memes_pb.visibility = View.GONE
-    }
-
     override fun openMemeDetails(data: Meme) {
         navMemeDetailsFragment.startMemeDetailsScreen(data)
     }
@@ -191,7 +150,4 @@ class ProfileFragment : BaseFragment(), ProfileView {
         }, null)
         startActivity(shareMeme)
     }
-
-    override fun getActionBar(): ActionBar? =
-        (activity as AppCompatActivity).supportActionBar
 }

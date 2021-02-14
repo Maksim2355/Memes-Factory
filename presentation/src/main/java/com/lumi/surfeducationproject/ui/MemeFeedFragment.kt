@@ -16,7 +16,9 @@ import com.lumi.surfeducationproject.ui.controllers.MemeController
 import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
 import com.lumi.surfeducationproject.presenters.MemesFeedPresenter
 import com.lumi.surfeducationproject.ui.custom_view.ToolbarSearchView
+import com.lumi.surfeducationproject.ui.extension.activity_extension.setColorStatusBar
 import com.lumi.surfeducationproject.views.MemeFeedView
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_meme_feed.*
 import moxy.ktx.moxyPresenter
 import ru.surfstudio.android.easyadapter.EasyAdapter
@@ -25,24 +27,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 
-class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, MemeFeedView,
-    RefresherOwner {
-
-    @Inject
-    lateinit var presenterProvider: Provider<MemesFeedPresenter>
-    private val presenter by moxyPresenter {
-        presenterProvider.get()
-    }
-
-
-    @Inject
-    lateinit var styleManager: StyleManager
-
-    @Inject
-    lateinit var inputModeManager: InputModeManager
-
-    @Inject
-    lateinit var snackBarManager: SnackBarManager
+class MemeFeedFragment : DaggerFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var navMemeDetailsFragment: NavigationMemeDetails
@@ -53,16 +38,12 @@ class MemeFeedFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, M
     @Inject
     lateinit var memeController: MemeController
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        App.instance.getFragmentContentComponentOrCreateIfNull().inject(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        styleManager.setColorStatusBar(R.color.colorPrimaryContent)
+        requireActivity().setColorStatusBar(R.color.colorPrimaryContent)
         return inflater.inflate(R.layout.fragment_meme_feed, container, false)
     }
 

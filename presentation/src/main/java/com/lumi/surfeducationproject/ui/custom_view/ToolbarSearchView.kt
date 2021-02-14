@@ -13,7 +13,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.utils.KeyboardUtil
-import kotlinx.android.synthetic.main.view_serach_toolbar.view.*
 
 
 class ToolbarSearchView @JvmOverloads constructor(

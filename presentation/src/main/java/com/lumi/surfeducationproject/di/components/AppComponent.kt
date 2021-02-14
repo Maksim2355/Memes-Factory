@@ -1,21 +1,31 @@
 package com.lumi.surfeducationproject.di.components
 
+import android.content.Context
 import com.example.data.di.NetworkModule
 import com.example.data.di.StorageModule
-import com.lumi.surfeducationproject.di.modules.activity_modules.ActivityModule
-import com.lumi.surfeducationproject.di.modules.activity_modules.NavigationMainModule
+import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.di.modules.app_modules.*
+import dagger.BindsInstance
 import dagger.Component
+import dagger.android.AndroidInjectionModule
+import dagger.android.AndroidInjector
 import javax.inject.Singleton
 
 
 @Singleton
 @Component(
-    modules = [AppModule::class, NetworkModule::class,
-        ServiceModule::class, StorageModule::class, RepositoryModule::class]
+    modules = [AndroidInjectionModule::class, AppModule::class, NetworkModule::class, ServiceModule::class,
+        StorageUtilsModule::class, StorageModule::class, RepositoryModule::class,
+        FactoryViewModelModule::class]
 )
-interface AppComponent {
-    fun addActivityComponent(navigationMainModule: NavigationMainModule,
-                             activityModule: ActivityModule
-    ): ActivityComponent
+interface AppComponent: AndroidInjector<App> {
+
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        fun application(context: Context): Builder
+        fun build(): AppComponent
+    }
+
+
 }

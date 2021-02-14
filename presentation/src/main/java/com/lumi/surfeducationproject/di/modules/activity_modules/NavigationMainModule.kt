@@ -1,24 +1,27 @@
 package com.lumi.surfeducationproject.di.modules.activity_modules
 
+import android.app.Activity
 import android.content.Context
+import com.lumi.surfeducationproject.AppActivity
 import com.lumi.surfeducationproject.di.scopes.ActivityScope
 import com.lumi.surfeducationproject.navigation.*
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
 @Module
-class NavigationMainModule(private val activity: Context) {
+interface NavigationMainModule {
 
-    @Provides
+    @Binds
     @ActivityScope
-    fun provideNavigationAuth() = activity as NavigationAuth
+    fun bindNavigationAuth(activity: AppActivity) : NavigationAuth
 
-    @Provides
+    @Binds
     @ActivityScope
-    fun provideNavigationContent() = activity as NavigationContent
+    fun bindNavigationContent(activity: AppActivity): NavigationContent
 
-    @Provides
+    @Binds
     @ActivityScope
-    fun provideNavigationStartApp() = activity as NavigationStartApp
+    fun bindNavigationStartApp(activity: AppActivity): NavigationStartApp
 
 }

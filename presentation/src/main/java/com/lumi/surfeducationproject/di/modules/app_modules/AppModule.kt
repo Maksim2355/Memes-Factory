@@ -1,24 +1,23 @@
 package com.lumi.surfeducationproject.di.modules.app_modules
 
-import android.content.Context
-import android.content.SharedPreferences
+import com.lumi.surfeducationproject.AppActivity
+import com.lumi.surfeducationproject.di.modules.activity_modules.MainActivityModule
+import com.lumi.surfeducationproject.di.modules.activity_modules.NavigationMainModule
 import dagger.Module
-import dagger.Provides
-import javax.inject.Singleton
+import dagger.android.AndroidInjectionModule
+import dagger.android.ContributesAndroidInjector
+
+import com.lumi.surfeducationproject.di.scopes.ActivityScope
 
 
-@Module
-class AppModule(private val context: Context) {
-
-    @Provides
-    @Singleton
-    fun provideContext() = context
 
 
-    @Provides
-    @Singleton
-    fun provideSharedPreference(): SharedPreferences =
-        context.getSharedPreferences("UserPreference", Context.MODE_PRIVATE)
 
+@Module(includes = [AndroidInjectionModule::class])
+interface AppModule {
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [MainActivityModule::class, NavigationMainModule::class])
+    fun activityInjector(): AppActivity
 
 }

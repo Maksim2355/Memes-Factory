@@ -27,56 +27,61 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2056540a-b033-4c50-8167-356d655c1328" name="Default Changelist" comment="Начал переход к mvvm в UI слое">
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/common/Event.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/ui/extension/activity_extension/ActivityInputMode.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/ui/extension/activity_extension/ActivitySnackBar.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/ui/extension/activity_extension/ActivityStyle.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/ui/extension/view_extension/TextFieldExtension.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/utils/FileSaveStorageUtil.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/utils/PermissionUtils.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/vm/AddMemeViewModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/vm/AuthViewModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/vm/MemeDetailsViewModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/vm/MemeFeedViewModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/vm/ProfileViewModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/vm/SplashViewModel.kt" afterDir="false" />
+    <list default="true" id="2056540a-b033-4c50-8167-356d655c1328" name="Default Changelist" comment="Создал вью модели без элементов роутинга и удалил элементы MVP">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_dagger_dagger_android_support_2_29_1_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/navEditor.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/injection_extension/InjectionViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/keys/ViewModelKey.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/activity_modules/MainActivityModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/app_modules/FactoryViewModelModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/app_modules/StorageUtilsModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/fragment_modules/auth_modules/AuthViewModelModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/fragment_modules/tab_modules/MainTabModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/fragment_modules/tab_modules/content_modules/AdapterUtilsModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/fragment_modules/tab_modules/content_modules/ContentViewModelModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/fragment_modules/tab_modules/content_modules/RepositoryContentModule.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/scopes/ContentFragmentScope.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/scopes/TabFragmentScope.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/vm/factory/ViewModelFactory.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_versionedparcelable_versionedparcelable_1_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_versionedparcelable_versionedparcelable_1_1_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_versionedparcelable_versionedparcelable_1_1_0_aar2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_versionedparcelable_versionedparcelable_1_1_0_aar2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/data/Memes-Factory.data.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/data/Memes-Factory.data.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/presentation/Memes-Factory.presentation.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/presentation/Memes-Factory.presentation.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/data/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependencies.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/dependencies.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/App.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/AppActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/AppActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/common/EmptyFields.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/common/StateFields.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/common/RefresherOwner.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/common/base_view/BaseFragment.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/common/base_view/BaseMemeListView.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/common/base_view/BasePresenter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/common/exceptions/EmptyMemesDatabaseException.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/common/managers/FileManager.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/common/managers/InputModeManager.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/common/managers/SnackBarManager.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/common/managers/StyleManager.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/components/ActivityComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/components/ActivityComponent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/components/FragmentAuthComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/components/FragmentAuthComponent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/components/FragmentContentComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/components/FragmentContentComponent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/auth_modules/PresenterAuthModule.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/content_modules/PresenterContentModule.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/presenters/AddMemePresenter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/presenters/AuthPresenter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/presenters/MemeDetailsPresenter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/presenters/MemesFeedPresenter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/presenters/ProfilePresenter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/presenters/SplashPresenter.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/common/managers/PermissionManager.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/components/ActivityComponent.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/components/AppComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/components/AppComponent.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/components/FragmentAuthComponent.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/components/FragmentContentComponent.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/activity_modules/ActivityModule.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/activity_modules/NavigationMainModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/activity_modules/NavigationMainModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/app_modules/AppModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/app_modules/AppModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/app_modules/RepositoryModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/app_modules/RepositoryModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/app_modules/ServiceModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/app_modules/ServiceModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/content_modules/AdapterUtilsModule.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/content_modules/RepositoryContentModule.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/content_modules/TabModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/modules/fragment_modules/tab_modules/TabModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/scopes/FragmentAuthScope.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/scopes/AuthFragmentScope.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/di/scopes/FragmentContentScope.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/ui/AddMemeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/ui/AddMemeFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/ui/AuthFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/ui/AuthFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/ui/MemeDetailsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/ui/MemeDetailsFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/ui/MemeFeedFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/ui/MemeFeedFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/ui/ProfileFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/ui/ProfileFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/utils/DateUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/utils/DateUtils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/views/AddMemeView.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/views/AuthView.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/views/MemeDetailsView.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/views/MemeFeedView.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/views/ProfileView.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/views/SplashView.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/ui/SplashFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/ui/SplashFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/ui/TabFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/ui/TabFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/vm/ProfileViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/com/lumi/surfeducationproject/vm/ProfileViewModel.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,6 +99,7 @@
       <list>
         <option value="Kotlin Object" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Interface" />
         <option value="Kotlin File" />
       </list>
     </option>
@@ -138,9 +144,15 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\provo\AndroidStudioProjects\Memes-Factory\presentation\src\main\java\com\lumi\surfeducationproject" />
     </key>
+    <key name="CreateKotlinClassDialog.RecentsKey">
+      <recent name="com.lumi.surfeducationproject.vm.factory" />
+    </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.lumi.surfeducationproject.common" />
+      <recent name="com.lumi.surfeducationproject.di.modules.fragment_modules.tab_modules.content_modules" />
+      <recent name="com.lumi.surfeducationproject.di.modules.fragment_modules.tab_modules" />
+      <recent name="com.lumi.surfeducationproject.di.modules.fragment_modules.content_modules" />
       <recent name="com.lumi.surfeducationproject.vm" />
-      <recent name="com.example.data.di" />
     </key>
   </component>
   <component name="RunManager" selected="Android App.presentation">
@@ -315,7 +327,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612808414997</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Создал вью модели без элементов роутинга и удалил элементы MVP">
+      <created>1612892571616</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1612892571616</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -339,6 +358,7 @@
     <MESSAGE value="Исправил ошибки при разбиении" />
     <MESSAGE value="Я дурачек и забыл сменить ветку. Теперь выпиливаю MVP в основной версии" />
     <MESSAGE value="Начал переход к mvvm в UI слое" />
-    <option name="LAST_COMMIT_MESSAGE" value="Начал переход к mvvm в UI слое" />
+    <MESSAGE value="Создал вью модели без элементов роутинга и удалил элементы MVP" />
+    <option name="LAST_COMMIT_MESSAGE" value="Создал вью модели без элементов роутинга и удалил элементы MVP" />
   </component>
 </project>

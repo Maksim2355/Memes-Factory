@@ -6,21 +6,22 @@ import com.example.data.services.local.SharedPreferenceService
 import com.example.data.services.local.SharedPreferenceServiceImpl
 import com.example.data.services.network.AuthService
 import com.example.data.services.network.AuthServiceImpl
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 
 @Module
-class ServiceModule {
+interface ServiceModule {
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideSharedPreferenceService(sharedPreference: SharedPreferences): SharedPreferenceService =
-        SharedPreferenceServiceImpl(sharedPreference)
+    fun bindSharedPreferenceService(
+        sharedPreferenceService: SharedPreferenceServiceImpl): SharedPreferenceService
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideAuthService(authApi: AuthApi): AuthService = AuthServiceImpl(authApi)
+    fun bindAuthService(authService: AuthServiceImpl): AuthService
 
 }
