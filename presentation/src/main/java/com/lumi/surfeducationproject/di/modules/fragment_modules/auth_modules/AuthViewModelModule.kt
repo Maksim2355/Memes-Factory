@@ -15,11 +15,11 @@ abstract class AuthViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(SplashViewModel::class)
-    abstract fun bindSplashViewModel(viewModel: SplashViewModel): SplashViewModel
+    abstract fun bindSplashViewModel(viewModel: SplashViewModel): ViewModel
 
 
     @Binds
     @IntoMap
     @ViewModelKey(AuthViewModel::class)
-    abstract fun bindAuthViewModel(viewModel: AuthViewModel): AuthViewModel
+    abstract fun bindAuthViewModel(viewModel: AuthViewModel): ViewModel
 }

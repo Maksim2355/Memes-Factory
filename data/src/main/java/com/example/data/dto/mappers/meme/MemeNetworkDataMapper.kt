@@ -4,6 +4,7 @@ package com.example.data.dto.mappers.meme
 import com.example.data.dto.network.NetworkMeme
 import com.example.domain.model.Meme
 import java.util.ArrayList
+import javax.inject.Inject
 
 class MemeNetworkDataMapper: MemeDataMapper<NetworkMeme> {
 
@@ -21,15 +22,17 @@ class MemeNetworkDataMapper: MemeDataMapper<NetworkMeme> {
 
     override fun transformList(list: List<NetworkMeme>): List<Meme> {
         val listMeme = ArrayList<Meme>()
-        for (memeNetwork in list){
-            listMeme.add(Meme(
-                memeNetwork.id.toInt(),
-                memeNetwork.title,
-                memeNetwork.createdDate,
-                memeNetwork.description,
-                memeNetwork.isFavorite,
-                memeNetwork.photoUrl
-            ))
+        for (memeNetwork in list) {
+            listMeme.add(
+                Meme(
+                    memeNetwork.id.toInt(),
+                    memeNetwork.title,
+                    memeNetwork.createdDate,
+                    memeNetwork.description,
+                    memeNetwork.isFavorite,
+                    memeNetwork.photoUrl
+                )
+            )
 
         }
         return listMeme

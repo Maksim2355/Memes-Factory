@@ -1,4 +1,4 @@
-package com.lumi.surfeducationproject.di.modules.fragment_modules.tab_modules.content_modules
+package com.lumi.surfeducationproject.di.modules.fragment_modules.tab_modules
 
 import com.example.data.repository.MemeRepositoryImpl
 import com.example.domain.repository.MemeRepository

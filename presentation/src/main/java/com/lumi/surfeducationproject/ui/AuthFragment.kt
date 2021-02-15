@@ -1,6 +1,5 @@
 package com.lumi.surfeducationproject.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -8,29 +7,38 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBar
-import com.lumi.surfeducationproject.App
+import androidx.lifecycle.ViewModelProvider
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.common.base_view.BaseFragment
-import com.lumi.surfeducationproject.common.StateFields
-import com.lumi.surfeducationproject.navigation.NavigationContent
-import com.lumi.surfeducationproject.presenters.AuthPresenter
+import com.lumi.surfeducationproject.databinding.FragmentAuthBinding
+import com.lumi.surfeducationproject.di.injection_extension.injectViewModel
+import com.lumi.surfeducationproject.di.named.ACTIVITY_NAVIGATION
+import com.lumi.surfeducationproject.di.named.FRAGMENT_CONTENT_NAVIGATION
+import com.lumi.surfeducationproject.navigation.NavigationDestination
+import com.lumi.surfeducationproject.vm.AuthViewModel
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_auth.*
-import moxy.ktx.moxyPresenter
 import javax.inject.Inject
-import javax.inject.Provider
+import javax.inject.Named
 
 
-class AuthFragment : DaggerFragment(), AuthView {
+class AuthFragment : DaggerFragment() {
 
     @Inject
-    lateinit var navigation: NavigationContent
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var authViewModel: AuthViewModel
+
+    private lateinit var binding: FragmentAuthBinding
+
+    @Inject
+    @Named(ACTIVITY_NAVIGATION)
+    lateinit var navigationDestination: NavigationDestination
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_auth, container, false)
+    ): View {
+        binding = FragmentAuthBinding.inflate(inflater, container, false)
+        authViewModel = injectViewModel(viewModelFactory)
+        return binding.root
     }
 
 

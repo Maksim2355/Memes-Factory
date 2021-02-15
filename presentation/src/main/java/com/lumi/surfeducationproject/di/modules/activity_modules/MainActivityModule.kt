@@ -1,13 +1,11 @@
 package com.lumi.surfeducationproject.di.modules.activity_modules
 
-import androidx.fragment.app.Fragment
 import com.lumi.surfeducationproject.di.modules.fragment_modules.auth_modules.AuthViewModelModule
-import com.lumi.surfeducationproject.di.modules.fragment_modules.tab_modules.MainTabModule
-import com.lumi.surfeducationproject.di.modules.fragment_modules.tab_modules.content_modules.AdapterUtilsModule
-import com.lumi.surfeducationproject.di.modules.fragment_modules.tab_modules.content_modules.RepositoryContentModule
-import com.lumi.surfeducationproject.di.modules.fragment_modules.tab_modules.TabModule
+import com.lumi.surfeducationproject.di.modules.fragment_modules.tab_modules.*
 import com.lumi.surfeducationproject.di.scopes.AuthFragmentScope
 import com.lumi.surfeducationproject.di.scopes.TabFragmentScope
+import com.lumi.surfeducationproject.ui.AuthFragment
+import com.lumi.surfeducationproject.ui.SplashFragment
 import com.lumi.surfeducationproject.ui.TabFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -18,7 +16,9 @@ interface MainActivityModule {
 
     @TabFragmentScope
     @ContributesAndroidInjector(
-        modules = [MainTabModule::class, TabModule::class]
+        modules = [MainTabModule::class, TabModule::class,
+            ContentViewModelModule::class, RepositoryContentModule::class,
+            TabBottomNavigationModule::class]
     )
     fun tabFragmentInjector(): TabFragment
 
@@ -26,6 +26,12 @@ interface MainActivityModule {
     @ContributesAndroidInjector(
         modules = [AuthViewModelModule::class]
     )
-    fun authFragmentInjector(): Fragment
+    fun authFragmentInjector(): AuthFragment
+
+    @AuthFragmentScope
+    @ContributesAndroidInjector(
+        modules = [AuthViewModelModule::class]
+    )
+    fun splashFragmentInjector(): SplashFragment
 
 }

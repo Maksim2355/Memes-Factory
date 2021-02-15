@@ -10,29 +10,33 @@ import androidx.fragment.app.DialogFragment
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.ActionsIntentImg
 import com.lumi.surfeducationproject.common.params.EXTRA_WAY_GET_IMG
+import com.lumi.surfeducationproject.databinding.DialogAddImgBinding
 
 
 class AddImgDialog: DialogFragment() {
 
     companion object{
-        val CAMERA_MESSAGE = 0
-        val GALLERY_MESSAGE = 1
+        const val CAMERA_MESSAGE = 0
+        const val GALLERY_MESSAGE = 1
     }
+
+    lateinit var binding: DialogAddImgBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.dialog_add_img, container)
+    ): View {
+        binding = DialogAddImgBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        add_img_for_camera_btn.setOnClickListener {
+        binding.addImgForCameraBtn.setOnClickListener {
             sendMessageParentFragmentAndCloseDialog(ActionsIntentImg.CAMERA)
         }
-        add_img_for_gallery_btn.setOnClickListener {
+        binding.addImgForGalleryBtn.setOnClickListener {
             sendMessageParentFragmentAndCloseDialog(ActionsIntentImg.GALLERY)
         }
     }

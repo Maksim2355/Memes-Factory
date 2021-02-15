@@ -4,6 +4,7 @@ import com.example.data.dto.network.LoginUserRequest
 import com.example.data.dto.network.UserResponse
 import com.example.domain.model.AuthorizationData
 import com.example.domain.model.User
+import javax.inject.Inject
 
 
 class UserDtoDataMapper {

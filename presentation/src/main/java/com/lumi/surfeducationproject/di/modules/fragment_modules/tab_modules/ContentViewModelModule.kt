@@ -1,4 +1,4 @@
-package com.lumi.surfeducationproject.di.modules.fragment_modules.tab_modules.content_modules
+package com.lumi.surfeducationproject.di.modules.fragment_modules.tab_modules
 
 import androidx.lifecycle.ViewModel
 import com.lumi.surfeducationproject.di.keys.ViewModelKey
@@ -17,21 +17,21 @@ interface ContentViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(AddMemeViewModel::class)
-    fun bindAddMemeViewModel(viewModel: AddMemeViewModel): AddMemeViewModel
+    fun bindAddMemeViewModel(viewModel: AddMemeViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(MemeDetailsViewModel::class)
-    fun bindMemeDetailsViewModel(viewModel: MemeDetailsViewModel): MemeDetailsViewModel
+    fun bindMemeDetailsViewModel(viewModel: MemeDetailsViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(MemeFeedViewModel::class)
-    fun bindMemeFeedViewModel(viewModel: MemeFeedViewModel): MemeFeedViewModel
+    fun bindMemeFeedViewModel(viewModel: MemeFeedViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(ProfileViewModel::class)
-    fun bindProfileViewModel(viewModel: ProfileViewModel): ProfileViewModel
+    fun bindProfileViewModel(viewModel: ProfileViewModel): ViewModel
 
 }

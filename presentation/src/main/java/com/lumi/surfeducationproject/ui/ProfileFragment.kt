@@ -5,32 +5,34 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.domain.model.Meme
 import com.example.domain.model.User
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.navigation.NavigationAuth
-import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
-import com.lumi.surfeducationproject.ui.controllers.MemeController
+import com.lumi.surfeducationproject.databinding.FragmentProfileBinding
+import com.lumi.surfeducationproject.di.injection_extension.injectViewModel
+import com.lumi.surfeducationproject.di.named.FRAGMENT_CONTENT_NAVIGATION
+import com.lumi.surfeducationproject.navigation.NavigationDestination
+import com.lumi.surfeducationproject.ui.extension.activity_extension.setColorStatusBar
+import com.lumi.surfeducationproject.vm.ProfileViewModel
 import dagger.android.support.DaggerFragment
-import ru.surfstudio.android.easyadapter.EasyAdapter
 import ru.surfstudio.android.easyadapter.ItemList
 import javax.inject.Inject
+import javax.inject.Named
 
 
 class ProfileFragment : DaggerFragment() {
 
-    @Inject
-    lateinit var navLogout: NavigationAuth
+    private lateinit var binding: FragmentProfileBinding
 
     @Inject
-    lateinit var navMemeDetailsFragment: NavigationMemeDetails
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var profileViewModel: ProfileViewModel
 
     @Inject
-    lateinit var easyAdapter: EasyAdapter
-
-    @Inject
-    lateinit var memeController: MemeController
+    @Named(FRAGMENT_CONTENT_NAVIGATION)
+    lateinit var navigationDestination: NavigationDestination
 
     private var dialogLogout: AlertDialog? = null
 
@@ -38,8 +40,10 @@ class ProfileFragment : DaggerFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
+        profileViewModel = injectViewModel(viewModelFactory)
         requireActivity().setColorStatusBar(R.color.colorPrimary)
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

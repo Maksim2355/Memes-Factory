@@ -44,6 +44,15 @@ class MemeDetailsViewModel @Inject constructor(
     val shareMemeEvent: LiveData<Event<Meme>>
         get() = _shareMemeEvent
 
+    //Тут бул не нужен, навигация плохая, а я Максим
+    private val _navigateBackstack: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val navigateBackstack: LiveData<Event<Boolean>>
+        get() = _navigateBackstack
+
+    fun navigateBack(){
+        _navigateBackstack.value = Event(true)
+    }
+
     fun bindMeme(meme: Meme) {
         _meme.value = meme
     }

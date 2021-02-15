@@ -6,27 +6,30 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.domain.model.Meme
 import com.example.domain.model.User
-import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.common.base_view.BaseFragment
 import com.lumi.surfeducationproject.common.managers.BottomBarVisible
+import com.lumi.surfeducationproject.databinding.FragmentMemeDetailsBinding
+import com.lumi.surfeducationproject.di.injection_extension.injectViewModel
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 
-import com.lumi.surfeducationproject.presenters.MemeDetailsPresenter
 import com.lumi.surfeducationproject.ui.extension.activity_extension.setColorStatusBar
-import com.lumi.surfeducationproject.utils.getPostCreateDate
-import com.lumi.surfeducationproject.views.MemeDetailsView
+import com.lumi.surfeducationproject.vm.MemeDetailsViewModel
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_meme_details.*
-import moxy.ktx.moxyPresenter
 import javax.inject.Inject
-import javax.inject.Provider
 
 
 class MemeDetailsFragment : DaggerFragment() {
+
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var memeDetailsViewModel: MemeDetailsViewModel
+
+    private lateinit var binding: FragmentMemeDetailsBinding
 
     @Inject
     lateinit var navBack: NavigationBackPressed
@@ -42,8 +45,10 @@ class MemeDetailsFragment : DaggerFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_meme_details, container, false)
+    ): View {
+        binding = FragmentMemeDetailsBinding.inflate(inflater, container, false)
+        memeDetailsViewModel = injectViewModel(viewModelFactory)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -82,23 +87,9 @@ class MemeDetailsFragment : DaggerFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_share) {
-            presenter.shareMeme()
+
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun showErrorStateUserInfoToolbar() {
-        nickname_mini_tv.text = getString(R.string.memeDetails_errorToolbarUser_message)
-    }
-
-    override fun showMeme(data: Meme) {
-        title_meme_tv.text = data.title
-        Glide.with(this).load(data.photoUrl).into(img_meme_iv)
-        created_date_tv.text = getPostCreateDate(data.createdDate)
-        if (data.isFavorite) {
-            favorite_details_chb.isChecked = true
-        }
-        text_meme_tv.text = data.description
     }
 
     override fun getActionBar() = (activity as AppCompatActivity).supportActionBar

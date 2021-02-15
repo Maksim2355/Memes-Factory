@@ -9,6 +9,8 @@ import com.lumi.surfeducationproject.common.EmptyFields
 import com.lumi.surfeducationproject.common.Event
 import com.lumi.surfeducationproject.common.FocusAuthFields
 import com.lumi.surfeducationproject.common.exceptions.NETWORK_EXCEPTIONS
+import com.lumi.surfeducationproject.navigation.navigation.ActionRoute
+import com.lumi.surfeducationproject.navigation.navigation.Route
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
@@ -57,6 +59,18 @@ class AuthViewModel @Inject constructor(
     val focusFiled: LiveData<FocusAuthFields>
         get() = _focusFiled
 
+    private val _navigateToContentTab: MutableLiveData<Event<Route>> = MutableLiveData()
+    val navigateToContentTab: LiveData<Event<Route>>
+        get() = _navigateToContentTab
+
+    fun navigateToContentScreen() {
+        _navigateToContentTab.value = Event(
+            Route(
+                actionRoute = ActionRoute.AUTH_FRAGMENT_TO_TAB_FRAGMENT
+            )
+        )
+    }
+
     fun updateLogin(loginUser: String) {
         _login.value = loginUser
         checkAndUpdateEmptyField()
@@ -69,7 +83,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun changeFocus(stateFields: FocusAuthFields?) {
-        when(stateFields){
+        when (stateFields) {
             FocusAuthFields.LOGIN -> {
                 _focusFiled.value = FocusAuthFields.LOGIN
             }
@@ -81,7 +95,7 @@ class AuthViewModel @Inject constructor(
                 _focusFiled.value = null
             }
         }
-        if (_focusFiled.value != FocusAuthFields.PASSWORD && (_password.value ?: "").isEmpty()){
+        if (_focusFiled.value != FocusAuthFields.PASSWORD && (_password.value ?: "").isEmpty()) {
             _isPasswordBtnActive.value = false
         }
     }

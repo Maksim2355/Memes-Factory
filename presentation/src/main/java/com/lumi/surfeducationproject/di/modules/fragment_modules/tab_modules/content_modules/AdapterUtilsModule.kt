@@ -3,16 +3,17 @@ package com.lumi.surfeducationproject.di.modules.fragment_modules.tab_modules.co
 import com.lumi.surfeducationproject.ui.controllers.MemeController
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import ru.surfstudio.android.easyadapter.EasyAdapter
 
 
 @Module
-interface AdapterUtilsModule {
+class AdapterUtilsModule {
 
-    @Binds
-    fun bindEasyAdapter(easyAdapter: EasyAdapter): EasyAdapter
+    @Provides
+    fun provideEasyAdapter() = EasyAdapter()
 
-    @Binds
-    fun bindMemeController(memeController: MemeController): MemeController
+    @Provides
+    fun provideMemeController() = MemeController()
 
 }

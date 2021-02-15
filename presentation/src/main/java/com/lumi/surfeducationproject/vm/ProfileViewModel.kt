@@ -1,5 +1,6 @@
 package com.lumi.surfeducationproject.vm
 
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,13 +9,16 @@ import com.example.domain.model.User
 import com.example.domain.repository.MemeRepository
 import com.example.domain.repository.UserRepository
 import com.lumi.surfeducationproject.common.Event
+import com.lumi.surfeducationproject.common.params.EXTRA_MEME_ID
+import com.lumi.surfeducationproject.navigation.navigation.ActionRoute
+import com.lumi.surfeducationproject.navigation.navigation.Route
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val memeRepository: MemeRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _listUserMeme: MutableLiveData<List<Meme>> = MutableLiveData(emptyList())
     val listUserMeme: LiveData<List<Meme>>
@@ -32,6 +36,9 @@ class ProfileViewModel @Inject constructor(
     val messageSnackBar: LiveData<Event<String>>
         get() = _messageSnackBar
 
+    private val _navigateTo: MutableLiveData<Event<Route>> = MutableLiveData()
+    val navigateTo: LiveData<Event<Route>>
+        get() = _navigateTo
 
     init {
         memeRepository.getUserMemes().observeOn(AndroidSchedulers.mainThread())
@@ -50,15 +57,30 @@ class ProfileViewModel @Inject constructor(
             })
     }
 
+    fun navigateLogoutProfile() {
+        _navigateTo.value =
+            Event(
+                Route(ActionRoute.TAB_FRAGMENT_TO_AUTH_FRAGMENT)
+            )
+    }
+
+    fun navigateMemeDetails(memeId: Int) {
+        val bundle = Bundle().apply { putInt(EXTRA_MEME_ID, memeId) }
+        _navigateTo.value =
+            Event(
+                Route(ActionRoute.PROFILE_FRAGMENT_TO_MEME_DETAILS, bundle)
+            )
+    }
+
     fun showLogoutDialog() {
         _isShowLogoutDialog.value = true
     }
 
-    fun hideLogoutDialog(){
+    fun hideLogoutDialog() {
         _isShowLogoutDialog.value = false
     }
 
-    fun logout(){
+    fun logout() {
         userRepository
             .deleteUser()
             .observeOn(AndroidSchedulers.mainThread())

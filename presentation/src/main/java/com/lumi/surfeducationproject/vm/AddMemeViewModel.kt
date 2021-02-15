@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domain.model.Meme
 import com.example.domain.repository.MemeRepository
+import com.lumi.surfeducationproject.common.Event
 import com.lumi.surfeducationproject.utils.getCreatedData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import java.security.SecureRandom
@@ -22,7 +23,6 @@ class AddMemeViewModel @Inject constructor(
     val isActiveCreateMemeButton: LiveData<Boolean>
         get() = _isActiveCreateMemeButton
 
-
     private val _titleMeme: MutableLiveData<String> = MutableLiveData("")
     val titleMeme: LiveData<String>
         get() = _titleMeme
@@ -31,10 +31,26 @@ class AddMemeViewModel @Inject constructor(
     val descriptionMeme: LiveData<String>
         get() = _descriptionMeme
 
-    private val _isShowDownloadImgDialog: MutableLiveData<Boolean> = MutableLiveData(false)
-    val isShowDownloadImgDialog: LiveData<Boolean>
-        get() = _isShowDownloadImgDialog
+    private val _showDownloadImgDialog: MutableLiveData<Boolean> = MutableLiveData(false)
+    val showDownloadImgDialog: LiveData<Boolean>
+        get() = _showDownloadImgDialog
 
+    private val _navigateBackstack: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val navigateBackstack: LiveData<Event<Boolean>>
+        get() = _navigateBackstack
+
+
+    fun showAddImgDialog(){
+        _showDownloadImgDialog.value = true
+    }
+
+    fun hideDownloadImgDialog(){
+        _showDownloadImgDialog.value = false
+    }
+
+    fun navigateBack(){
+        _navigateBackstack.value = Event(true)
+    }
 
     fun downloadImgUrl(url: String) {
         _imgUrl.value = url
