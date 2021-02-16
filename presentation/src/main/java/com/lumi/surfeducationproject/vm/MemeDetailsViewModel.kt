@@ -14,6 +14,7 @@ import javax.inject.Inject
 
 class MemeDetailsViewModel @Inject constructor(
     private val userRepository: UserRepository,
+    private val memeRepository: MemeRepository
 ) : ViewModel() {
 
     init {
@@ -49,15 +50,19 @@ class MemeDetailsViewModel @Inject constructor(
     val navigateBackstack: LiveData<Event<Boolean>>
         get() = _navigateBackstack
 
-    fun navigateBack(){
+    fun navigateBack() {
         _navigateBackstack.value = Event(true)
     }
 
-    fun bindMeme(meme: Meme) {
-        _meme.value = meme
+    fun bindMeme(memeId: Int) {
+        memeRepository.getMemes().observeOn(AndroidSchedulers.mainThread()).subscribe({ listMeme ->
+            listMeme.find { meme -> meme.id == memeId }?.let { _meme.value = it }
+        }, {
+            //Какую-то обработку, мб снакбар
+        })
     }
 
-    fun shareMeme(){
+    fun shareMeme() {
         _meme.value?.let {
             _shareMemeEvent.value = Event(it)
         }

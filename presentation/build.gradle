@@ -70,6 +70,7 @@ dependencies {
     implementation presentationDependencies.easyAdapter
     implementation presentationDependencies.constraintLayout
     implementation presentationDependencies.legacySupport
+
     implementation presentationDependencies.navigationFragment
     implementation presentationDependencies.navigationUi
 

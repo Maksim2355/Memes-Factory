@@ -1,6 +1,8 @@
 package com.lumi.surfeducationproject.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +13,7 @@ import com.lumi.surfeducationproject.databinding.FragmentSplashBinding
 import com.lumi.surfeducationproject.di.injection_extension.injectViewModel
 import com.lumi.surfeducationproject.di.named.ACTIVITY_NAVIGATION
 import com.lumi.surfeducationproject.navigation.NavigationDestination
-import com.lumi.surfeducationproject.vm.MemeDetailsViewModel
+import com.lumi.surfeducationproject.vm.SplashViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 import javax.inject.Named
@@ -20,7 +22,7 @@ class SplashFragment : DaggerFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    lateinit var memeDetailsViewModel: MemeDetailsViewModel
+    lateinit var splashViewModel: SplashViewModel
 
     private lateinit var binding: FragmentSplashBinding
 
@@ -28,17 +30,30 @@ class SplashFragment : DaggerFragment() {
     @Named(ACTIVITY_NAVIGATION)
     lateinit var navigationDestination: NavigationDestination
 
-    private var isAuthUser: Boolean = false
 
+    @SuppressLint("ResourceType")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSplashBinding.inflate(inflater, container, false)
-        memeDetailsViewModel = injectViewModel(viewModelFactory)
+        splashViewModel = injectViewModel(viewModelFactory)
         val anim = AnimationUtils.loadAnimation(context, R.animator.pulse_logo_app)
+        binding.logoIv.startAnimation(anim)
+        return binding.root
+    }
 
-        return inflater.inflate(R.layout.fragment_splash, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        splashViewModel.navigateTo.observe(viewLifecycleOwner) {
+            Handler().postDelayed({
+                it.getContentIfNotHandled()?.let { route ->
+                    navigationDestination.navigateTo(route)
+                }
+            }, 1500)
+
+        }
     }
 
 }

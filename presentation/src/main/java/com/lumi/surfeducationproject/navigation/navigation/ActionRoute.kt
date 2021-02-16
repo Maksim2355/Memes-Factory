@@ -13,5 +13,5 @@ enum class ActionRoute(val action: Int) {
     AUTH_FRAGMENT_TO_TAB_FRAGMENT(R.id.action_authFragment_to_tabFragment),
     TAB_FRAGMENT_TO_AUTH_FRAGMENT(R.id.action_tabFragment_to_authFragment),
     MEME_FEED_FRAGMENT_TO_MEME_DETAILS(R.id.action_memeFeedFragment_to_memeDetailsFragment),
-    PROFILE_FRAGMENT_TO_MEME_DETAILS(R.id.action_profileFragment_to_memeDetailsFragment)
+    PROFILE_FRAGMENT_TO_MEME_DETAILS(R.id.action_profileFragment_to_memeDetailsFragment),
 }

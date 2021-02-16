@@ -4,6 +4,7 @@ import com.lumi.surfeducationproject.di.modules.fragment_modules.tab_modules.con
 import com.lumi.surfeducationproject.di.scopes.ContentFragmentScope
 import com.lumi.surfeducationproject.ui.AddMemeFragment
 import com.lumi.surfeducationproject.ui.MemeDetailsFragment
+import com.lumi.surfeducationproject.ui.MemeFeedFragment
 import com.lumi.surfeducationproject.ui.ProfileFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -14,13 +15,17 @@ interface MainTabModule {
 
     @ContentFragmentScope
     @ContributesAndroidInjector(
-        modules = []
+        modules = [AdapterUtilsModule::class]
     )
     fun memeDetailsFragmentInjector(): MemeDetailsFragment
 
     @ContentFragmentScope
     @ContributesAndroidInjector
     fun addMemeFragmentInjector(): AddMemeFragment
+
+    @ContentFragmentScope
+    @ContributesAndroidInjector
+    fun memeFeedFragmentInjector(): MemeFeedFragment
 
     @ContentFragmentScope
     @ContributesAndroidInjector

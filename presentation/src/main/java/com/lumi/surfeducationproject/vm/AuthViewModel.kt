@@ -38,8 +38,7 @@ class AuthViewModel @Inject constructor(
     val isShowPasswordHelper: LiveData<Boolean>
         get() = _isShowPasswordHelper
 
-    private val _messageStateField: MutableLiveData<EmptyFields> =
-        MutableLiveData(null)
+    private val _messageStateField: MutableLiveData<EmptyFields> = MutableLiveData(null)
     val messageStateField: LiveData<EmptyFields?>
         get() = _messageStateField
 
@@ -71,6 +70,11 @@ class AuthViewModel @Inject constructor(
         )
     }
 
+    fun changePasswordVisible(){
+        val isPasswordVisible: Boolean = _isPasswordVisibleText.value ?: false
+        _isPasswordVisibleText.value = !isPasswordVisible
+    }
+
     fun updateLogin(loginUser: String) {
         _login.value = loginUser
         checkAndUpdateEmptyField()
@@ -97,23 +101,6 @@ class AuthViewModel @Inject constructor(
         }
         if (_focusFiled.value != FocusAuthFields.PASSWORD && (_password.value ?: "").isEmpty()) {
             _isPasswordBtnActive.value = false
-        }
-    }
-
-    private fun checkAndUpdateEmptyField() {
-        val loginUser = _login.value ?: ""
-        val passwordUser = _password.value ?: ""
-        when {
-            loginUser.isEmpty() && passwordUser.isEmpty() -> {
-                _messageStateField.value = EmptyFields.ALL
-            }
-            loginUser.isEmpty() -> {
-                _messageStateField.value = EmptyFields.LOGIN
-            }
-            passwordUser.isEmpty() -> {
-                _messageStateField.value = EmptyFields.PASSWORD
-            }
-            else -> _messageStateField.value = null
         }
     }
 
@@ -157,6 +144,23 @@ class AuthViewModel @Inject constructor(
                     _messageStateField.value = EmptyFields.PASSWORD
                 }
             }
+        }
+    }
+
+    private fun checkAndUpdateEmptyField() {
+        val loginUser = _login.value ?: ""
+        val passwordUser = _password.value ?: ""
+        when {
+            loginUser.isEmpty() && passwordUser.isEmpty() -> {
+                _messageStateField.value = EmptyFields.ALL
+            }
+            loginUser.isEmpty() -> {
+                _messageStateField.value = EmptyFields.LOGIN
+            }
+            passwordUser.isEmpty() -> {
+                _messageStateField.value = EmptyFields.PASSWORD
+            }
+            else -> _messageStateField.value = null
         }
     }
 

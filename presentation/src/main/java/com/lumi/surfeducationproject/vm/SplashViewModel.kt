@@ -1,6 +1,5 @@
 package com.lumi.surfeducationproject.vm
 
-import android.os.Handler
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,10 +13,6 @@ class SplashViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
-    private val _isAnimationActive: MutableLiveData<Boolean> = MutableLiveData(false)
-    val isAnimationActive: LiveData<Boolean>
-        get() = _isAnimationActive
-
     private val _navigateTo: MutableLiveData<Event<Route>> = MutableLiveData()
     val navigateTo: LiveData<Event<Route>>
         get() = _navigateTo
@@ -27,7 +22,6 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun startApp() {
-        _isAnimationActive.value = true
         userRepository.getUser().subscribe({
             if (it != null) {
                 //Переход на главный экран
