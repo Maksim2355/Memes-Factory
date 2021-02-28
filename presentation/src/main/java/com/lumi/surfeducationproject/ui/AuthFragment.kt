@@ -1,172 +1,176 @@
 package com.lumi.surfeducationproject.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.TextView
-import androidx.appcompat.app.ActionBar
-import com.lumi.surfeducationproject.App
+import androidx.lifecycle.ViewModelProvider
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.common.base_view.BaseFragment
 import com.lumi.surfeducationproject.common.EmptyFields
-import com.lumi.surfeducationproject.common.managers.SnackBarManager
-import com.lumi.surfeducationproject.navigation.NavigationContent
-import com.lumi.surfeducationproject.presenters.AuthPresenter
-import com.lumi.surfeducationproject.views.AuthView
-import kotlinx.android.synthetic.main.fragment_auth.*
-import moxy.ktx.moxyPresenter
-import studio.carbonylgroup.textfieldboxes.ExtendedEditText
-import studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+import com.lumi.surfeducationproject.common.FocusAuthFields
+import com.lumi.surfeducationproject.databinding.FragmentAuthBinding
+import com.lumi.surfeducationproject.di.injection_extension.injectViewModel
+import com.lumi.surfeducationproject.di.named.ACTIVITY_NAVIGATION
+import com.lumi.surfeducationproject.navigation.NavigationDestination
+import com.lumi.surfeducationproject.ui.extension.activity_extension.showSnackBarMessage
+import com.lumi.surfeducationproject.vm.AuthViewModel
+import dagger.android.support.DaggerFragment
 import javax.inject.Inject
-import javax.inject.Provider
+import javax.inject.Named
 
 
-class AuthFragment : BaseFragment(), AuthView {
+class AuthFragment : DaggerFragment() {
 
-    @Inject
-    lateinit var presenterProvider: Provider<AuthPresenter>
-    private val presenter by moxyPresenter {
-        presenterProvider.get()
+    companion object {
+        const val LENGTH_PASSWORD = 6
     }
 
     @Inject
-    lateinit var snackBarManager: SnackBarManager
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var authViewModel: AuthViewModel
+
+    private lateinit var binding: FragmentAuthBinding
 
     @Inject
-    lateinit var navigation: NavigationContent
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        App.instance.getFragmentAuthComponentOrCreateIfNull().inject(this)
-    }
+    @Named(ACTIVITY_NAVIGATION)
+    lateinit var navigationDestination: NavigationDestination
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_auth, container, false)
+    ): View {
+        binding = FragmentAuthBinding.inflate(inflater, container, false)
+        authViewModel = injectViewModel(viewModelFactory)
+        return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        observeViews()
     }
 
     private fun initView() {
-        input_login_fb.setSimpleTextChangeWatcher { theNewText, _ ->
-            presenter.updateLogin(theNewText)
+        with(binding) {
+            inputLoginFb.setSimpleTextChangeWatcher { theNewText, _ ->
+                authViewModel.updateLogin(theNewText)
+            }
+            inputPasswordFb.setSimpleTextChangeWatcher { theNewText, _ ->
+                authViewModel.updatePassword(theNewText)
+            }
+            passwordEt.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    authViewModel.changeFocus(FocusAuthFields.PASSWORD)
+                } else {
+                    authViewModel.changeFocus(null)
+                }
+            }
+            inputPasswordFb.endIconImageButton.setOnClickListener {
+                authViewModel.changePasswordVisible()
+            }
+            authUserBtn.setOnClickListener { authViewModel.authUser() }
         }
 
-        input_password_fb.setSimpleTextChangeWatcher { theNewText, _ ->
-            presenter.updatePassword(theNewText)
-        }
+    }
 
-        password_et.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                presenter.enableCheckPasswordField()
-            } else {
-                presenter.disableCheckPasswordField()
+    private fun observeViews() {
+        with(authViewModel) {
+            login.observe(viewLifecycleOwner) {
+                binding.loginInputEt.setText(it)
+            }
+            password.observe(viewLifecycleOwner) {
+                binding.passwordEt.setText(it)
+            }
+            isLoadingAuthorizationUser.observe(viewLifecycleOwner) {
+                if (it) {
+                    binding.authUserBtn.visibility = View.GONE
+                    binding.authPb.visibility = View.VISIBLE
+                } else {
+                    binding.authPb.visibility = View.GONE
+                    binding.authUserBtn.visibility = View.VISIBLE
+                }
+            }
+            isShowPasswordHelper.observe(viewLifecycleOwner) {
+                if (it) {
+                    binding.inputPasswordFb.helperText =
+                        "Длина пароля должна состоять из $LENGTH_PASSWORD символов"
+                } else {
+                    binding.inputPasswordFb.helperText = null
+                }
+            }
+            messageStateField.observe(viewLifecycleOwner) {
+                if (it != null) {
+                    when (it) {
+                        EmptyFields.ALL -> {
+                            binding.inputPasswordFb.setError(
+                                "Поля не должны быть пустыми",
+                                false
+                            )
+                            binding.inputLoginFb.setError(
+                                "Поля не должны быть пустыми",
+                                false
+                            )
+                        }
+                        EmptyFields.LOGIN -> {
+                            binding.inputLoginFb.setError(
+                                "Поля не должны быть пустыми",
+                                false
+                            )
+                        }
+                        EmptyFields.PASSWORD -> {
+                            binding.inputPasswordFb.setError(
+                                "Поля не должны быть пустыми",
+                                false
+                            )
+                        }
+                    }
+                } else {
+                    binding.inputPasswordFb.removeError()
+                    binding.inputLoginFb.removeError()
+                }
+            }
+            isPasswordVisibleBtnActive.observe(viewLifecycleOwner) {
+                if (it) {
+                    binding.inputPasswordFb.setEndIcon(R.drawable.ic_eye_on)
+                } else {
+                    binding.inputPasswordFb.setEndIcon(R.drawable.ic_eye_off)
+                }
+            }
+            isPasswordVisibleText.observe(viewLifecycleOwner) {
+                if (it) {
+                    binding.passwordEt.transformationMethod =
+                        PasswordTransformationMethod.getInstance()
+                } else {
+                    binding.passwordEt.transformationMethod =
+                        HideReturnsTransformationMethod.getInstance()
+                }
+            }
+            showErrorSnackBar.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()
+                    ?.let { message ->
+                        requireActivity().showSnackBarMessage(
+                            message,
+                            binding.rootLayoutAuth
+                        )
+                    }
+            }
+            focusFiled.observe(viewLifecycleOwner) {
+                when (it) {
+                    FocusAuthFields.PASSWORD -> {
+                        binding.passwordEt.isFocusableInTouchMode = true
+                    }
+                    FocusAuthFields.LOGIN -> {
+                        binding.loginInputEt.isFocusableInTouchMode = true
+                    }
+                }
+            }
+            navigateToContentTab.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { it1 -> navigationDestination.navigateTo(it1) }
             }
         }
-
-        auth_user_btn.setOnClickListener { authUser() }
-        input_password_fb.endIconImageButton.setOnClickListener {
-            presenter.changeVisiblePassword()
-        }
     }
-
-    private fun authUser() {
-        presenter.authUser()
-    }
-
-    override fun enablePasswordField(isPasswordVisible: Boolean) {
-        if (isPasswordVisible) {
-            input_password_fb.setEndIcon(R.drawable.ic_eye_on)
-        } else {
-            input_password_fb.setEndIcon(R.drawable.ic_eye_off)
-        }
-    }
-
-    override fun disablePasswordField() {
-        input_password_fb.removeEndIcon()
-    }
-
-    override fun openContentFragment() {
-        navigation.startContentScreen();
-    }
-
-    override fun showPassword() {
-        input_password_fb.setEndIcon(R.drawable.ic_eye_on)
-        password_et.transformationMethod = HideReturnsTransformationMethod.getInstance()
-    }
-
-    override fun hidePassword() {
-        input_password_fb.setEndIcon(R.drawable.ic_eye_off)
-        password_et.transformationMethod = PasswordTransformationMethod.getInstance()
-    }
-
-    override fun showErrorSnackBar(messageError: String) {
-        snackBarManager.showErrorMessage(messageError)
-    }
-
-    override fun showMessageErrorInputField(emptyFields: EmptyFields, messageError: String) {
-        when (emptyFields) {
-            EmptyFields.LOGIN -> {
-                input_login_fb.setError(messageError, false)
-            }
-            EmptyFields.PASSWORD -> {
-                input_password_fb.setError(messageError, false)
-            }
-            EmptyFields.ALL -> {
-                input_login_fb.setError(messageError, false)
-                input_password_fb.setError(messageError, false)
-            }
-        }
-    }
-
-    override fun hideMessageErrorInputField(emptyFields: EmptyFields) {
-        when (emptyFields) {
-            EmptyFields.LOGIN -> {
-                input_login_fb.removeError()
-            }
-            EmptyFields.PASSWORD -> {
-                input_password_fb.removeError()
-            }
-            EmptyFields.ALL -> {
-                input_login_fb.removeError()
-                input_password_fb.removeError()
-            }
-        }
-    }
-
-    override fun showPasswordHelper(lengthPassword: Int) {
-        input_password_fb.helperText = "Длина пароля должна состоять из $lengthPassword символов"
-    }
-
-    override fun hidePasswordHelper() {
-        input_password_fb.helperText = null
-    }
-
-    override fun showAuthProgressBar() {
-        auth_user_btn.visibility = View.GONE
-        auth_pb.visibility = View.VISIBLE
-    }
-
-    override fun hideAuthProgressBar() {
-        auth_user_btn.visibility = View.VISIBLE
-        auth_pb.visibility = View.GONE
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        App.instance.clearFragmentAuthComponent()
-    }
-    override fun getActionBar(): ActionBar? = null
 
 }

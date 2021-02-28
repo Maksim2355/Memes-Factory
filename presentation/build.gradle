@@ -42,15 +42,14 @@ android {
 }
 
 
-
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     implementation project(':domain')
     implementation project(':data')
     def presentationDependencies = rootProject.ext.presentationDeps
-    def appDependencies  = rootProject.ext.appDeps
-    def dataDependencies  = rootProject.ext.dataDeps
+    def appDependencies = rootProject.ext.appDeps
+    def dataDependencies = rootProject.ext.dataDeps
 
     implementation appDependencies.kotlin
     implementation appDependencies.ktx
@@ -61,6 +60,7 @@ dependencies {
     implementation presentationDependencies.daggerAndroid
     kapt presentationDependencies.daggerCompiler
     kapt presentationDependencies.daggerAndroidProcessor
+    implementation presentationDependencies.daggerSupport
 
     implementation presentationDependencies.rxJavaAndroid
 
@@ -70,6 +70,7 @@ dependencies {
     implementation presentationDependencies.easyAdapter
     implementation presentationDependencies.constraintLayout
     implementation presentationDependencies.legacySupport
+
     implementation presentationDependencies.navigationFragment
     implementation presentationDependencies.navigationUi
 
@@ -81,7 +82,6 @@ dependencies {
 
     implementation dataDependencies.roomRuntime
     kapt dataDependencies.roomCompiler
-
 
     testImplementation appDependencies.junit
     androidTestImplementation presentationDependencies.junitAndroid

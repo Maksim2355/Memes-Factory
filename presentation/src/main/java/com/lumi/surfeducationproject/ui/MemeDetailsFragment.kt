@@ -4,40 +4,34 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.navigation.fragment.navArgs
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.domain.model.Meme
 import com.example.domain.model.User
-import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
-import com.lumi.surfeducationproject.common.base_view.BaseFragment
 import com.lumi.surfeducationproject.common.managers.BottomBarVisible
-import com.lumi.surfeducationproject.common.managers.StyleManager
+import com.lumi.surfeducationproject.common.params.EXTRA_MEME_ID
+import com.lumi.surfeducationproject.databinding.FragmentMemeDetailsBinding
+import com.lumi.surfeducationproject.di.injection_extension.injectViewModel
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
 
-import com.lumi.surfeducationproject.presenters.MemeDetailsPresenter
-import com.lumi.surfeducationproject.utils.getPostCreateDate
-import com.lumi.surfeducationproject.views.MemeDetailsView
-import kotlinx.android.synthetic.main.fragment_meme_details.*
-import moxy.ktx.moxyPresenter
+import com.lumi.surfeducationproject.ui.extension.activity_extension.setColorStatusBar
+import com.lumi.surfeducationproject.ui.extension.fragment_extensions.loadAvatars
+import com.lumi.surfeducationproject.ui.extension.fragment_extensions.setToolbar
+import com.lumi.surfeducationproject.vm.MemeDetailsViewModel
+import dagger.android.support.DaggerFragment
 import javax.inject.Inject
-import javax.inject.Provider
 
 
-class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
-
-    @Inject
-    lateinit var presenterProvider: Provider<MemeDetailsPresenter>
-    private val presenter by moxyPresenter { presenterProvider.get() }
+class MemeDetailsFragment : DaggerFragment() {
 
     @Inject
-    lateinit var styleManager: StyleManager
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var memeDetailsViewModel: MemeDetailsViewModel
+
+    private lateinit var binding: FragmentMemeDetailsBinding
 
     @Inject
     lateinit var navBack: NavigationBackPressed
@@ -45,49 +39,73 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
     @Inject
     lateinit var bottomBarVisible: BottomBarVisible
 
-    private val args: MemeDetailsFragmentArgs by navArgs()
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        App.instance.getFragmentContentComponentOrCreateIfNull().inject(this)
-        styleManager.setColorStatusBar(R.color.colorPrimaryContent)
+        requireActivity().setColorStatusBar(R.color.colorPrimaryContent)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_meme_details, container, false)
+    ): View {
+        binding = FragmentMemeDetailsBinding.inflate(inflater, container, false)
+        memeDetailsViewModel = injectViewModel(viewModelFactory)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolbar()
-        val meme = args.meme
-        presenter.meme = meme
+        arguments?.getInt(EXTRA_MEME_ID).let {
+            if (it != null) {
+                memeDetailsViewModel.bindMeme(it)
+            }
+        }
+        observeViews()
 
-        presenter.bindMeme()
-        presenter.bindUserInfoToolbar()
     }
 
     private fun initToolbar() {
-        meme_details_toolbar.navigationIcon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_close) }
-        (activity as AppCompatActivity).setSupportActionBar(meme_details_toolbar)
-        getActionBar()?.title = null
-        meme_details_toolbar.setNavigationOnClickListener { navBack.back() }
+        with(binding.memeDetailsToolbar) {
+            navigationIcon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_close) }
+            setToolbar(this)
+            setNavigationOnClickListener { memeDetailsViewModel.navigateBack() }
+        }
     }
 
-
-    override fun onStart() {
-        super.onStart()
-        bottomBarVisible.hideBottomNavigationBar()
-
+    private fun observeViews() {
+        with(memeDetailsViewModel) {
+            meme.observe(viewLifecycleOwner) { meme->
+                binding.titleMemeTv.text = meme.title
+                loadAvatars(binding.imgMemeIv, meme.photoUrl)
+                binding.createdDateTv.setText(meme.createdDate)
+                binding.favoriteDetailsChb.isChecked = meme.isFavorite
+                binding.textMemeTv.text = meme.description
+            }
+            user.observe(viewLifecycleOwner) {
+                it?.let { user ->
+                    loadAvatars(binding.avatarsMiniIv)
+                    binding.nicknameMiniTv.text = user.firstName
+                }
+            }
+            shareMemeEvent.observe(viewLifecycleOwner) { memeEvent ->
+                memeEvent.getContentIfNotHandled()?.let { meme ->
+                    val shareMeme = Intent.createChooser(Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TEXT, meme.title)
+                        putExtra(Intent.EXTRA_STREAM, meme.photoUrl)
+                        type = "image/*"
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    }, null)
+                    startActivity(shareMeme)
+                }
+            }
+            navigateBackstack.observe(viewLifecycleOwner) {
+                navBack.back()
+            }
+        }
     }
 
-    override fun onStop() {
-        super.onStop()
-        bottomBarVisible.showBottomNavigationBar()
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -96,43 +114,18 @@ class MemeDetailsFragment : BaseFragment(), MemeDetailsView {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_share) {
-            presenter.shareMeme()
+            memeDetailsViewModel.shareMeme()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    override fun showErrorStateUserInfoToolbar() {
-        nickname_mini_tv.text = getString(R.string.memeDetails_errorToolbarUser_message)
+    override fun onStart() {
+        super.onStart()
+        bottomBarVisible.hideBottomNavigationBar()
     }
 
-    override fun showMeme(data: Meme) {
-        title_meme_tv.text = data.title
-        Glide.with(this).load(data.photoUrl).into(img_meme_iv)
-        created_date_tv.text = getPostCreateDate(data.createdDate)
-        if (data.isFavorite) {
-            favorite_details_chb.isChecked = true
-        }
-        text_meme_tv.text = data.description
-    }
-
-    override fun getActionBar() = (activity as AppCompatActivity).supportActionBar
-
-    override fun shareMeme(meme: Meme) {
-        val shareMeme = Intent.createChooser(Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, meme.title)
-            putExtra(Intent.EXTRA_STREAM, meme.photoUrl)
-            type = "image/*"
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        }, null)
-        startActivity(shareMeme)
-    }
-
-    override fun showUserInfoToolbar(user: User) {
-        Glide.with(this)
-            .load("https://img.pngio.com/avatar-1-length-of-human-face-hd-png-download-6648260-free-human-face-png-840_640.png")
-            .optionalCircleCrop()
-            .into(avatars_mini_iv)
-        nickname_mini_tv.text = user.firstName
+    override fun onStop() {
+        super.onStop()
+        bottomBarVisible.showBottomNavigationBar()
     }
 }

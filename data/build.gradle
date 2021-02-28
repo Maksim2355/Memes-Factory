@@ -49,8 +49,6 @@ dependencies {
 
     implementation dataDependencies.dagger
     kapt dataDependencies.daggerCompiler
-    implementation dataDependencies.daggerAndroid
-    kapt dataDependencies.daggerAndroidProcessor
 
     implementation dataDependencies.rxJavaAndroid
     implementation dataDependencies.rxJavaRetrofitAdapter

@@ -2,45 +2,41 @@ package com.lumi.surfeducationproject.ui
 
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.example.domain.model.Meme
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.lumi.surfeducationproject.App
 import com.lumi.surfeducationproject.R
 import com.lumi.surfeducationproject.common.managers.BottomBarVisible
+import com.lumi.surfeducationproject.common.params.EXTRA_MEME_ID
+import com.lumi.surfeducationproject.databinding.FragmentTabBinding
 import com.lumi.surfeducationproject.navigation.NavigationBackPressed
-import com.lumi.surfeducationproject.navigation.NavigationMemeDetails
-import kotlinx.android.synthetic.main.fragment_tab.*
+import com.lumi.surfeducationproject.navigation.NavigationDestination
+import com.lumi.surfeducationproject.navigation.navigation.NavigatorNavController
+import com.lumi.surfeducationproject.navigation.navigation.Route
+import dagger.android.support.DaggerFragment
 
-class TabFragment : Fragment(), NavigationBackPressed, NavigationMemeDetails, BottomBarVisible {
+class TabFragment : DaggerFragment(), NavigationBackPressed,
+    BottomBarVisible, NavigationDestination {
 
-    companion object {
-        private const val LABEL_MEME_FEED = "fragment_meme_feed"
-        private const val LABEL_PROFILE = "fragment_profile"
-    }
+    private lateinit var navigator: NavigatorNavController
 
-    private lateinit var navControllerTab: NavController
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        App.instance.getFragmentContentComponentOrCreateIfNull(this)
-    }
+    private lateinit var binding: FragmentTabBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_tab, container, false)
+    ): View {
+        binding = FragmentTabBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navControllerTab =
+        val navControllerTab =
             Navigation.findNavController(view.findViewById(R.id.nav_host_fragment_content))
-        NavigationUI.setupWithNavController(bottom_navigation_view, navControllerTab);
+        navigator = NavigatorNavController(navControllerTab)
+        NavigationUI.setupWithNavController(binding.bottomNavigationView, navControllerTab)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -49,35 +45,19 @@ class TabFragment : Fragment(), NavigationBackPressed, NavigationMemeDetails, Bo
     }
 
     override fun showBottomNavigationBar() {
-        bottom_navigation_view.visibility = View.VISIBLE
+        binding.bottomNavigationView.visibility = View.VISIBLE
     }
 
     override fun hideBottomNavigationBar() {
-        bottom_navigation_view.visibility = View.GONE
+        binding.bottomNavigationView.visibility = View.GONE
     }
 
     override fun back() {
-        navControllerTab.popBackStack()
+        navigator.popBackStack()
     }
 
-    override fun startMemeDetailsScreen(meme: Meme) {
-        when (navControllerTab.currentDestination?.label) {
-            LABEL_MEME_FEED -> {
-                val action =
-                    MemeFeedFragmentDirections.actionMemeFeedFragmentToMemeDetailsFragment(meme)
-                navControllerTab.navigate(action)
-            }
-            LABEL_PROFILE -> {
-                val action =
-                    ProfileFragmentDirections.actionProfileFragmentToMemeDetailsFragment(meme)
-                navControllerTab.navigate(action)
-            }
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        App.instance.clearFragmentContentComponent()
+    override fun navigateTo(route: Route) {
+        navigator.navigate(route)
     }
 
 }

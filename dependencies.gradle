@@ -49,6 +49,8 @@ ext {
             daggerCompiler        : "com.google.dagger:dagger-compiler:$daggerVersions",
             daggerAndroid         : "com.google.dagger:dagger-android:$daggerVersions",
             daggerAndroidProcessor: "com.google.dagger:dagger-android-processor:$daggerVersions",
+
+            daggerSupport         : "com.google.dagger:dagger-android-support:$daggerVersions",
             rxJavaAndroid         : "io.reactivex.rxjava3:rxandroid:$rxJavaVersions",
 
             fieldBoxes            : "com.github.HITGIF:TextFieldBoxes:$textFieldBoxesVersions",

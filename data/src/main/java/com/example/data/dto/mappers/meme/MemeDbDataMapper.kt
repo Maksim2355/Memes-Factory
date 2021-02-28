@@ -4,8 +4,9 @@ package com.example.data.dto.mappers.meme
 import com.example.data.dto.local.MemeDbo
 import com.example.domain.model.Meme
 import java.util.ArrayList
+import javax.inject.Inject
 
-class MemeDbDataMapper : MemeDataMapper<MemeDbo> {
+class MemeDbDataMapper @Inject constructor() : MemeDataMapper<MemeDbo> {
 
     override fun transform(memeDbo: MemeDbo) = Meme(
         id = memeDbo.id,
